@@ -1,0 +1,134 @@
+{
+  "id": 2,
+  "sectiom_name": "Writing",
+  "questions": [
+    {
+      "id": 1,
+      "question": "/static/images/questions/writing1.jpg",
+      "answer_type": [
+        {
+          "id": 1,
+          "answer_type": "text"
+        },
+        {
+          "id": 2,
+          "answer_type": "radio",
+          "options": [
+            {
+              "id": 1,
+              "option": "Option 1"
+            },
+            {
+              "id": 2,
+              "option": "Option 2"
+            },
+            {
+              "id": 3,
+              "option": "Option 3"
+            },
+            {
+              "id": 4,
+              "option": "Option 4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "question": "/static/images/questions/writing2.jpg",
+      "answer_type": [
+        {
+          "id": 1,
+          "answer_type": "text"
+        },
+        {
+          "id": 2,
+          "answer_type": "radio",
+          "options": [
+            {
+              "id": 1,
+              "option": "Option 1"
+            },
+            {
+              "id": 2,
+              "option": "Option 2"
+            },
+            {
+              "id": 3,
+              "option": "Option 3"
+            },
+            {
+              "id": 4,
+              "option": "Option 4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "question": "/static/images/questions/writing1.jpg",
+      "answer_type": [
+        {
+          "id": 1,
+          "answer_type": "text"
+        },
+        {
+          "id": 2,
+          "answer_type": "radio",
+          "options": [
+            {
+              "id": 1,
+              "option": "Option 1"
+            },
+            {
+              "id": 2,
+              "option": "Option 2"
+            },
+            {
+              "id": 3,
+              "option": "Option 3"
+            },
+            {
+              "id": 4,
+              "option": "Option 4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "question": "/static/images/questions/writing2.jpg",
+      "answer_type": [
+        {
+          "id": 1,
+          "answer_type": "text"
+        },
+        {
+          "id": 2,
+          "answer_type": "radio",
+          "options": [
+            {
+              "id": 1,
+              "option": "Option 1"
+            },
+            {
+              "id": 2,
+              "option": "Option 2"
+            },
+            {
+              "id": 3,
+              "option": "Option 3"
+            },
+            {
+              "id": 4,
+              "option": "Option 4"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
