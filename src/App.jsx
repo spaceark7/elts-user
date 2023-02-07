@@ -5,6 +5,7 @@ import Layout from './components/Layout'
 import PaginationTestLayout from './components/Test/PaginationTestLayout'
 import RequireAuth from './components/RequireAuth'
 import AdminDashboard from './features/admin/AdminDashboard'
+import Validation from './features/validation/Validation'
 import Login from './features/auth/Login'
 import Register from './features/auth/Register'
 import ChangePassword from './features/ChangePassword/ChangePassword'
@@ -20,6 +21,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route index element={<HomePage />} />
+          <Route path='validation/:id' element={<Validation />} />
           <Route path='login' element={<Login />} />
           <Route path='register' element={<Register />} />
 
