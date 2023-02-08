@@ -254,7 +254,6 @@
       "description": "Exam 1 Description",
       "questionaire": 120,
       "duration": 60,
-
       "expired_date": "2022-02-11",
       "token": "1234567890",
       "status": true
@@ -266,7 +265,6 @@
       "description": "Exam 1 Description",
       "questionaire": 120,
       "duration": 60,
-
       "expired_date": "2022-02-11",
       "token": "1234567890",
       "status": false
@@ -1211,7 +1209,6 @@
         {
           "id": 1,
           "test_name": "International English Language Testing System",
-
           "test_amount": 200,
           "test_duration": 120,
           "expired_date": "2022-01-11",
@@ -1220,7 +1217,6 @@
         {
           "id": 2,
           "test_name": "International English Language Testing System",
-
           "test_amount": 200,
           "test_duration": 120,
           "expired_date": "2022-03-02",
@@ -1229,10 +1225,437 @@
       ]
     }
   ],
-  "test-answer": {
-    "Reading": {
-      "subsection": 1,
-      "answer": []
+  "test-answers": [
+    {
+      "Reading": "Reading",
+      "answers": [
+        {
+          "id": 1,
+          "answer": "asu"
+        },
+        {
+          "id": 2,
+          "answer": "usa"
+        },
+        {
+          "id": 3,
+          "answer": "Option 2"
+        }
+      ],
+      "id": 1
     }
-  }
+  ],
+  "Reading": [
+    {
+      "answers": [
+        {
+          "id": 1,
+          "answer": "as"
+        },
+        {
+          "id": 2,
+          "answer": "uus"
+        },
+        {
+          "id": 3,
+          "answer": "Option 1"
+        }
+      ],
+      "id": 1
+    },
+    {
+      "answers": [
+        {
+          "id": 1,
+          "answer": "sss"
+        },
+        {
+          "id": 2,
+          "answer": "ss"
+        },
+        {
+          "id": 3,
+          "answer": "Option 1"
+        }
+      ],
+      "id": 2
+    },
+    {
+      "answers": [
+        {
+          "id": 4,
+          "answer": "as"
+        },
+        {
+          "id": 5,
+          "answer": "Option 1"
+        }
+      ],
+      "id": 3
+    },
+    {
+      "answers": [],
+      "id": 4
+    },
+    {
+      "answers": [
+        {
+          "id": 1,
+          "answer": "as"
+        },
+        {
+          "id": 2,
+          "answer": "sa"
+        },
+        {
+          "id": 3,
+          "answer": "Option 1"
+        }
+      ],
+      "id": 5
+    },
+    {
+      "answers": [],
+      "id": 6
+    },
+    {
+      "answers": [
+        {
+          "id": 4,
+          "answer": "as"
+        },
+        {
+          "id": 5,
+          "answer": "Option 4"
+        }
+      ],
+      "id": 7
+    },
+    {
+      "answers": [],
+      "id": 8
+    },
+    {
+      "answers": [
+        {
+          "id": 1,
+          "answer": "as"
+        },
+        {
+          "id": 2,
+          "answer": "us"
+        },
+        {
+          "id": 3,
+          "answer": "Option 1"
+        }
+      ],
+      "id": 9
+    },
+    {
+      "answers": [],
+      "id": 10
+    },
+    {
+      "answers": [
+        {
+          "id": 1,
+          "answer": "uus"
+        },
+        {
+          "id": 2,
+          "answer": "uas"
+        },
+        {
+          "id": 3,
+          "answer": "Option 1"
+        }
+      ],
+      "id": 11
+    },
+    {
+      "answers": [],
+      "id": 12
+    },
+    {
+      "answers": [
+        {
+          "id": 5,
+          "answer": "Option 1"
+        },
+        {
+          "id": 4,
+          "answer": "as"
+        }
+      ],
+      "id": 13
+    },
+    {
+      "answers": [
+        {
+          "id": 1,
+          "answer": "as"
+        },
+        {
+          "id": 2,
+          "answer": "us"
+        },
+        {
+          "id": 3,
+          "answer": "Option 3"
+        }
+      ],
+      "id": 14
+    },
+    {
+      "answers": [],
+      "id": 15
+    },
+    {
+      "answers": [
+        {
+          "id": 1,
+          "answer": "as"
+        },
+        {
+          "id": 2,
+          "answer": "usa"
+        },
+        {
+          "id": 3,
+          "answer": "Option 1"
+        }
+      ],
+      "id": 16
+    },
+    {
+      "answers": [
+        {
+          "id": 4,
+          "answer": "s"
+        },
+        {
+          "id": 5,
+          "answer": "Option 3"
+        }
+      ],
+      "id": 17
+    },
+    {
+      "answers": [
+        {
+          "id": 1,
+          "answer": "as"
+        },
+        {
+          "id": 2,
+          "answer": "susu"
+        },
+        {
+          "id": 3,
+          "answer": "Option 1"
+        }
+      ],
+      "id": 18
+    },
+    {
+      "answers": [
+        {
+          "id": 4,
+          "answer": ""
+        },
+        {
+          "id": 1,
+          "answer": "sa"
+        },
+        {
+          "id": 2,
+          "answer": "as"
+        },
+        {
+          "id": 3,
+          "answer": "Option 1"
+        }
+      ],
+      "id": 19
+    },
+    {
+      "answers": [
+        {
+          "id": 1,
+          "answer": "as"
+        },
+        {
+          "id": 2,
+          "answer": "us"
+        },
+        {
+          "id": 3,
+          "answer": "Option 1"
+        }
+      ],
+      "id": 20
+    },
+    {
+      "answers": [],
+      "id": 21
+    },
+    {
+      "answers": [
+        {
+          "id": 4,
+          "answer": ""
+        },
+        {
+          "id": 1,
+          "answer": "as"
+        },
+        {
+          "id": 2,
+          "answer": "su"
+        },
+        {
+          "id": 3,
+          "answer": "Option 3"
+        }
+      ],
+      "id": 22
+    },
+    {
+      "answers": [
+        {
+          "id": 1,
+          "answer": "asu"
+        },
+        {
+          "id": 2,
+          "answer": "asi"
+        },
+        {
+          "id": 3,
+          "answer": "Option 1"
+        }
+      ],
+      "id": 23
+    },
+    {
+      "answers": [
+        {
+          "id": 1,
+          "answer": "asu"
+        },
+        {
+          "id": 2,
+          "answer": "asi"
+        },
+        {
+          "id": 3,
+          "answer": "Option 1"
+        }
+      ],
+      "id": 24
+    },
+    {
+      "answers": [
+        {
+          "id": 1,
+          "answer": "asu"
+        },
+        {
+          "id": 2,
+          "answer": "asi"
+        },
+        {
+          "id": 3,
+          "answer": "Option 1"
+        }
+      ],
+      "id": 25
+    },
+    {
+      "answers": [
+        {
+          "id": 1,
+          "answer": "u"
+        },
+        {
+          "id": 2,
+          "answer": "asu"
+        },
+        {
+          "id": 3,
+          "answer": "Option 1"
+        }
+      ],
+      "id": 26
+    },
+    {
+      "answers": [
+        {
+          "id": 1,
+          "answer": "asu"
+        },
+        {
+          "id": 2,
+          "answer": "asu"
+        },
+        {
+          "id": 3,
+          "answer": "Option 2"
+        }
+      ],
+      "id": 27
+    },
+    {
+      "answers": [
+        {
+          "id": 1,
+          "answer": "asu"
+        },
+        {
+          "id": 2,
+          "answer": "asi"
+        },
+        {
+          "id": 3,
+          "answer": "Option 2"
+        }
+      ],
+      "id": 28
+    },
+    {
+      "answers": [
+        {
+          "id": 2,
+          "answer": "asas"
+        },
+        {
+          "id": 1,
+          "answer": "sdd"
+        },
+        {
+          "id": 3,
+          "answer": "Option 1"
+        }
+      ],
+      "id": 29
+    },
+    {
+      "answers": [
+        {
+          "id": 1,
+          "answer": "dadang"
+        },
+        {
+          "id": 2,
+          "answer": "dudung"
+        },
+        {
+          "id": 3,
+          "answer": "Option 2"
+        }
+      ],
+      "id": 30
+    }
+  ]
 }

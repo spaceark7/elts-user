@@ -6,7 +6,8 @@ import './index.css'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { theme } from './theme/index'
 import { ProSidebarProvider } from 'react-pro-sidebar'
-import { AuthProvider } from './features/auth/context/AuthContext'
+import { AuthProvider } from './context/AuthContext'
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <AuthProvider>

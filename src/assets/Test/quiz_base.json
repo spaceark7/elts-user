@@ -2,13 +2,91 @@
   {
     "id": 1,
     "section_name": "Listening",
+    "part": 1,
     "duration": 30,
-
+    "question": "/static/images/questions/listening_p1.png",
+    "answer_type": [
+      {
+        "id": 1,
+        "answer_type": "input",
+        "field": "number"
+      },
+      {
+        "id": 2,
+        "answer_type": "radio",
+        "options": [
+          {
+            "id": 1,
+            "option": "10TH OCTOBER"
+          },
+          {
+            "id": 2,
+            "option": "OCTOBER 1992"
+          },
+          {
+            "id": 3,
+            "option": "10 OCTOBER 1992"
+          },
+          {
+            "id": 4,
+            "option": "1992 OCTOBER 10"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "answer_type": "input"
+      },
+      {
+        "id": 4,
+        "answer_type": "input"
+      },
+      {
+        "id": 5,
+        "answer_type": "input"
+      },
+      {
+        "id": 6,
+        "answer_type": "radio",
+        "options": [
+          {
+            "id": 1,
+            "option": "3"
+          },
+          {
+            "id": 2,
+            "option": "3 WEEKS"
+          },
+          {
+            "id": 3,
+            "option": "TRI WEEKS"
+          },
+          {
+            "id": 4,
+            "option": "3RD WEEKS"
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "answer_type": "input"
+      },
+      {
+        "id": 8,
+        "answer_type": "input"
+      },
+      {
+        "id": 9,
+        "answer_type": "input"
+      },
+      {
+        "id": 10,
+        "answer_type": "input"
+      }
+    ],
     "parts": [
       {
         "part_no": 1,
-        "question": "/static/images/questions/listening_p1.png",
-        "audio": "/static/audio/listening/section_1.mp3",
         "answers": [
           {
             "id": 1,
@@ -380,13 +458,155 @@
   {
     "id": 2,
     "section_name": "Reading",
+    "part": 2,
     "duration": 30,
-    "question": "/static/images/questions/listening_p1.png",
+    "question": "/static/images/questions/reading2.jpg",
+    "answer_type": [
+      {
+        "id": 4,
+        "answer_type": "text"
+      },
+      {
+        "id": 5,
+        "answer_type": "radio",
+        "options": [
+          {
+            "id": 1,
+            "option": "Option 1"
+          },
+          {
+            "id": 2,
+            "option": "Option 2"
+          },
+          {
+            "id": 3,
+            "option": "Option 3"
+          },
+          {
+            "id": 4,
+            "option": "Option 4"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "section_name": "Reading",
+    "subsection": 3,
+    "duration": 30,
+    "question": "/static/images/questions/reading1.jpg",
+    "answer_type": [
+      {
+        "id": 6,
+
+        "answer_type": "text"
+      },
+      {
+        "id": 7,
+        "id_quiz": 7,
+        "answer_type": "radio",
+        "options": [
+          {
+            "id": 1,
+            "option": "Option 1"
+          },
+          {
+            "id": 2,
+            "option": "Option 2"
+          },
+          {
+            "id": 3,
+            "option": "Option 3"
+          },
+          {
+            "id": 4,
+            "option": "Option 4"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "section_name": "Reading",
+    "subsection": 4,
+    "duration": 30,
+    "question": "/static/images/questions/reading2.jpg",
+    "answer_type": [
+      {
+        "id": 8,
+        "answer_type": "text"
+      },
+      {
+        "id": 9,
+        "answer_type": "radio",
+        "options": [
+          {
+            "id": 1,
+            "option": "Option 1"
+          },
+          {
+            "id": 2,
+            "option": "Option 2"
+          },
+          {
+            "id": 3,
+            "option": "Option 3"
+          },
+          {
+            "id": 4,
+            "option": "Option 4"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "section_name": "Writing",
+    "subsection": 1,
+    "duration": 30,
+    "question": "/static/images/questions/writing1.jpg",
+    "answer_type": [
+      {
+        "id": 10,
+        "answer_type": "input"
+      },
+      {
+        "id": 11,
+        "answer_type": "radio",
+        "options": [
+          {
+            "id": 1,
+            "option": "Option 1"
+          },
+          {
+            "id": 2,
+            "option": "Option 2"
+          },
+          {
+            "id": 3,
+            "option": "Option 3"
+          },
+          {
+            "id": 4,
+            "option": "Option 4"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "section_name": "Writing",
+    "subsection": 2,
+    "duration": 30,
+    "question": "/static/images/questions/writing2.jpg",
     "answer_type": [
       {
         "id": 1,
-        "answer_type": "input",
-        "field": "number"
+        "answer_type": "text"
       },
       {
         "id": 2,
@@ -394,347 +614,299 @@
         "options": [
           {
             "id": 1,
-            "option": "10TH OCTOBER"
+            "option": "Option 1"
           },
           {
             "id": 2,
-            "option": "OCTOBER 1992"
+            "option": "Option 2"
           },
           {
             "id": 3,
-            "option": "10 OCTOBER 1992"
+            "option": "Option 3"
           },
           {
             "id": 4,
-            "option": "1992 OCTOBER 10"
+            "option": "Option 4"
           }
         ]
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "section_name": "Writing",
+    "subsection": 3,
+    "duration": 30,
+    "question": "/static/images/questions/writing1.jpg",
+    "answer_type": [
+      {
+        "id": 1,
+        "answer_type": "text"
       },
       {
-        "id": 3,
-        "answer_type": "input"
-      },
-      {
-        "id": 4,
-        "answer_type": "input"
-      },
-      {
-        "id": 5,
-        "answer_type": "input"
-      },
-      {
-        "id": 6,
+        "id": 2,
         "answer_type": "radio",
         "options": [
           {
             "id": 1,
-            "option": "3"
+            "option": "Option 1"
           },
           {
             "id": 2,
-            "option": "3 WEEKS"
+            "option": "Option 2"
           },
           {
             "id": 3,
-            "option": "TRI WEEKS"
+            "option": "Option 3"
           },
           {
             "id": 4,
-            "option": "3RD WEEKS"
+            "option": "Option 4"
           }
         ]
-      },
-      {
-        "id": 7,
-        "answer_type": "input"
-      },
-      {
-        "id": 8,
-        "answer_type": "input"
-      },
-      {
-        "id": 9,
-        "answer_type": "input"
-      },
-      {
-        "id": 10,
-        "answer_type": "input"
       }
-    ],
-    "parts": [
+    ]
+  },
+  {
+    "id": 8,
+    "section_name": "Writing",
+    "subsection": 4,
+    "duration": 30,
+    "question": "/static/images/questions/writing2.jpg",
+    "answer_type": [
       {
-        "part_no": 1,
-        "answers": [
-          {
-            "id": 41,
-            "question_no": 1,
-            "answer_type": "input",
-            "field": "number"
-          },
-          {
-            "id": 42,
-            "question_no": 2,
-            "answer_type": "radio",
-            "options": [
-              {
-                "id": 1,
-                "option": "10TH OCTOBER"
-              },
-              {
-                "id": 2,
-                "option": "OCTOBER 1992"
-              },
-              {
-                "id": 3,
-                "option": "10 OCTOBER 1992"
-              },
-              {
-                "id": 4,
-                "option": "1992 OCTOBER 10"
-              }
-            ]
-          },
-          {
-            "id": 43,
-            "question_no": 3,
-            "answer_type": "input"
-          },
-          {
-            "id": 44,
-            "question_no": 4,
-            "answer_type": "input"
-          },
-          {
-            "id": 45,
-            "question_no": 5,
-            "answer_type": "input"
-          },
-          {
-            "id": 46,
-            "question_no": 6,
-            "answer_type": "radio",
-            "options": [
-              {
-                "id": 1,
-                "option": "3"
-              },
-              {
-                "id": 2,
-                "option": "3 WEEKS"
-              },
-              {
-                "id": 3,
-                "option": "TRI WEEKS"
-              },
-              {
-                "id": 4,
-                "option": "3RD WEEKS"
-              }
-            ]
-          },
-          {
-            "id": 47,
-            "question_no": 7,
-            "answer_type": "input"
-          },
-          {
-            "id": 48,
-            "question_no": 8,
-            "answer_type": "input"
-          },
-          {
-            "id": 49,
-            "question_no": 9,
-            "answer_type": "input"
-          },
-          {
-            "id": 50,
-            "question_no": 10,
-            "answer_type": "input"
-          }
-        ]
+        "id": 1,
+        "answer_type": "text"
       },
       {
-        "part_no": 2,
-        "answers": [
+        "id": 2,
+        "answer_type": "radio",
+        "options": [
           {
-            "id": 51,
-            "question_no": 11,
-            "answer_type": "input",
-            "field": "number"
+            "id": 1,
+            "option": "Option 1"
           },
           {
-            "id": 52,
-            "question_no": 12,
-            "answer_type": "radio",
-            "options": [
-              {
-                "id": 1,
-                "option": "10TH OCTOBER"
-              },
-              {
-                "id": 2,
-                "option": "OCTOBER 1992"
-              },
-              {
-                "id": 3,
-                "option": "10 OCTOBER 1992"
-              },
-              {
-                "id": 4,
-                "option": "1992 OCTOBER 10"
-              }
-            ]
+            "id": 2,
+            "option": "Option 2"
           },
           {
-            "id": 53,
-            "question_no": 13,
-            "answer_type": "input"
+            "id": 3,
+            "option": "Option 3"
           },
           {
-            "id": 54,
-            "question_no": 14,
-            "answer_type": "input"
-          },
-          {
-            "id": 55,
-            "question_no": 15,
-            "answer_type": "input"
-          },
-          {
-            "id": 56,
-            "question_no": 16,
-            "answer_type": "radio",
-            "options": [
-              {
-                "id": 1,
-                "option": "3"
-              },
-              {
-                "id": 2,
-                "option": "3 WEEKS"
-              },
-              {
-                "id": 3,
-                "option": "TRI WEEKS"
-              },
-              {
-                "id": 4,
-                "option": "3RD WEEKS"
-              }
-            ]
-          },
-          {
-            "id": 57,
-            "question_no": 17,
-            "answer_type": "input"
-          },
-          {
-            "id": 58,
-            "question_no": 18,
-            "answer_type": "input"
-          },
-          {
-            "id": 59,
-            "question_no": 19,
-            "answer_type": "input"
-          },
-          {
-            "id": 60,
-            "question_no": 20,
-            "answer_type": "input"
+            "id": 4,
+            "option": "Option 4"
           }
         ]
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "section_name": "Listening",
+    "subsection": 1,
+    "duration": 30,
+    "question": "/static/images/questions/listening1.jpg",
+    "answer_type": [
+      {
+        "id": 1,
+        "answer_type": "text"
       },
       {
-        "part_no": 3,
-        "answers": [
+        "id": 2,
+        "answer_type": "radio",
+        "options": [
           {
-            "id": 61,
-            "question_no": 21,
-            "answer_type": "input",
-            "field": "number"
+            "id": 1,
+            "option": "Option 1"
           },
           {
-            "id": 62,
-            "question_no": 22,
-            "answer_type": "radio",
-            "options": [
-              {
-                "id": 1,
-                "option": "10TH OCTOBER"
-              },
-              {
-                "id": 2,
-                "option": "OCTOBER 1992"
-              },
-              {
-                "id": 3,
-                "option": "10 OCTOBER 1992"
-              },
-              {
-                "id": 4,
-                "option": "1992 OCTOBER 10"
-              }
-            ]
+            "id": 2,
+            "option": "Option 2"
           },
           {
-            "id": 63,
-            "question_no": 23,
-            "answer_type": "input"
+            "id": 3,
+            "option": "Option 3"
           },
           {
-            "id": 64,
-            "question_no": 24,
-            "answer_type": "input"
+            "id": 4,
+            "option": "Option 4"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "section_name": "Listening",
+    "subsection": 2,
+    "duration": 30,
+    "question": "/static/images/questions/listening2.jpg",
+    "answer_type": [
+      {
+        "id": 1,
+        "answer_type": "text"
+      },
+      {
+        "id": 2,
+        "answer_type": "radio",
+        "options": [
+          {
+            "id": 1,
+            "option": "Option 1"
           },
           {
-            "id": 65,
-            "question_no": 25,
-            "answer_type": "input"
+            "id": 2,
+            "option": "Option 2"
           },
           {
-            "id": 66,
-            "question_no": 26,
-            "answer_type": "radio",
-            "options": [
-              {
-                "id": 1,
-                "option": "3"
-              },
-              {
-                "id": 2,
-                "option": "3 WEEKS"
-              },
-              {
-                "id": 3,
-                "option": "TRI WEEKS"
-              },
-              {
-                "id": 4,
-                "option": "3RD WEEKS"
-              }
-            ]
+            "id": 3,
+            "option": "Option 3"
           },
           {
-            "id": 67,
-            "question_no": 27,
-            "answer_type": "input"
+            "id": 4,
+            "option": "Option 4"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "section_name": "Listening",
+    "subsection": 3,
+    "duration": 30,
+    "question": "/static/images/questions/listening1.jpg",
+    "answer_type": [
+      {
+        "id": 1,
+        "answer_type": "text"
+      },
+      {
+        "id": 2,
+        "answer_type": "radio",
+        "options": [
+          {
+            "id": 1,
+            "option": "Option 1"
           },
           {
-            "id": 68,
-            "question_no": 28,
-            "answer_type": "input"
+            "id": 2,
+            "option": "Option 2"
           },
           {
-            "id": 69,
-            "question_no": 29,
-            "answer_type": "input"
+            "id": 3,
+            "option": "Option 3"
           },
           {
-            "id": 70,
-            "question_no": 30,
-            "answer_type": "input"
+            "id": 4,
+            "option": "Option 4"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "section_name": "Listening",
+    "subsection": 4,
+    "duration": 30,
+    "question": "/static/images/questions/listening2.jpg",
+    "answer_type": [
+      {
+        "id": 1,
+        "answer_type": "text"
+      },
+      {
+        "id": 2,
+        "answer_type": "radio",
+        "options": [
+          {
+            "id": 1,
+            "option": "Option 1"
+          },
+          {
+            "id": 2,
+            "option": "Option 2"
+          },
+          {
+            "id": 3,
+            "option": "Option 3"
+          },
+          {
+            "id": 4,
+            "option": "Option 4"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "section_name": "Speaking",
+    "subsection": 1,
+    "duration": 30,
+    "question": "/static/images/questions/listening1.jpg",
+    "answer_type": [
+      {
+        "id": 1,
+        "answer_type": "text"
+      },
+      {
+        "id": 2,
+        "answer_type": "radio",
+        "options": [
+          {
+            "id": 1,
+            "option": "Option 1"
+          },
+          {
+            "id": 2,
+            "option": "Option 2"
+          },
+          {
+            "id": 3,
+            "option": "Option 3"
+          },
+          {
+            "id": 4,
+            "option": "Option 4"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "section_name": "Speaking",
+    "subsection": 2,
+    "duration": 30,
+    "question": "/static/images/questions/listening2.jpg",
+    "answer_type": [
+      {
+        "id": 1,
+        "answer_type": "text"
+      },
+      {
+        "id": 2,
+        "answer_type": "radio",
+        "options": [
+          {
+            "id": 1,
+            "option": "Option 1"
+          },
+          {
+            "id": 2,
+            "option": "Option 2"
+          },
+          {
+            "id": 3,
+            "option": "Option 3"
+          },
+          {
+            "id": 4,
+            "option": "Option 4"
           }
         ]
       }

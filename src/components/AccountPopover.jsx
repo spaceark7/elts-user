@@ -1,7 +1,7 @@
 import { MenuItem, MenuList, Popover, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React from 'react'
-import useAuth from '../features/auth/hooks/useAuth'
+import useAuth from '../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
 
 const AccountPopover = (props) => {

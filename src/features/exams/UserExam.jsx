@@ -16,7 +16,7 @@ import React, { useEffect } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import DialogContainer from '../../components/DialogContainer'
 import ExamInstruction from './Components/ExamInstruction'
-import useAuth from '../auth/hooks/useAuth'
+import useAuth from '../../hooks/useAuth'
 
 const ExamInfo = ({ data }) => {
   const [open, setOpen] = React.useState(false)
@@ -147,7 +147,7 @@ const ExamInfo = ({ data }) => {
           <CardActions>
             <Button
               component={RouterLink}
-              to='/test/1'
+              to='/exam/listening/1'
               variant='outlined'
               color='primary'
               startIcon={<Quiz />}

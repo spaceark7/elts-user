@@ -23,7 +23,7 @@ import BarChartIcon from '@mui/icons-material/BarChart'
 import DescriptionIcon from '@mui/icons-material/Description'
 import PasswordIcon from '@mui/icons-material/Password'
 import LogoutIcon from '@mui/icons-material/Logout'
-import useAuth from '../features/auth/hooks/useAuth'
+import useAuth from '../hooks/useAuth'
 
 const items = [
   {

@@ -21,7 +21,7 @@ import { useState } from 'react'
 import { useFormik } from 'formik'
 import Api from '../../api/Api'
 import CloseIcon from '@mui/icons-material/Close'
-import useAuth from './hooks/useAuth'
+import useAuth from '../../hooks/useAuth'
 import { config } from '../../api/utils'
 
 const Login = () => {
@@ -74,9 +74,11 @@ const Login = () => {
         }
         actions.setSubmitting(false)
       } catch (error) {
-        setErrMessage(error.response.data ? error.response.data : error.message)
-        setError(true)
         console.log(error)
+        setErrMessage(
+          error.response?.data ? error.response.data : error.message
+        )
+        setError(true)
       }
     },
   })
