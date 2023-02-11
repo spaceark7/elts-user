@@ -1,10 +1,15 @@
-import { Box, Container, Grid } from '@mui/material'
+import { Box, Container, Grid, Typography } from '@mui/material'
 
 import React from 'react'
-import TotalCertifiedMember from '../../components/Dashboard/TotalCertifiedMember'
-import TotalMemberCard from '../../components/Dashboard/TotalMemberCard'
+
+import { Article, AssignmentInd, FindInPage } from '@mui/icons-material'
+import TotalCard from '../../components/Dashboard/TestCard'
+import useAuth from '../../hooks/useAuth'
+import UserCard from '../../components/Dashboard/userCard'
+import InstructionCard from '../../components/Dashboard/InstructionCard'
 
 const AdminDashboard = () => {
+  const { auth } = useAuth()
   return (
     <>
       <Box
@@ -15,32 +20,70 @@ const AdminDashboard = () => {
         }}
       >
         <Container maxWidth={false}>
+          <Box className='pb-8'>
+            <Typography color='MenuText' variant='h4'>
+              Selamat datang, {auth?.user?.name}
+            </Typography>
+            <Typography color='CaptionText' variant='body2'>
+              IELTS Golden English
+            </Typography>
+          </Box>
+
           <Grid container spacing={3}>
             <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <TotalMemberCard />
+              <TotalCard
+                test={4}
+                type='all'
+                icon={<Article />}
+                title='Semua Test'
+              />
             </Grid>
             <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <TotalCertifiedMember />
+              <TotalCard
+                test={4}
+                type='certified'
+                icon={<AssignmentInd />}
+                title='Test Selesai'
+              />
+              {/* <TotalCertifiedMember /> */}
             </Grid>
             <Grid item xl={3} lg={3} sm={6} xs={12}>
+              <TotalCard
+                test={4}
+                type='review'
+                icon={<FindInPage />}
+                title='Dalam Review'
+              />
               {/* <TasksProgress /> */}
             </Grid>
-            <Grid item xl={3} lg={3} sm={6} xs={12}>
-              {/* <TotalProfit sx={{ height: '100%' }} /> */}
-            </Grid>
-            <Grid item lg={8} md={12} xl={9} xs={12}>
-              {/* <Sales /> */}
-            </Grid>
-            <Grid item lg={4} md={6} xl={3} xs={12}>
-              {/* <TrafficByDevice sx={{ height: '100%' }} /> */}
-            </Grid>
-            <Grid item lg={4} md={6} xl={3} xs={12}>
-              {/* <LatestProducts sx={{ height: '100%' }} /> */}
-            </Grid>
-            <Grid item lg={8} md={12} xl={9} xs={12}>
-              {/* <LatestOrders /> */}
-            </Grid>
           </Grid>
+          <div className='justify-round mt-4 flex space-x-6'>
+            <UserCard user={auth.user} />
+            <InstructionCard />
+            {/* <Card>
+              <CardContent>
+                <Box
+                  sx={{
+                    alignItems: 'center',
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                >
+                 
+                  <Typography color='textPrimary' gutterBottom variant='h5'>
+                    asss
+                  </Typography>
+                  <Typography color='textSecondary' variant='body2'>
+                    asss
+                  </Typography>
+                  <Typography color='textSecondary' variant='body2'>
+                    ass
+                  </Typography>
+                </Box>
+              </CardContent>
+              <Divider />
+            </Card> */}
+          </div>
         </Container>
       </Box>
     </>

@@ -1,55 +1,38 @@
 import { Avatar, Box, Card, CardContent, Grid, Typography } from '@mui/material'
-import GroupsIcon from '@mui/icons-material/Groups'
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
-const TotalMemberCard = () => {
+import { ArticleOutlined } from '@mui/icons-material'
+const TotalMemberCard = ({ test }) => {
   return (
     <Card>
-      <CardContent>
-        <Grid container spacing={3} sx={{ justifyContent: 'space-between' }}>
-          <Grid item>
-            <Typography color='textSecondary' gutterBottom variant='overline'>
-              TOTAL MEMBERS
-            </Typography>
-            <Typography color='textPrimary' variant='h4'>
-              4000
-            </Typography>
-          </Grid>
-          <Grid item>
+      <CardContent className='p-4'>
+        <Box className='flex items-center space-x-2'>
+          <Box>
             <Avatar
-              className='bg-green-500'
               sx={{
-                backgroundColor: 'warning.main',
+                backgroundColor: 'primary.main',
                 height: 56,
                 width: 56,
               }}
             >
-              <GroupsIcon />
+              <ArticleOutlined />
             </Avatar>
+          </Box>
+          <Grid container spacing={3} sx={{ justifyContent: 'space-between' }}>
+            <Grid item>
+              <Typography color='textSecondary' gutterBottom variant='overline'>
+                Semua Test
+              </Typography>
+              <Typography color='textPrimary' variant='h4'>
+                {test}
+              </Typography>
+            </Grid>
           </Grid>
-        </Grid>
-        <Box
-          sx={{
-            alignItems: 'center',
-            display: 'flex',
-            pt: 2,
-          }}
-        >
-          <ArrowUpwardIcon color='success' />
-          <Typography
-            variant='body2'
-            sx={{
-              mr: 1,
-            }}
-          >
-            16%
-          </Typography>
-          <Typography color='textSecondary' variant='caption'>
-            Since last month
-          </Typography>
         </Box>
       </CardContent>
     </Card>
   )
 }
-
+// default props
+TotalMemberCard.defaultProps = {
+  test: 0,
+}
 export default TotalMemberCard

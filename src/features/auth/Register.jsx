@@ -9,6 +9,8 @@ import {
   OutlinedInput,
   FormControl,
   InputLabel,
+  Collapse,
+  Alert,
 } from '@mui/material'
 
 import { Link, useNavigate } from 'react-router-dom'
@@ -19,6 +21,8 @@ import { useState } from 'react'
 import { replace, useFormik } from 'formik'
 import { MuiTelInput } from 'mui-tel-input'
 import Api from '../../api/Api'
+import { config } from '../../api/utils'
+import CloseIcon from '@mui/icons-material/Close'
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -40,7 +44,7 @@ const Register = () => {
         .min(3, 'Nama tidak valid')
         .required('Nama wajib diisi'),
       phone: Yup.string()
-        .max(20, 'Nomor handphone tidak valid')
+        .max(13, 'Nomor handphone tidak valid')
         .min(12, 'Nomor handphone tidak valid')
         .required('Nomor telepon wajib diisi'),
       email: Yup.string()
@@ -58,24 +62,43 @@ const Register = () => {
     }),
     onSubmit: async (values, actions) => {
       const registerData = {
-        ...values,
-        role: 'member',
+        name: values.name,
+        email: values.email,
+        phone: values.phone,
+        password: values.password,
+        password_confirmation: values.confirmPassword,
       }
 
-      try {
-        const response = await Api.post(
-          '/register',
-          JSON.stringify(registerData),
-          config
-        )
-        console.log(response.data)
-        navigate('/login')
-        actions.setSubmitting(false)
-      } catch (error) {
-        console.log(error.message)
-        setError(true)
-        setErrMessage(error.message)
-      }
+      await Api.post('auth/register', registerData, config)
+        .then((response) => {
+          navigate('/login')
+          actions.setSubmitting(false)
+        })
+        .catch((error) => {
+          setError(true)
+
+          if (error.response.data?.email[0]) {
+            setErrMessage('Email sudah terdaftar')
+          }
+          if (error.response.data?.phone[0]) {
+            setErrMessage('Nomor telepon sudah terdaftar')
+          }
+          if (error.response.data?.email[0] && error.response.data?.phone[0]) {
+            setErrMessage('Email dan nomor telepon sudah terdaftar')
+          }
+        })
+
+      // try {
+      //   // const response = await Api.post('auth/register', registerData)
+
+      //   console.log(response)
+      //   navigate('/login')
+      //   actions.setSubmitting(false)
+      // } catch (error) {
+      //   console.log(error.message)
+      //   setError(true)
+      //   setErrMessage(error.message)
+      // }
       actions.setSubmitting(false)
     },
   })
@@ -101,6 +124,7 @@ const Register = () => {
               </Typography>
             </Box>
           </Link>
+
           <form
             className='rounded-2xl p-4 pb-12 shadow-lg'
             onSubmit={formik.handleSubmit}
@@ -112,6 +136,27 @@ const Register = () => {
               <Typography color='textSecondary' gutterBottom variant='body2'>
                 Silahkan isi informasi dibawah
               </Typography>
+              {error && (
+                <Collapse in={error}>
+                  <Alert
+                    action={
+                      <IconButton
+                        aria-label='close'
+                        color='inherit'
+                        size='small'
+                        onClick={() => {
+                          setError(false)
+                        }}
+                      >
+                        <CloseIcon fontSize='inherit' />
+                      </IconButton>
+                    }
+                    severity='error'
+                  >
+                    <Typography>{errMessage}</Typography>
+                  </Alert>
+                </Collapse>
+              )}
             </Box>
 
             <div className='space-y-3'>

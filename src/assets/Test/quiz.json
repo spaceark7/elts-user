@@ -101,6 +101,8 @@
       },
       {
         "part_no": 2,
+        "question": "/static/images/questions/listening_p2.png",
+        "audio": "/static/audio/listening/section_2.mp3",
         "answers": [
           {
             "id": 11,
@@ -193,6 +195,8 @@
       },
       {
         "part_no": 3,
+        "question": "/static/images/questions/listening_p3.png",
+        "audio": "/static/audio/listening/section_3.mp3",
         "answers": [
           {
             "id": 21,
@@ -285,6 +289,9 @@
       },
       {
         "part_no": 4,
+        "question": "/static/images/questions/listening_p4.png",
+        "audio": "/static/audio/listening/section_4.mp3",
+        "callback": "/exam/reading/1",
         "answers": [
           {
             "id": 31,
@@ -648,6 +655,7 @@
       },
       {
         "part_no": 3,
+        "callback": "/exam/writing/1",
         "answers": [
           {
             "id": 61,

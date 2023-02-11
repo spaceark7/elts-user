@@ -1,9 +1,9 @@
-import { Box, Pagination, PaginationItem, Stack } from '@mui/material'
+import { Box, Button, Pagination, PaginationItem, Stack } from '@mui/material'
 import React, { useEffect } from 'react'
 
 import Quiz from '../../assets/Test/quiz.json'
 import Timer from './Timer'
-import { Outlet, useNavigate, useParams } from 'react-router-dom'
+import { Outlet, useNavigate, useParams, Link } from 'react-router-dom'
 import DashboardNavBar from '../../components/DashboardNavBar'
 
 import useAnswers from '../../hooks/useAnswers'
@@ -21,9 +21,11 @@ const PaginationTestLayout = () => {
 
   const [isAnswered, setIsAnswered] = React.useState([])
 
-  //get total answers  from  quiz.json
+  console.log(data)
 
   const totalPages = data.parts.length
+  const navigateCallback = data.parts[totalPages - 1]?.callback
+  console.log('cb :', navigateCallback)
 
   // const totalPages = data
   //   .reduce((acc, item) => [...acc, ...item.parts.flatMap((num) => num)], [])
@@ -62,7 +64,7 @@ const PaginationTestLayout = () => {
           <Outlet />
         </Box>
 
-        <Box className='sticky bottom-0 z-20 mb-4 flex justify-center bg-white py-4'>
+        <Box className='sticky bottom-0 z-20 mx-auto mb-4 flex w-full items-center justify-center space-x-8 bg-white py-4'>
           <Pagination
             color='primary'
             hideNextButton
@@ -79,6 +81,17 @@ const PaginationTestLayout = () => {
             page={page}
             onChange={handleChange}
           />
+
+          {navigateCallback && page === totalPages && (
+            <Button
+              variant='contained'
+              color='secondary'
+              className='justify-self-end'
+              onClick={handleChange}
+            >
+              Proceed to Next Section
+            </Button>
+          )}
         </Box>
       </Stack>
     </Box>

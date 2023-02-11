@@ -8,21 +8,13 @@ export const SuspendedControl = [
   </Box>,
 ]
 
-export const PlayControl = [
-  RHAP_UI.MAIN_CONTROLS,
-  'CURRENT_TIME',
-  <> - </>,
-  'DURATION',
-  RHAP_UI.VOLUME_CONTROLS,
-]
+export const PlayControl = [RHAP_UI.MAIN_CONTROLS, RHAP_UI.VOLUME_CONTROLS]
 export const DisabledControl = [
   <Box className='flex items-center space-x-2'>
     <IconButton color='secondary' disabled>
       <PlayDisabled />
     </IconButton>
   </Box>,
-  'CURRENT_TIME',
-  <> - </>,
-  'DURATION',
+
   RHAP_UI.VOLUME_CONTROLS,
 ]

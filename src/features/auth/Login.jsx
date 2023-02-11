@@ -15,7 +15,7 @@ import {
 
 import { Link, useNavigate } from 'react-router-dom'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { Phone, Visibility, VisibilityOff } from '@mui/icons-material'
 import * as Yup from 'yup'
 import { useState } from 'react'
 import { useFormik } from 'formik'
@@ -29,7 +29,7 @@ const Login = () => {
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState(false)
   const [errMessage, setErrMessage] = useState('')
-  const { setAuth } = useAuth()
+  const { setAuth, auth } = useAuth()
   const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
@@ -47,39 +47,73 @@ const Login = () => {
         .required('Password wajib diisi'),
     }),
     onSubmit: async (values, actions) => {
+      setError(false)
+      setErrMessage('')
       const loginData = {
         email: values.email,
         password: values.password,
       }
 
-      try {
-        const response = await Api.post(
-          '/login',
-          JSON.stringify(loginData),
-          config
-        )
+      await Api.post('auth/login', loginData)
+        .then((res) => {
+          const accessToken = res.data.data?.access_token
 
-        const accessToken = response.data?.accessToken
-        const role = response.data?.user.role
-        setAuth({
-          user: response.data?.user,
-          role: role,
-          accessToken: accessToken,
+          setAuth({
+            accessToken,
+          })
+        })
+        .catch((err) => {
+          setError(true)
+          setErrMessage(err?.response?.data?.message)
         })
 
-        if (role === 'admin') {
+      await Api.get('auth/me', {
+        headers: {
+          Authorization: `Bearer ${auth.accessToken}`,
+        },
+      })
+        .then((res) => {
+          console.log(res.data)
+          setAuth({
+            user: {
+              name: res.data.name,
+              phone: res.data.phone,
+              email: res.data.email,
+              is_active: res.data.is_active,
+            },
+          })
           navigate('/dash', { replace: true })
-        } else if (role === 'member') {
-          navigate('/dash', { replace: true })
-        }
-        actions.setSubmitting(false)
-      } catch (error) {
-        console.log(error)
-        setErrMessage(
-          error.response?.data ? error.response.data : error.message
-        )
-        setError(true)
-      }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+
+      // try {
+      //   const response = await Api.post('auth/login', loginData)
+
+      //   if (response?.status == 404) {
+      //     throw new Error(response.message)
+      //   }
+
+      //   const accessToken = response.data?.accessToken
+
+      //   setAuth({
+      //     // user: user.data,
+      //     accessToken: accessToken,
+      //   })
+
+      //   // if (role === 'admin') {
+      //   //   navigate('/dash', { replace: true })
+      //   // } else if (role === 'member') {
+      //   //   navigate('/dash', { replace: true })
+      //   // }
+
+      //   // navigate('/dash', { replace: true })
+      //   actions.setSubmitting(false)
+      // } catch (error) {
+      //   setErrMessage(error?.message)
+      //   setError(true)
+      // }
     },
   })
 

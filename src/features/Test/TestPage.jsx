@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import RadioAnswer from './answers/RadioAnswer'
 import TextAnswer from './answers/TextAnswer'
 
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import Quiz from '../../assets/Test/quiz.json'
 import useAnswers from '../../hooks/useAnswers'
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.min.css'
@@ -21,8 +21,6 @@ const TestPage = () => {
   const [answer, setAnswer] = useState(answers[page - 1]?.answer || [])
   const data = filtered[0]
   const context = data.parts.find((item) => item.part_no.toString() === page)
-
-  console.log(context)
 
   const addAnswer = (data) => {
     // remove old answer
@@ -92,7 +90,7 @@ const TestPage = () => {
 
           {context.audio && <AudioPlayer audio={context?.audio} />}
 
-          <Box className='h-full w-full '>
+          <Box className=' w-full '>
             <Box className='relative h-3/4 w-full'>
               <InnerImageZoom
                 zoomScale={0.5}
@@ -137,10 +135,23 @@ const TestPage = () => {
                   )
               }
             })}
-            <Box className='sticky bottom-0 z-50 bg-white py-10'>
-              <Button variant='contained' fullWidth onClick={sendAnswer}>
-                Save Answers
-              </Button>
+            <Box className='sticky bottom-0 z-50 bg-white '>
+              <Box className='flex space-x-4'>
+                <Button variant='contained' fullWidth onClick={sendAnswer}>
+                  Save Answers
+                </Button>
+                {context.callback && data.parts.length.toString() === page && (
+                  <Button
+                    LinkComponent={Link}
+                    to={context.callback}
+                    variant='text'
+                    color='info'
+                    fullWidth
+                  >
+                    Proceed Next Section
+                  </Button>
+                )}
+              </Box>
             </Box>
           </Box>
         </Box>

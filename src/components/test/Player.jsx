@@ -4,8 +4,6 @@ import 'react-h5-audio-player/lib/styles.css'
 import AudioPlayer, { RHAP_UI } from 'react-h5-audio-player'
 import { SuspendedControl, PlayControl, DisabledControl } from './HelperControl'
 
-// const suspendControl = [SuspendedControl]
-
 const Player = ({ audio }) => {
   const [error, setError] = useState(false)
   const [playToken, setPlayToken] = useState(true)
@@ -21,10 +19,10 @@ const Player = ({ audio }) => {
           src={audio}
           showJumpControls={false}
           showSkipControls={false}
+          autoPlayAfterSrcChange={false}
           onPlay={() => setPlayToken(false)}
           onCanPlay={() => setReadyToPlay(true)}
           hasDefaultKeyBindings={false}
-          customProgressBarSection={[]}
           customAdditionalControls={[]}
           customControlsSection={
             playToken
@@ -41,7 +39,7 @@ const Player = ({ audio }) => {
   return (
     <Box className=' max-w-lg px-4'>
       {content}
-      <Alert className='mt-2' severity='warning'>
+      <Alert className='mt-2 text-xs font-semibold' severity='warning'>
         You can only play it once! So Please prepare yourself before proceed
       </Alert>
     </Box>
