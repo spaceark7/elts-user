@@ -6,27 +6,23 @@ const HomePage = () => {
     <div className='max-w-screen h-screen max-h-screen'>
       <div className='flex h-full flex-col px-4 md:flex-row'>
         <Box className='flex h-1/2 flex-col justify-center text-start md:ml-8 md:h-full md:w-2/6'>
-          <Box>
-            <Typography className='font-semibold text-yellow-600'>
-              Golden IELTS
-            </Typography>
-          </Box>
-          <Typography className='my-2 ' fontWeight={'medium'} variant='h4'>
-            The First online IELTS in Indonesia
+
+          <Typography className='my-2  font-semibold text-yellow-600' fontWeight={'medium'} variant='h4'>
+            IELTS Golden English
           </Typography>
           <Typography className='mb-6' paragraph variant='body2'>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat,
             minus ab! Repellendus cumque quibusdam nemo blanditiis delectus
             sunt, laudantium fugit enim a velit, quae nisi.
           </Typography>
-          <Link to={'/login'}>
+          <Link to={'/register'}>
             <Button
               className='w-fit'
               fullWidth={false}
               variant='contained'
               color='primary'
             >
-              Study Now
+              Daftar Sekarang
             </Button>
           </Link>
         </Box>
