@@ -62,7 +62,7 @@ const Register = () => {
     }),
     onSubmit: async (values, actions) => {
       const registerData = {
-        name: values.name,
+        name: values.name.toUpperCase(),
         email: values.email,
         phone: values.phone,
         password: values.password,
