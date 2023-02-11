@@ -29,7 +29,7 @@ function App() {
           <Route path='register' element={<Register />} />
 
           <Route element={<RequireAuth allowedRoles={'member'} />}>
-            <Route path='dash' element={<DashLayout />}>
+            <Route path='dashboard' element={<DashLayout />}>
               <Route index element={<AdminDashboard />} />
 
               <Route path='user-exam' element={<Outlet />}>

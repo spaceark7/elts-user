@@ -27,7 +27,7 @@ import useAuth from '../hooks/useAuth'
 
 const items = [
   {
-    to: '/dash',
+    to: '/dashboard',
     icon: <BarChartIcon fontSize='small' />,
     title: 'Dasbor',
   },
@@ -119,6 +119,11 @@ const DashboardSideBar = () => {
 
   const { auth, setAuth } = useAuth()
 
+  const clearAuth = () => {
+    setAuth(null)
+    localStorage.removeItem('token')
+    navigate('/login')
+  }
   const content = (
     <Box
       sx={{
@@ -239,13 +244,12 @@ const DashboardSideBar = () => {
               collapsed ? 'justify-center' : 'justify-between '
             } px-2 transition ease-in-out`}
           >
-            <Typography
-              className={`${
-                collapsed ? 'hidden' : 'block'
-              } font-bold text-white transition ease-in-out`}
-            >
-              IELTS
-            </Typography>
+            <Box className={`${collapsed ? 'hidden' : 'block'}  `}>
+              <img
+                className='mx-auto h-6  w-fit object-contain '
+                src='/static/images/golden.png'
+              />
+            </Box>
             <IconButton
               className='hidden md:block'
               onClick={() => collapseSidebar()}
@@ -305,14 +309,7 @@ const DashboardSideBar = () => {
                 subMenuDetail={item?.submenu}
               />
             ))}
-            <Box
-              onClick={() =>
-                setAuth({
-                  user: null,
-                  accessToken: null,
-                })
-              }
-            >
+            <Box onClick={clearAuth}>
               <Item title={'Keluar'} icon={<LogoutIcon fontSize='small' />} />
             </Box>
           </Menu>

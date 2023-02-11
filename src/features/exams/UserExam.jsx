@@ -18,8 +18,19 @@ import DialogContainer from '../../components/DialogContainer'
 import ExamInstruction from './Components/ExamInstruction'
 import useAuth from '../../hooks/useAuth'
 
+import { AVAILABLE_TEST, REVIEW_TEST, FINISH_TEST } from '../../constant'
+
 const ExamInfo = ({ data }) => {
   const [open, setOpen] = React.useState(false)
+
+  const status =
+    data.status === AVAILABLE_TEST ? (
+      <Chip label='Tersedia' color='primary' />
+    ) : data.status === REVIEW_TEST ? (
+      <Chip label='Sedang Koreksi' color='warning' />
+    ) : data.status === FINISH_TEST ? (
+      'Selesai'
+    ) : null
 
   const handleCloseDIalog = () => {
     setOpen(false)
@@ -41,7 +52,7 @@ const ExamInfo = ({ data }) => {
           </Button>
           <Button
             component={RouterLink}
-            to={`/dash`}
+            to='/exam/listening/1'
             variant='contained'
             color='primary'
           >
@@ -55,7 +66,7 @@ const ExamInfo = ({ data }) => {
             <Typography color='MenuText' variant='h6'>
               Informasi Tes
             </Typography>
-            {data.test_status ? <Chip label='Lulus' color='success' /> : null}
+            {status}
           </Box>
 
           <Divider variant='fullWidth' />
@@ -74,7 +85,14 @@ const ExamInfo = ({ data }) => {
                 color='CaptionText'
                 variant='body1'
               >
-                {data.test_name}
+                {data.exam.name}
+              </Typography>
+              <Typography
+                fontWeight='medium'
+                color='GrayText'
+                variant='caption'
+              >
+                {data.exam.description}
               </Typography>
             </Box>
             <Box>
@@ -128,7 +146,7 @@ const ExamInfo = ({ data }) => {
           </Box>
         </CardContent>
 
-        {data.test_status ? (
+        {data.status === FINISH_TEST ? (
           <CardActions>
             <Button variant='text' color='primary' startIcon={<Print />}>
               Cetak Sertifikat
@@ -146,8 +164,9 @@ const ExamInfo = ({ data }) => {
         ) : (
           <CardActions>
             <Button
-              component={RouterLink}
-              to='/exam/listening/1'
+              // component={RouterLink}
+              // to='/exam/listening/1'
+              onClick={() => setOpen(true)}
               variant='outlined'
               color='primary'
               startIcon={<Quiz />}
@@ -162,14 +181,20 @@ const ExamInfo = ({ data }) => {
 }
 
 const UserExam = () => {
-  const [data, setData] = React.useState({})
+  const [data, setData] = React.useState()
   const { auth } = useAuth()
 
   useEffect(() => {
     const FetchData = async () => {
-      const response = await Api.get(`/member-test?user_id=${auth.user.id}`)
+      const { data } = await Api.get(`/exam-list`, {
+        headers: {
+          Authorization: `Bearer ${auth.access_token}`,
+        },
+      })
 
-      setData(response.data[0])
+      const exam_list = data?.['exam-list']
+      console.log(exam_list)
+      setData(exam_list)
     }
     FetchData()
   }, [])
@@ -180,13 +205,13 @@ const UserExam = () => {
         <Typography color='MenuText' variant='h4'>
           Test IELTS
         </Typography>
-        <Typography color='CaptionText' variant='caption'>
-          Menampilkan informasi tes IELTS yang telah diikuti
+        <Typography color='CaptionText' variant='body2'>
+          Menampilkan status informasi semua tes
         </Typography>
       </Box>
 
       <Box className='flex flex-col space-y-6'>
-        {data?.test_data?.map((item) => (
+        {data?.map((item) => (
           <ExamInfo key={item.id} data={item} />
         ))}
       </Box>

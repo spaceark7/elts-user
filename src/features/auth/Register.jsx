@@ -44,7 +44,7 @@ const Register = () => {
         .min(3, 'Nama tidak valid')
         .required('Nama wajib diisi'),
       phone: Yup.string()
-        .max(13, 'Nomor handphone tidak valid')
+        .max(15, 'Nomor handphone tidak valid')
         .min(12, 'Nomor handphone tidak valid')
         .required('Nomor telepon wajib diisi'),
       email: Yup.string()

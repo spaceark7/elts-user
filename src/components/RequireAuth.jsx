@@ -5,17 +5,19 @@ const RequireAuth = ({ allowedRoles }) => {
   const { auth } = useAuth()
   const location = useLocation()
 
+  // get token from local storage
+  const token = localStorage.getItem('token')
+  const localToken = JSON.parse(token)
+
   // return auth?.role && auth?.accessToken ? (
   //   <Outlet />
   // ) : (
   //   <Navigate to={{ pathname: '/login', state: { from: location } }} />
   // )
-  return auth?.user || auth?.accessToken ? (
+  return auth.access_token || localToken ? (
     <Outlet />
   ) : (
-    <Navigate
-      to={{ pathname: '/login', state: { from: location, replace: true } }}
-    />
+    <Navigate to={{ pathname: '/login' }} />
   )
 }
 

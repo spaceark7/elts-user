@@ -44,7 +44,7 @@ const NotFound = () => {
 
           <Button
             component={RouterLink}
-            to='/dash'
+            to='/dashboard'
             startIcon={<ArrowBack fontSize='small' />}
             sx={{ mt: 3 }}
             variant='contained'

@@ -15,14 +15,14 @@ import {
 
 import { Link, useNavigate } from 'react-router-dom'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import { Phone, Visibility, VisibilityOff } from '@mui/icons-material'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
 import * as Yup from 'yup'
 import { useState } from 'react'
 import { useFormik } from 'formik'
 import Api from '../../api/Api'
 import CloseIcon from '@mui/icons-material/Close'
 import useAuth from '../../hooks/useAuth'
-import { config } from '../../api/utils'
+import { useEffect } from 'react'
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -54,39 +54,96 @@ const Login = () => {
         password: values.password,
       }
 
-      await Api.post('auth/login', loginData)
-        .then((res) => {
-          const accessToken = res.data.data?.access_token
-
+      try {
+        const { data } = await Api.post('auth/login', loginData)
+        if (data) {
+          const access_token = data.data?.access_token
           setAuth({
-            accessToken,
+            access_token,
           })
-        })
-        .catch((err) => {
+          localStorage.setItem('token', JSON.stringify(access_token))
+        } else {
           setError(true)
-          setErrMessage(err?.response?.data?.message)
-        })
+          setErrMessage('Terjadi kesalahan')
+        }
 
-      await Api.get('auth/me', {
-        headers: {
-          Authorization: `Bearer ${auth.accessToken}`,
-        },
-      })
-        .then((res) => {
-          console.log(res.data)
-          setAuth({
-            user: {
-              name: res.data.name,
-              phone: res.data.phone,
-              email: res.data.email,
-              is_active: res.data.is_active,
-            },
-          })
-          navigate('/dash', { replace: true })
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+        // try {
+        //   const { data: user } = await Api.get('auth/me', {
+        //     headers: {
+        //       Authorization: `Bearer ${auth.accessToken}`,
+        //     },
+        //   })
+        //   console.log(user)
+        //   if (user) {
+        //     setAuth({
+        //       ...auth,
+        //       user: {
+        //         name: user.name,
+        //         phone: user.phone,
+        //         email: user.email,
+        //         is_active: user.is_active,
+        //       },
+        //     })
+        //   }
+        // } catch (error) {
+        //   setError(true)
+        //   setErrMessage(error?.response?.data?.message)
+        // }
+
+        // if (user) {
+        //   setAuth({
+        //     ...auth,
+        //     user: {
+        //       name: user.name,
+        //       phone: user.phone,
+        //       email: user.email,
+        //       is_active: user.is_active,
+        //     },
+        //   })
+        // }
+
+        navigate('/dashboard', { replace: true })
+        actions.setSubmitting(false)
+      } catch (error) {
+        setError(true)
+        setErrMessage(error?.response?.data?.message)
+      }
+
+      // await Api.post('auth/login', loginData)
+      //   .then((res) => {
+      //     const accessToken = res.data.data?.access_token
+
+      //     setAuth({
+      //       accessToken,
+      //     })
+      //     navigate('/dashboard', { replace: true })
+      //   })
+      //   .catch((err) => {
+      //     setError(true)
+      //     setErrMessage(err?.response?.data?.message)
+      //   })
+
+      // await Api.get('auth/me', {
+      //   headers: {
+      //     Authorization: `Bearer ${auth.accessToken}`,
+      //   },
+      // })
+      //   .then((res) => {
+      //     console.log(res.data)
+      //     setAuth({
+      //       ...auth,
+      //       user: {
+      //         name: res.data.name,
+      //         phone: res.data.phone,
+      //         email: res.data.email,
+      //         is_active: res.data.is_active,
+      //       },
+      //     })
+      //     navigate('/dashboard', { replace: true })
+      //   })
+      //   .catch((err) => {
+      //     console.log(err)
+      //   })
 
       // try {
       //   const response = await Api.post('auth/login', loginData)
@@ -116,6 +173,14 @@ const Login = () => {
       // }
     },
   })
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    const localToken = JSON.parse(token)
+    if (localToken !== null || auth?.accessToken) {
+      navigate('/dashboard', { replace: true })
+    }
+  }, [])
 
   return (
     <>

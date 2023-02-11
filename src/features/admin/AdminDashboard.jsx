@@ -1,15 +1,38 @@
 import { Box, Container, Grid, Typography } from '@mui/material'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { Article, AssignmentInd, FindInPage } from '@mui/icons-material'
 import TotalCard from '../../components/Dashboard/TestCard'
 import useAuth from '../../hooks/useAuth'
 import UserCard from '../../components/Dashboard/userCard'
 import InstructionCard from '../../components/Dashboard/InstructionCard'
+import Api from '../../api/Api'
 
 const AdminDashboard = () => {
-  const { auth } = useAuth()
+  const { auth, setAuth } = useAuth()
+  const [user, setUser] = React.useState({})
+  useEffect(() => {
+    // fetch user information
+    const fetchUser = async () => {
+      const { data } = await Api.get('/auth/me', {
+        headers: {
+          Authorization: `Bearer ${auth?.access_token}`,
+        },
+      })
+      setAuth({ ...auth, user: data })
+      localStorage.setItem('user', JSON.stringify(data))
+      setUser(data)
+      console.log(data)
+    }
+
+    const user = localStorage.getItem('user')
+    if (user) {
+      setUser(JSON.parse(user))
+    } else {
+      fetchUser()
+    }
+  }, [])
   return (
     <>
       <Box
@@ -58,7 +81,7 @@ const AdminDashboard = () => {
             </Grid>
           </Grid>
           <div className='justify-round mt-4 flex space-x-6'>
-            <UserCard user={auth.user} />
+            <UserCard user={user} />
             <InstructionCard />
             {/* <Card>
               <CardContent>
