@@ -7,6 +7,13 @@ import { useNavigate } from 'react-router-dom'
 const AccountPopover = (props) => {
   const { anchorEl, onClose, open, ...other } = props
   const { auth, setAuth } = useAuth()
+  const navigate = useNavigate()
+  const clearAuth = () => {
+    setAuth(null)
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    navigate('/login')
+  }
   return (
     <Popover
       anchorEl={anchorEl}
@@ -45,16 +52,7 @@ const AccountPopover = (props) => {
           },
         }}
       >
-        <MenuItem
-          onClick={() =>
-            setAuth({
-              user: null,
-              accessToken: null,
-            })
-          }
-        >
-          Keluar
-        </MenuItem>
+        <MenuItem onClick={clearAuth}>Keluar</MenuItem>
       </MenuList>
     </Popover>
   )

@@ -335,20 +335,20 @@ const Login = () => {
                 Masuk
               </Button>
             </Box>
+            <Typography color='textSecondary' variant='body2'>
+              Tidak punya akun?{' '}
+              <Link
+                to='/register'
+                variant='subtitle2'
+                underline='hover'
+                sx={{
+                  cursor: 'pointer',
+                }}
+              >
+                Daftar disini
+              </Link>
+            </Typography>
           </form>
-          <Typography color='textSecondary' variant='body2'>
-            Tidak punya akun?{' '}
-            <Link
-              to='/register'
-              variant='subtitle2'
-              underline='hover'
-              sx={{
-                cursor: 'pointer',
-              }}
-            >
-              Daftar disini
-            </Link>
-          </Typography>
         </Container>
       </Box>
     </>

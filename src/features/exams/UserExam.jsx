@@ -10,14 +10,14 @@ import {
   Typography,
 } from '@mui/material'
 import { Preview, Print, Quiz } from '@mui/icons-material'
-import Api from '../../api/Api'
+import Api, { useExamList } from '../../api/Api'
 import React, { useEffect } from 'react'
 
 import { Link as RouterLink } from 'react-router-dom'
 import DialogContainer from '../../components/DialogContainer'
 import ExamInstruction from './Components/ExamInstruction'
 import useAuth from '../../hooks/useAuth'
-
+import useSWR from 'swr'
 import { AVAILABLE_TEST, REVIEW_TEST, FINISH_TEST } from '../../constant'
 
 const ExamInfo = ({ data }) => {
@@ -183,21 +183,36 @@ const ExamInfo = ({ data }) => {
 const UserExam = () => {
   const [data, setData] = React.useState()
   const { auth } = useAuth()
+  const { exam, error, isValidating, isLoading } = useExamList(
+    auth.access_token
+  )
 
-  useEffect(() => {
-    const FetchData = async () => {
-      const { data } = await Api.get(`/exam-list`, {
-        headers: {
-          Authorization: `Bearer ${auth.access_token}`,
-        },
-      })
+  // useEffect(() => {
+  //   const FetchData = async () => {
+  //     const { data } = await Api.get(`/exam-list`, {
+  //       headers: {
+  //         Authorization: `Bearer ${auth.access_token}`,
+  //       },
+  //     })
 
-      const exam_list = data?.['exam-list']
-      console.log(exam_list)
-      setData(exam_list)
-    }
-    FetchData()
-  }, [])
+  //     const exam_list = data?.['exam-list']
+
+  //     setData(exam_list)
+  //   }
+  //   FetchData()
+  // }, [])
+
+  let content
+  if (isLoading) {
+    content = <Typography>Loading...</Typography>
+  } else if (error) {
+    content = <Typography>Something went wrong</Typography>
+  } else if (exam) {
+    content = exam.map((item) => <ExamInfo key={item.id} data={item} />)
+  } else {
+    content = <Typography>Nothing Happen</Typography>
+    console.log(isLoading, error, examData, isValidating)
+  }
 
   return (
     <Box className='px-2 py-4'>
@@ -211,9 +226,11 @@ const UserExam = () => {
       </Box>
 
       <Box className='flex flex-col space-y-6'>
-        {data?.map((item) => (
+        {/* {data?.map((item) => (
           <ExamInfo key={item.id} data={item} />
-        ))}
+        ))} */}
+
+        {content}
       </Box>
     </Box>
   )

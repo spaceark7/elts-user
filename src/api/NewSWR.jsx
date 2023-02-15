@@ -2,9 +2,6 @@ import axios from 'axios'
 import useSWR from 'swr'
 
 export const examListEndpoint = '/exam-list'
-export default axios.create({
-  baseURL: 'https://admin.ielts-goldenenglish.com/public/api/',
-})
 
 export const ExamApi = axios.create({
   baseURL: 'https://admin.ielts-goldenenglish.com/public/api',
@@ -24,13 +21,19 @@ export const getExamList = async (access_token) => {
 export const useExamList = (access_token) => {
   const { data, error, isValidating, isLoading } = useSWR(
     examListEndpoint,
-    () => getExamList(access_token)
+    () => getExamList(access_token),
+    {
+      onSuccess: (data) => {
+        console.log('success', data)
+      },
+      onError: (error) => {
+        console.log('error', error)
+      },
+    }
   )
 
-  const exam_list = data?.['exam-list']
-
   return {
-    exam: data?.['exam-list'],
+    exam: data,
     error,
     isValidating,
     isLoading,

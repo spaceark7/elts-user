@@ -23,7 +23,6 @@ const AdminDashboard = () => {
       setAuth({ ...auth, user: data })
       localStorage.setItem('user', JSON.stringify(data))
       setUser(data)
-      console.log(data)
     }
 
     const user = localStorage.getItem('user')

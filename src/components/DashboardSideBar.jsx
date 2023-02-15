@@ -122,6 +122,7 @@ const DashboardSideBar = () => {
   const clearAuth = () => {
     setAuth(null)
     localStorage.removeItem('token')
+    localStorage.removeItem('user')
     navigate('/login')
   }
   const content = (

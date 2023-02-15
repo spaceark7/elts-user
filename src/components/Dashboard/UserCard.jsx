@@ -9,7 +9,6 @@ import {
 } from '@mui/material'
 
 const UserCard = ({ user }) => {
-  console.log(user)
   return (
     <Card className='w-full md:w-1/2'>
       <CardHeader className='pb-2' title='Informasi' />
