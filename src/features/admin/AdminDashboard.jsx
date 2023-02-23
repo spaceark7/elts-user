@@ -5,7 +5,7 @@ import React, { useEffect } from 'react'
 import { Article, AssignmentInd, FindInPage } from '@mui/icons-material'
 import TotalCard from '../../components/Dashboard/TestCard'
 import useAuth from '../../hooks/useAuth'
-import UserCard from '../../components/Dashboard/userCard'
+import UserCard from '../../components/Dashboard/UserCard'
 import InstructionCard from '../../components/Dashboard/InstructionCard'
 import Api from '../../api/Api'
 

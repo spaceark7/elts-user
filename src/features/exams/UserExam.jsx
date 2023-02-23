@@ -17,8 +17,8 @@ import { Link as RouterLink } from 'react-router-dom'
 import DialogContainer from '../../components/DialogContainer'
 import ExamInstruction from './Components/ExamInstruction'
 import useAuth from '../../hooks/useAuth'
-import useSWR from 'swr'
 import { AVAILABLE_TEST, REVIEW_TEST, FINISH_TEST } from '../../constant'
+import SkeletonCard from '../../components/Skeleton/SkeletonCard'
 
 const ExamInfo = ({ data }) => {
   const [open, setOpen] = React.useState(false)
@@ -204,7 +204,7 @@ const UserExam = () => {
 
   let content
   if (isLoading) {
-    content = <Typography>Loading...</Typography>
+    content = <SkeletonCard />
   } else if (error) {
     content = <Typography>Something went wrong</Typography>
   } else if (exam) {

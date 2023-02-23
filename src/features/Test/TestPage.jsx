@@ -81,7 +81,7 @@ const TestPage = () => {
     <Box>
       <Container
         maxWidth='xl'
-        className='relative  flex  flex-col divide-x-2 divide-slate-600 md:flex-row'
+        className='relative  flex flex-col  space-x-2 divide-x-2 divide-slate-600 md:flex-row'
       >
         <Box className='flex-1 '>
           <Typography className='py-2 text-2xl font-bold' align='center'>
