@@ -28,6 +28,7 @@ export const useExamList = (access_token) => {
   )
 
   const exam_list = data?.['exam-list']
+  console.log(exam_list)
 
   return {
     exam: data?.['exam-list'],
