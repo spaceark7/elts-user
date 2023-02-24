@@ -1,8 +1,16 @@
-import { Box, Card, CardContent, TextField, Typography } from '@mui/material'
+import { Box, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
+import { useParams } from 'react-router-dom'
+import useAnswers from '../../../hooks/useAnswers'
 
-const TextAnswer = ({ data, handleAnswer, answer, type }) => {
-  const [value, setValue] = useState(answer[data.id - 1]?.answer || '')
+const TextAnswer = ({ data, addAnswer, answer, type }) => {
+  const { answers } = useAnswers()
+  const { page } = useParams()
+  const contextAnswer = answers
+    .filter((item) => item.page === page)[0]
+    ?.answers.find((item) => item.id === data.id)
+  // console.log(contextAnswer)
+  const [value, setValue] = useState(contextAnswer?.answer ?? '')
 
   const handleChange = (event) => {
     setValue(event.target.value)
@@ -16,7 +24,7 @@ const TextAnswer = ({ data, handleAnswer, answer, type }) => {
         <TextField
           fullWidth
           value={value}
-          onBlur={() => handleAnswer({ id: data.id, answer: value })}
+          onBlur={() => addAnswer({ id: data.id, answer: value })}
           onChange={handleChange}
           id='outlined-textarea'
           label='Answer'

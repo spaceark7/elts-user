@@ -10,8 +10,9 @@ import {
 } from '@mui/material'
 import React, { useState } from 'react'
 
-const RadioAnswer = ({ data, handleAnswer, answer }) => {
-  const [value, setValue] = useState(answer[data.id - 1]?.answer || '')
+const RadioAnswer = ({ data, addAnswer, answer }) => {
+  const contextAnswer = answer.find((item) => item.id === data.id)
+  const [value, setValue] = useState(contextAnswer?.answer ?? '')
 
   // Return radio buttons for answer
   const handleChange = (event) => {
@@ -25,7 +26,7 @@ const RadioAnswer = ({ data, handleAnswer, answer }) => {
         <FormControl>
           <RadioGroup
             value={value}
-            onBlur={() => handleAnswer({ id: data.id, answer: value })}
+            onBlur={() => addAnswer({ id: data.id, answer: value })}
             onChange={handleChange}
             row
             aria-labelledby='demo-radio-buttons-group-label'

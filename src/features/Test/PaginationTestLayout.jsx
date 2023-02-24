@@ -7,6 +7,8 @@ import { Outlet, useNavigate, useParams, Link } from 'react-router-dom'
 import DashboardNavBar from '../../components/DashboardNavBar'
 
 import useAnswers from '../../hooks/useAnswers'
+import { useRef } from 'react'
+import DotIndicator from './DotIndicator'
 
 const PaginationTestLayout = () => {
   const { page: currentPage, section } = useParams()
@@ -15,17 +17,15 @@ const PaginationTestLayout = () => {
       return item
     }
   })
+  const topPageRef = useRef()
   const [page, setPage] = React.useState(1)
   const [data, setData] = React.useState(currSection[0])
   const { answers } = useAnswers()
 
   const [isAnswered, setIsAnswered] = React.useState([])
 
-  console.log(data)
-
   const totalPages = data.parts.length
   const navigateCallback = data.parts[totalPages - 1]?.callback
-  console.log('cb :', navigateCallback)
 
   // const totalPages = data
   //   .reduce((acc, item) => [...acc, ...item.parts.flatMap((num) => num)], [])
@@ -36,6 +36,13 @@ const PaginationTestLayout = () => {
   const handleChange = (event, value) => {
     setPage(value)
     navigate(`${value}`)
+    topPageRef.current.scrollIntoView({
+      behavior: 'smooth',
+    })
+  }
+
+  const gotoNextSection = () => {
+    navigate(navigateCallback)
   }
 
   useEffect(() => {
@@ -51,7 +58,7 @@ const PaginationTestLayout = () => {
   time.setMinutes(time.getMinutes() + 120)
 
   return (
-    <Box className='relative max-w-full'>
+    <Box ref={topPageRef} className='relative max-w-full'>
       <Stack className=' mx-auto min-h-screen justify-center ' spacing={2}>
         <DashboardNavBar
           desktop={true}
@@ -64,17 +71,21 @@ const PaginationTestLayout = () => {
           <Outlet />
         </Box>
 
-        <Box className='sticky bottom-0 z-20 mx-auto mb-4 flex w-full items-center justify-center space-x-8 bg-white py-4'>
+        <Box className='z-20 mx-auto flex w-full items-center justify-center space-x-8 bg-gray-100 bg-white py-4'>
           <Pagination
             color='primary'
             hideNextButton
             hidePrevButton
             renderItem={(item) => (
-              <PaginationItem
-                // component={Link}
-                // to={`/test/${page}  `}
-                {...item}
-              />
+              <>
+                <DotIndicator />
+
+                <PaginationItem
+                  // component={Link}
+                  // to={`/test/${page}  `}
+                  {...item}
+                />
+              </>
             )}
             boundaryCount={totalPages}
             count={totalPages}
@@ -82,16 +93,16 @@ const PaginationTestLayout = () => {
             onChange={handleChange}
           />
 
-          {navigateCallback && page === totalPages && (
+          {/* {navigateCallback && page === totalPages && (
             <Button
               variant='contained'
               color='secondary'
               className='justify-self-end'
-              onClick={handleChange}
+              onClick={gotoNextSection}
             >
               Proceed to Next Section
             </Button>
-          )}
+          )} */}
         </Box>
       </Stack>
     </Box>

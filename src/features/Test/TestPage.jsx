@@ -23,12 +23,42 @@ const TestPage = () => {
   const context = data.parts.find((item) => item.part_no.toString() === page)
 
   const addAnswer = (data) => {
-    // remove old answer
-    const newAnswer = answer.filter((item) => item.id !== data.id)
-    newAnswer.push(data)
-    newAnswer.sort((a, b) => a.id - b.id)
+    const currPage = answers.find((item) => item.page === page)
 
-    setAnswer(newAnswer)
+    if (!currPage) {
+      setAnswers((prev) => [
+        ...prev,
+        {
+          page,
+          answers: [data],
+        },
+      ])
+    } else {
+      const newAnswer = currPage.answers.filter((item) => item.id !== data.id)
+      newAnswer.push(data)
+      newAnswer.sort((a, b) => a.id - b.id)
+
+      setAnswers((prev) => [
+        ...prev.filter((item) => item.page !== page),
+        {
+          page,
+          answers: newAnswer,
+        },
+      ])
+      answers.sort((a, b) => a.page - b.page)
+    }
+
+    // remove old answer
+    // const newAnswer =
+    //   answers
+    //     .filter((item) => item.page === page)[0]
+    //     ?.answers.filter((item) => item.id !== data.id) || []
+    // console.log('bef a ', newAnswer)
+    // newAnswer.push(data)
+    // console.log('aft a ', newAnswer)
+    // newAnswer.sort((a, b) => a.id - b.id)
+
+    // setAnswer(newAnswer)
 
     // setAnswer((prev) => [
     //   ...prev,
@@ -52,10 +82,13 @@ const TestPage = () => {
     // })
     const newAnswerPage = answers.filter((item) => item.page !== page)
     console.log('before: ', newAnswerPage)
+    console.log(page)
     newAnswerPage.push({
       page,
       answers: answer,
     })
+    setAnswer([])
+    setAnswers(newAnswerPage.sort((a, b) => a.page - b.page))
 
     console.log('after: ', newAnswerPage)
 
@@ -117,7 +150,7 @@ const TestPage = () => {
                   return (
                     <TextAnswer
                       key={item.id}
-                      handleAnswer={addAnswer}
+                      addAnswer={addAnswer}
                       data={item}
                       answer={answer}
                       type={item.field}
@@ -128,15 +161,15 @@ const TestPage = () => {
                   return (
                     <RadioAnswer
                       key={item.id}
-                      handleAnswer={addAnswer}
+                      addAnswer={addAnswer}
                       data={item}
                       answer={answer}
                     />
                   )
               }
             })}
-            <Box className='sticky bottom-0 z-50 bg-white '>
-              <Box className='flex space-x-4'>
+            <Box className=' z-50 bg-white '>
+              <Box className='flex flex-col space-y-4'>
                 <Button variant='contained' fullWidth onClick={sendAnswer}>
                   Save Answers
                 </Button>
