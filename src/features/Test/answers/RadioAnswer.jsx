@@ -9,9 +9,15 @@ import {
   Typography,
 } from '@mui/material'
 import React, { useState } from 'react'
+import { useParams } from 'react-router-dom'
+import useAnswers from '../../../hooks/useAnswers'
 
-const RadioAnswer = ({ data, addAnswer, answer }) => {
-  const contextAnswer = answer.find((item) => item.id === data.id)
+const RadioAnswer = ({ data, addAnswer }) => {
+  const { answers } = useAnswers()
+  const { page } = useParams()
+  const contextAnswer = answers
+    .filter((item) => item.page === page)[0]
+    ?.answers.find((item) => item.id === data.id)
   const [value, setValue] = useState(contextAnswer?.answer ?? '')
 
   // Return radio buttons for answer

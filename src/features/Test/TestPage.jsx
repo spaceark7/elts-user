@@ -1,5 +1,5 @@
 import { Box, Button, Container, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import RadioAnswer from './answers/RadioAnswer'
 import TextAnswer from './answers/TextAnswer'
 
@@ -11,33 +11,52 @@ import InnerImageZoom from 'react-inner-image-zoom'
 import AudioPlayer from '../../components/test/Player'
 
 const TestPage = () => {
-  const { answers, setAnswers } = useAnswers()
+  const { answers, setAnswers, setFilled } = useAnswers()
   const { page, section } = useParams()
   const filtered = Quiz.filter((item) => {
     if (item.section_name.toLowerCase() === section.toLowerCase()) {
       return item.parts[page - 1]
     }
   })
-  const [answer, setAnswer] = useState(answers[page - 1]?.answer || [])
+
+  const answerPage = answers.find((item) => item.page === page) || {
+    answers: [],
+  }
+
   const data = filtered[0]
   const context = data.parts.find((item) => item.part_no.toString() === page)
 
   const addAnswer = (data) => {
     const currPage = answers.find((item) => item.page === page)
 
-    if (!currPage) {
-      setAnswers((prev) => [
-        ...prev,
-        {
-          page,
-          answers: [data],
-        },
-      ])
+    if (data.answer !== '') {
+      if (!currPage) {
+        setAnswers((prev) => [
+          ...prev,
+          {
+            page,
+            answers: [data],
+          },
+        ])
+      } else {
+        const newAnswer = currPage.answers.filter((item) => item.id !== data.id)
+        newAnswer.push(data)
+        newAnswer.sort((a, b) => a.id - b.id)
+        setAnswers((prev) => [
+          ...prev.filter((item) => item.page !== page),
+          {
+            page,
+            answers: newAnswer,
+          },
+        ])
+
+        answers.sort((a, b) => a.page - b.page)
+
+        // remove empty value on answers array
+      }
     } else {
       const newAnswer = currPage.answers.filter((item) => item.id !== data.id)
-      newAnswer.push(data)
-      newAnswer.sort((a, b) => a.id - b.id)
-
+      console.log('null :', newAnswer)
       setAnswers((prev) => [
         ...prev.filter((item) => item.page !== page),
         {
@@ -45,7 +64,6 @@ const TestPage = () => {
           answers: newAnswer,
         },
       ])
-      answers.sort((a, b) => a.page - b.page)
     }
 
     // remove old answer
@@ -90,8 +108,6 @@ const TestPage = () => {
     setAnswer([])
     setAnswers(newAnswerPage.sort((a, b) => a.page - b.page))
 
-    console.log('after: ', newAnswerPage)
-
     const title = data.section_name
 
     // try {
@@ -109,6 +125,17 @@ const TestPage = () => {
     //   console.log(error)
     // }
   }
+
+  useEffect(() => {
+    // check if answer is equal to the question
+
+    if (answerPage?.answers.length === context.answers.length) {
+      setFilled((prev) => [...prev.filter((item) => item[0] !== page), page])
+    } else {
+      console.log('not equal')
+      setFilled((prev) => [...prev.filter((item) => item[0] !== page)])
+    }
+  }, [answerPage.answers.length, context.answers.length])
 
   return (
     <Box>
@@ -152,7 +179,6 @@ const TestPage = () => {
                       key={item.id}
                       addAnswer={addAnswer}
                       data={item}
-                      answer={answer}
                       type={item.field}
                     />
                   )
@@ -163,7 +189,6 @@ const TestPage = () => {
                       key={item.id}
                       addAnswer={addAnswer}
                       data={item}
-                      answer={answer}
                     />
                   )
               }

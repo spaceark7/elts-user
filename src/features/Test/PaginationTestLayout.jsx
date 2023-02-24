@@ -17,12 +17,27 @@ const PaginationTestLayout = () => {
       return item
     }
   })
+
   const topPageRef = useRef()
+  const pageRef = useRef()
   const [page, setPage] = React.useState(1)
   const [data, setData] = React.useState(currSection[0])
-  const { answers } = useAnswers()
+  const { answers, filled } = useAnswers()
 
-  const [isAnswered, setIsAnswered] = React.useState([])
+  const filtered = Quiz.filter((item) => {
+    if (item.section_name.toLowerCase() === section.toLowerCase()) {
+      return item.parts[page - 1]
+    }
+  })
+
+  const answerPage = answers.find((item) => item.page === page) || {
+    answers: [],
+  }
+
+  const question = filtered[0]
+  const context = question.parts.find(
+    (item) => item.part_no.toString() === currentPage
+  )
 
   const totalPages = data.parts.length
   const navigateCallback = data.parts[totalPages - 1]?.callback
@@ -46,11 +61,12 @@ const PaginationTestLayout = () => {
   }
 
   useEffect(() => {
-    const is_answered = answers.find((item) => item.page === currentPage)
-    if (is_answered) {
-      setIsAnswered((prev) => [...prev, is_answered])
+    console.log('answer: ', answerPage?.answers.length)
+    console.log('question ', context.answers.length)
+    if (answerPage?.answers.length === context.answers.length) {
+      console.log('equal')
     }
-  }, [answers])
+  }, [answerPage.answers.length, context.answers.length])
 
   // function to change background color when page answered
 
@@ -76,10 +92,15 @@ const PaginationTestLayout = () => {
             color='primary'
             hideNextButton
             hidePrevButton
+            ref={pageRef}
             renderItem={(item) => (
               <>
-                <DotIndicator />
+                {/* {filled.includes(currentPage.toString()) &&
+                  item.page.toString() === currentPage && (
+                    <DotIndicator filled={true} />
+                  )} */}
 
+                <DotIndicator itemPage={item.page} />
                 <PaginationItem
                   // component={Link}
                   // to={`/test/${page}  `}

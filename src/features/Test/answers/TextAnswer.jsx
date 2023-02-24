@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import useAnswers from '../../../hooks/useAnswers'
 
-const TextAnswer = ({ data, addAnswer, answer, type }) => {
+const TextAnswer = ({ data, addAnswer, type }) => {
   const { answers } = useAnswers()
   const { page } = useParams()
   const contextAnswer = answers
