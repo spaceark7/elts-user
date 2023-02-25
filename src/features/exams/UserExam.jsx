@@ -29,7 +29,7 @@ const ExamInfo = ({ data }) => {
     ) : data.status === REVIEW_TEST ? (
       <Chip label="Sedang Koreksi" color="warning" />
     ) : data.status === FINISH_TEST ? (
-      "Selesai"
+        <Chip label="Selesai" color="success" />
     ) : null;
 
   const handleCloseDIalog = () => {
@@ -63,7 +63,8 @@ const ExamInfo = ({ data }) => {
         </Box>
 
         <DialogActions>
-          <Button onClick={handleCloseDIalog} variant="text">
+          <Button onClick={handleCloseDIalog}  variant="contained"
+            color="error" >
             Batal
           </Button>
           <Button
@@ -161,6 +162,7 @@ const ExamInfo = ({ data }) => {
             </Box>
           </Box>
         </CardContent>
+        
 
         {data.status === FINISH_TEST ? (
           <CardActions>
