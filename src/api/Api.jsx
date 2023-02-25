@@ -3,11 +3,11 @@ import useSWR from 'swr'
 
 export const examListEndpoint = '/exam-list'
 export default axios.create({
-  baseURL: 'https://admin.ielts-goldenenglish.com/public/api/',
+  baseURL: import.meta.env.VITE_API_URL,
 })
 
 export const ExamApi = axios.create({
-  baseURL: 'https://admin.ielts-goldenenglish.com/public/api',
+  baseURL: import.meta.env.VITE_API_URL,
 })
 
 export const getExamList = async (access_token) => {
