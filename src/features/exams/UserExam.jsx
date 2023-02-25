@@ -108,7 +108,7 @@ const ExamInfo = ({ data }) => {
                 color='CaptionText'
                 variant='body1'
               >
-                {data.test_amount}
+                {data.exam.total_question}
               </Typography>
             </Box>
             <Box>
@@ -124,7 +124,7 @@ const ExamInfo = ({ data }) => {
                 color='CaptionText'
                 variant='body1'
               >
-                {data.test_duration} Menit
+                {data.exam.duration} Menit
               </Typography>
             </Box>
             <Box>
@@ -140,7 +140,7 @@ const ExamInfo = ({ data }) => {
                 color='CaptionText'
                 variant='body1'
               >
-                {data.expired_date}
+                {data.exam.end_date}
               </Typography>
             </Box>
           </Box>
