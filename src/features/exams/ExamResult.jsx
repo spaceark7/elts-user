@@ -34,7 +34,6 @@ const UserExamResult = () => {
 
         setData(response?.data)
       } catch (error) {
-        console.log(error?.response.status)
         setErrorData(error?.response.status)
       }
     }

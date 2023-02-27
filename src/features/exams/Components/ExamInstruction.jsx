@@ -1,9 +1,14 @@
-import { Box, DialogContentText, Typography } from '@mui/material'
+import {
+  Box,
+  DialogContent,
+  DialogContentText,
+  Typography,
+} from '@mui/material'
 
 const ExamInstruction = () => {
   return (
     <Box>
-      <DialogContentText
+      <DialogContent
         sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -47,7 +52,7 @@ const ExamInstruction = () => {
             2. Kemudian anda akan diarahkan ke halaman tes.
           </Typography>
         </Box>
-      </DialogContentText>
+      </DialogContent>
     </Box>
   )
 }

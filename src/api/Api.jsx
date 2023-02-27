@@ -2,6 +2,7 @@ import axios from 'axios'
 import useSWR from 'swr'
 
 export const examListEndpoint = '/exam-list'
+export const checkTokenEndpoint = '/cek-token'
 export default axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 })
@@ -21,13 +22,32 @@ export const getExamList = async (access_token) => {
   return response.data
 }
 
-export const useExamList = (access_token) => {
-  const { data, error, isValidating, isLoading } = useSWR(
-    examListEndpoint,
-    () => getExamList(access_token)
+export const checkTestToken = async (access_token, test_token) => {
+  const response = await ExamApi.post(
+    checkTokenEndpoint,
+    { token: test_token },
+    {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        ContentType: 'application/json',
+      },
+    }
   )
 
-  const exam_list = data?.['exam-list']
+  return response.data
+}
+
+export const useExamList = (access_token) => {
+  let auth = access_token
+
+  if (!auth) {
+    auth = JSON.parse(localStorage.getItem('token'))
+  }
+
+  const { data, error, isValidating, isLoading } = useSWR(
+    examListEndpoint,
+    () => getExamList(auth)
+  )
 
   return {
     exam: data?.['exam-list'],

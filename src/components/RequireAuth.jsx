@@ -14,7 +14,7 @@ const RequireAuth = ({ allowedRoles }) => {
   // ) : (
   //   <Navigate to={{ pathname: '/login', state: { from: location } }} />
   // )
-  return auth.access_token || localToken ? (
+  return (auth.user && auth.access_token) || localToken ? (
     <Outlet />
   ) : (
     <Navigate to={{ pathname: '/login' }} />
