@@ -42,7 +42,7 @@ const Login = () => {
         action={
           <IconButton
             aria-label='close'
-            color='inherit'
+            color='info'
             size='small'
             onClick={() => {
               setSuccess(false)
