@@ -19,8 +19,6 @@ const ExamResultInfo = ({ data }) => {
       <Grid item lg={8} md={6} xs={12}>
         <MemberExamResult data={data} />
       </Grid>
-
-     
         <iframe
           src="https://admin.ielts-goldenenglish.com/public/api/certificate/39a37e3a-1471-4dab-a548-972bd6135eb7"
           width="100%"
