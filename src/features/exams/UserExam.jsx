@@ -45,6 +45,7 @@ const ExamInfo = ({ data }) => {
     validationSchema: Yup.object({
       token: Yup.string().required('Token wajib diisi'),
     }),
+
     onSubmit: async (values, actions) => {
       const res = await checkTestToken(auth.access_token, values.token)
       if (res.status !== 404) {
@@ -89,7 +90,7 @@ const ExamInfo = ({ data }) => {
                 label='Token Test'
                 name='token'
                 type='text'
-                value={formik.values.token}
+                value={formik.values.token.toUpperCase()}
                 onChange={formik.handleChange}
                 placeholder='Fill your token test here'
               />
