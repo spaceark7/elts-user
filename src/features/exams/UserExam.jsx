@@ -125,7 +125,7 @@ const ExamInfo = ({ data }) => {
         </form>
       </DialogContainer>
 
-      <Card raised className='max-w-screen py-4 md:col-span-1 '>
+      <Card raised className='max-w-screen col-span-2 py-4 lg:col-span-1 '>
         <CardContent>
           <Box className='mb-2 flex justify-between'>
             <Typography color='MenuText' variant='h6'>
