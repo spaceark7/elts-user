@@ -245,9 +245,13 @@ const DashboardSideBar = () => {
               collapsed ? 'justify-center' : 'justify-between '
             } px-2 transition ease-in-out`}
           >
-            <Box className={`${collapsed ? 'hidden' : 'block'}  `}>
+            <Box
+              className={`${
+                collapsed ? 'hidden' : 'mx-auto block flex flex-1'
+              }  `}
+            >
               <img
-                className='mx-auto h-6  w-fit object-contain '
+                className='mx-auto h-8 w-fit object-contain pl-4 '
                 src='/static/images/golden.png'
               />
             </Box>

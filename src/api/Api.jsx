@@ -4,6 +4,7 @@ import useSWR from 'swr'
 export const examListEndpoint = '/exam-list'
 export const checkTokenEndpoint = '/cek-token'
 export const examScoreEndpoint = '/exam-score'
+export const changePasswordEndpoint = '/auth/update-password'
 export default axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 })
@@ -78,4 +79,27 @@ export const getExamScore = async (access_token, id) => {
   // console.log(response.data?.['exam-list'])
 
   return response.data?.['exam-list']
+}
+
+export const UpdatePassword = async (access_token, data) => {
+  let auth = access_token
+  let user = JSON.parse(localStorage.getItem('user'))
+  if (!auth) {
+    auth = JSON.parse(localStorage.getItem('token'))
+  }
+
+  const response = await ExamApi.put(
+    `${changePasswordEndpoint}/${user.id}`,
+    data,
+    {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        ContentType: 'application/json',
+      },
+    }
+  )
+
+  // console.log(response.data?.['exam-list'])
+
+  return response
 }

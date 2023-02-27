@@ -4,28 +4,34 @@ import {
   Container,
   IconButton,
   InputAdornment,
-  TextField,
+  Collapse,
+  Alert,
   Typography,
   OutlinedInput,
   FormControl,
   InputLabel,
 } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
 
 import { Link, useNavigate } from 'react-router-dom'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import useAuth from '../../hooks/useAuth'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import * as Yup from 'yup'
 import { useState } from 'react'
 import { replace, useFormik } from 'formik'
-import { MuiTelInput } from 'mui-tel-input'
+
 import Api from '../../api/Api'
+import { UpdatePassword } from '../../api/Api'
 
 const ChangePassword = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const [successMessage, setSuccessMessage] = useState('')
   const [error, setError] = useState(false)
   const [errMessage, setErrMessage] = useState('')
   const navigate = useNavigate({ replace: true })
+  const { auth, setAuth } = useAuth()
   const formik = useFormik({
     initialValues: {
       currentPassword: '',
@@ -33,7 +39,7 @@ const ChangePassword = () => {
       confirmPassword: '',
     },
     validationSchema: Yup.object({
-      currentPassword: Yup.string().max(255).min(8, 'Sandi minimal 8 karakter'),
+      currentPassword: Yup.string().max(255).required('Kata sandi wajib diisi'),
 
       password: Yup.string().max(255).min(8, 'Sandi minimal 8 karakter'),
 
@@ -42,29 +48,89 @@ const ChangePassword = () => {
         .equals([Yup.ref('password'), null], 'Password tidak sama'),
     }),
     onSubmit: async (values, actions) => {
-      const registerData = {
-        ...values,
-        role: 'member',
+      const old_password = values.currentPassword
+      const new_password = values.password
+
+      const ant = {
+        old_password,
+        new_password,
       }
 
+      setError(false)
+      setErrMessage('')
+      setSuccess(false)
+      setSuccessMessage('')
+
       try {
-        const response = await Api.post(
-          '/register',
-          JSON.stringify(registerData),
-          config
-        )
-        console.log(response.data)
-        navigate('/login')
+        const response = await UpdatePassword(auth.access_token, ant)
+        setSuccess(true)
+        setSuccessMessage(response.data.message)
         actions.setSubmitting(false)
       } catch (error) {
-        console.log(error.message)
         setError(true)
-        setErrMessage(error.message)
+        setErrMessage(error.response.data.message)
+
+        actions.setSubmitting(false)
       }
-      actions.setSubmitting(false)
+
+      formik.resetForm()
+
+      // setSuccess(true)
+      // setSuccessMessage(response.message)
+      // // navigate('/login')
+      // actions.setSubmitting(false)
+
+      // console.log(error.message)
+      // setError(true)
+      // setErrMessage(error.message)
+      // actions.setSubmitting(false)
     },
   })
 
+  let message = (
+    <Collapse in={success}>
+      <Alert
+        action={
+          <IconButton
+            aria-label='close'
+            color='info'
+            size='small'
+            onClick={() => {
+              setSuccess(false)
+              setSuccessMessage('')
+            }}
+          >
+            <CloseIcon fontSize='inherit' />
+          </IconButton>
+        }
+        severity='success'
+      >
+        {successMessage}
+      </Alert>
+    </Collapse>
+  )
+
+  let errComponent = (
+    <Collapse in={error}>
+      <Alert
+        action={
+          <IconButton
+            aria-label='close'
+            color='error'
+            size='small'
+            onClick={() => {
+              setError(false)
+            }}
+          >
+            <CloseIcon fontSize='inherit' />
+          </IconButton>
+        }
+        severity='error'
+      >
+        {errMessage}
+      </Alert>
+    </Collapse>
+  )
   return (
     <>
       <Box
@@ -90,6 +156,10 @@ const ChangePassword = () => {
                 Silahkan isi kata sandi lama anda kemudian kata sandi baru anda
               </Typography>
             </Box>
+            <Box className='mb-4'>
+              {success && message}
+              {error && errComponent}
+            </Box>
 
             <div className='space-y-6'>
               <Box>
@@ -110,12 +180,12 @@ const ChangePassword = () => {
                   <OutlinedInput
                     id='currentPassword'
                     error={Boolean(
-                      formik.touched.password && formik.errors.password
+                      formik.touched.currentPassword &&
+                        formik.errors.currentPassword
                     )}
                     name='currentPassword'
                     autoComplete='none'
                     type={showPassword ? 'text' : 'password'}
-                    onBlur={formik.handleBlur}
                     value={formik.values.currentPassword}
                     onChange={formik.handleChange}
                     endAdornment={
@@ -160,7 +230,6 @@ const ChangePassword = () => {
                     name='password'
                     autoComplete='none'
                     type={showPassword ? 'text' : 'password'}
-                    onBlur={formik.handleBlur}
                     value={formik.values.password}
                     onChange={formik.handleChange}
                     endAdornment={
@@ -208,7 +277,6 @@ const ChangePassword = () => {
                     name='confirmPassword'
                     autoComplete='none'
                     type={showConfirmPassword ? 'text' : 'password'}
-                    onBlur={formik.handleBlur}
                     value={formik.values.confirmPassword}
                     onChange={formik.handleChange}
                     endAdornment={
