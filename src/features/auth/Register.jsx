@@ -71,7 +71,6 @@ const Register = () => {
 
       await Api.post('auth/register', registerData, config)
         .then((response) => {
-          console.log(response)
           navigate('/login', {
             replace: true,
             state: { message: response.data.message },

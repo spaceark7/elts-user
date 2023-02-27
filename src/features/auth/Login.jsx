@@ -203,8 +203,6 @@ const Login = () => {
     },
   })
 
-  console.log(successMessage)
-
   useEffect(() => {
     const token = localStorage.getItem('token')
     const localToken = JSON.parse(token)
