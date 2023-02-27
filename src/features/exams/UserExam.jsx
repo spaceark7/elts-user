@@ -24,6 +24,7 @@ import * as Yup from 'yup'
 
 const ExamInfo = ({ data }) => {
   const [open, setOpen] = React.useState(false)
+
   const { auth } = useAuth()
   const navigate = useNavigate()
   const status =
@@ -217,7 +218,7 @@ const ExamInfo = ({ data }) => {
             </Button>
             <Button
               component={RouterLink}
-              to='preview/1'
+              to={`/preview/${data.id}`}
               variant='text'
               color='secondary'
               startIcon={<Preview />}
@@ -225,6 +226,8 @@ const ExamInfo = ({ data }) => {
               Lihat Hasil
             </Button>
           </CardActions>
+        ) : data.status == REVIEW_TEST ? (
+          <> </>
         ) : (
           <CardActions>
             <Button
