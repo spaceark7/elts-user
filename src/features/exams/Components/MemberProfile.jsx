@@ -30,17 +30,11 @@ const MemberProfile = ({ data }) => {
             }}
           />
           <Typography color='textPrimary' gutterBottom variant='h5'>
-            {data.name}
+            {data.member.name}
           </Typography>
           <Typography color='textSecondary' variant='body2'>
-            {data.email}
+            {data.member.email}
           </Typography>
-          <Typography color='textSecondary' variant='body2'>
-            {data.phone}
-          </Typography>
-          <Box className='mt-4 flex items-center justify-center'>
-            <Chip label={data.exam_status} color='success' />
-          </Box>
         </Box>
 
         <Divider variant='fullWidth' />

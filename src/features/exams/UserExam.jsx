@@ -218,7 +218,7 @@ const ExamInfo = ({ data }) => {
             </Button>
             <Button
               component={RouterLink}
-              to={`/preview/${data.id}`}
+              to={`preview/${data.id}`}
               variant='text'
               color='secondary'
               startIcon={<Preview />}
