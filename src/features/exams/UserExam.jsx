@@ -125,7 +125,7 @@ const ExamInfo = ({ data }) => {
         </form>
       </DialogContainer>
 
-      <Card raised className='max-w-screen-lg py-4'>
+      <Card raised className='max-w-screen py-4 md:col-span-1 '>
         <CardContent>
           <Box className='mb-2 flex justify-between'>
             <Typography color='MenuText' variant='h6'>
@@ -213,9 +213,6 @@ const ExamInfo = ({ data }) => {
 
         {data.status === FINISH_TEST ? (
           <CardActions>
-            <Button variant='text' color='primary' startIcon={<Print />}>
-              Cetak Sertifikat
-            </Button>
             <Button
               component={RouterLink}
               to={`preview/${data.id}`}
@@ -279,7 +276,7 @@ const UserExam = () => {
         </Typography>
       </Box>
 
-      <Box className='flex flex-col space-y-6'>
+      <Box className='grid grid-cols-2 gap-y-4 md:gap-x-2 '>
         {/* {data?.map((item) => (
           <ExamInfo key={item.id} data={item} />
         ))} */}
