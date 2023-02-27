@@ -1,15 +1,31 @@
 import { Alert, AlertTitle, Box, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useTimer } from 'react-timer-hook'
+import Timeframe from 'react-timeframe'
 
 const Timer = ({ expiryTime }) => {
+  const localExpiryTime = JSON.parse(localStorage.getItem('expiryTime'))
   const [open, setOpen] = React.useState(false)
+  const [expiry, setExpiryTime] = React.useState(null)
   const handleOpenAlert = () => {
     setOpen(true)
   }
 
+  useMemo(() => {
+    if (localExpiryTime) {
+      // if expiry time is found, set it to state
+      setExpiryTime(localExpiryTime)
+    } else {
+      // if expiry time is not found, set it to local storage
+
+      localStorage.setItem('expiryTime', JSON.stringify(expiryTime))
+    }
+
+    // check local storage for expiry time
+  }, [expiry, localExpiryTime])
+
   const { seconds, minutes, hours } = useTimer({
-    expiryTimestamp: expiryTime,
+    expiryTimestamp: Date.parse(localExpiryTime),
     onExpire: () => handleOpenAlert(),
   })
 
@@ -23,7 +39,13 @@ const Timer = ({ expiryTime }) => {
             Waktu tersisa :
           </Typography>
           <Typography color='white'>
-            {hours}:{minutes}:{seconds}
+            {expiry !== null ? (
+              <>
+                {hours}:{minutes}:{seconds}
+              </>
+            ) : (
+              <>Null</>
+            )}
           </Typography>
         </Box>
       )}

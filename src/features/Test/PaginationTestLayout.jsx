@@ -23,6 +23,10 @@ const PaginationTestLayout = () => {
   const [page, setPage] = React.useState(1)
   const [data, setData] = React.useState(currSection[0])
   const { answers, filled } = useAnswers()
+  const [timeRemain, setTimeRemain] = React.useState(0)
+
+  const time = new Date()
+  time.setMinutes(time.getMinutes() + 120)
 
   const filtered = Quiz.filter((item) => {
     if (item.section_name.toLowerCase() === section.toLowerCase()) {
@@ -69,9 +73,6 @@ const PaginationTestLayout = () => {
   }, [answerPage.answers.length, context.answers.length])
 
   // function to change background color when page answered
-
-  const time = new Date()
-  time.setMinutes(time.getMinutes() + 120)
 
   return (
     <Box ref={topPageRef} className='relative max-w-full'>

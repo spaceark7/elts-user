@@ -12,6 +12,7 @@ import Api from '../../api/Api'
 const AdminDashboard = () => {
   const { auth, setAuth } = useAuth()
   const [user, setUser] = React.useState({})
+
   useEffect(() => {
     // fetch user information
     const fetchUser = async () => {
@@ -23,18 +24,15 @@ const AdminDashboard = () => {
       setAuth({ ...auth, user: data })
       localStorage.setItem('user', JSON.stringify(data))
       setUser(data)
-
-     
     }
 
     const user = localStorage.getItem('user')
     if (user) {
       setUser(JSON.parse(user))
-       
     } else {
       fetchUser()
     }
-  }, [])
+  }, [user.email])
   return (
     <>
       <Box
@@ -47,7 +45,7 @@ const AdminDashboard = () => {
         <Container maxWidth={false}>
           <Box className='pb-8'>
             <Typography color='MenuText' variant='h4'>
-              Selamat datang, {auth?.user?.name}
+              Selamat datang, {user?.name}
             </Typography>
             <Typography color='CaptionText' variant='body2'>
               IELTS Golden English
@@ -57,7 +55,7 @@ const AdminDashboard = () => {
           <Grid container spacing={3}>
             <Grid item lg={3} sm={6} xl={3} xs={12}>
               <TotalCard
-                test= {auth?.user?.widget.all_test}
+                test={user?.widget?.all_test}
                 type='all'
                 icon={<Article />}
                 title='Semua Test'
@@ -65,7 +63,7 @@ const AdminDashboard = () => {
             </Grid>
             <Grid item xl={3} lg={3} sm={6} xs={12}>
               <TotalCard
-                test= {auth?.user?.widget.finish_test}
+                test={user?.widget?.finish_test}
                 type='certified'
                 icon={<AssignmentInd />}
                 title='Test Selesai'
@@ -74,7 +72,7 @@ const AdminDashboard = () => {
             </Grid>
             <Grid item xl={3} lg={3} sm={6} xs={12}>
               <TotalCard
-                 test= {auth?.user?.widget.review_test}
+                test={auth?.user?.widget?.review_test}
                 type='review'
                 icon={<FindInPage />}
                 title='Dalam Review'

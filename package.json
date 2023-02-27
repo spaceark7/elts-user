@@ -24,6 +24,7 @@
     "react-inner-image-zoom": "^3.0.2",
     "react-pro-sidebar": "^1.0.0-alpha.9",
     "react-router-dom": "^6.4.4",
+    "react-timeframe": "^2.1.2",
     "react-timer-hook": "^3.0.5",
     "swr": "^2.0.3",
     "yup": "^0.32.11"

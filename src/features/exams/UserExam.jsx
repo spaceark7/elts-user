@@ -13,7 +13,7 @@ import {
 import { Preview, Print, Quiz } from '@mui/icons-material'
 import Api, { checkTestToken, useExamList } from '../../api/Api'
 import React, { useEffect, useState } from 'react'
-import { Link as RouterLink, useNavigate } from 'react-router-dom'
+import { Link as RouterLink, redirect, useNavigate } from 'react-router-dom'
 import DialogContainer from '../../components/DialogContainer'
 import ExamInstruction from './Components/ExamInstruction'
 import useAuth from '../../hooks/useAuth'
@@ -49,9 +49,15 @@ const ExamInfo = ({ data }) => {
       const res = await checkTestToken(auth.access_token, values.token)
       if (res.status !== 404) {
         // Navigate to listening page and replace the current page
-        navigate('/exam/listening/1', { replace: true })
-      } else {
-        alert('Token tidak ditemukan')
+        navigate('/exam/listening/1', {
+          replace: true,
+          state: { token: values.token },
+        })
+        // navigate('/exam/listening/1')
+      } else if (res.status === 404) {
+        actions.setErrors({
+          token: 'Token tidak valid',
+        })
       }
 
       actions.setSubmitting(false)
