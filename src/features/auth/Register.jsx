@@ -71,7 +71,11 @@ const Register = () => {
 
       await Api.post('auth/register', registerData, config)
         .then((response) => {
-          navigate('/login')
+          console.log(response)
+          navigate('/login', {
+            replace: true,
+            state: { message: response.data.message },
+          })
           actions.setSubmitting(false)
         })
         .catch((error) => {
@@ -170,7 +174,7 @@ const Register = () => {
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
                 type='text'
-                value={formik.values.name}
+                value={formik.values.name.toUpperCase()}
                 variant='outlined'
               />
               <TextField

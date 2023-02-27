@@ -47,12 +47,14 @@ const ExamInfo = ({ data }) => {
     }),
 
     onSubmit: async (values, actions) => {
-      const res = await checkTestToken(auth.access_token, values.token)
+      const res = await checkTestToken(
+        auth.access_token,
+        values.token.toUpperCase()
+      )
       if (res.status !== 404) {
         // Navigate to listening page and replace the current page
         navigate('/exam/listening/1', {
           replace: true,
-          state: { token: values.token },
         })
         // navigate('/exam/listening/1')
       } else if (res.status === 404) {

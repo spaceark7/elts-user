@@ -13,7 +13,7 @@ import {
   Alert,
 } from '@mui/material'
 
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import * as Yup from 'yup'
@@ -25,12 +25,41 @@ import useAuth from '../../hooks/useAuth'
 import { useEffect } from 'react'
 
 const Login = () => {
+  const location = useLocation()
   const [showPassword, setShowPassword] = useState(false)
-  const [success, setSuccess] = useState(false)
+  const [success, setSuccess] = useState(
+    location.state?.message !== undefined ? true : false
+  )
   const [error, setError] = useState(false)
   const [errMessage, setErrMessage] = useState('')
+  const [successMessage, setSuccessMessage] = useState(location.state?.message)
   const { setAuth, auth } = useAuth()
   const navigate = useNavigate()
+
+  let message = (
+    <Collapse in={success}>
+      <Alert
+        action={
+          <IconButton
+            aria-label='close'
+            color='inherit'
+            size='small'
+            onClick={() => {
+              setSuccess(false)
+            }}
+          >
+            <CloseIcon fontSize='inherit' />
+          </IconButton>
+        }
+        severity='success'
+      >
+        {/* {location.state?.message} */}
+        Registration Success! Please confirm to administrator for activating
+        your account
+      </Alert>
+    </Collapse>
+  )
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -174,6 +203,8 @@ const Login = () => {
     },
   })
 
+  console.log(successMessage)
+
   useEffect(() => {
     const token = localStorage.getItem('token')
     const localToken = JSON.parse(token)
@@ -217,27 +248,7 @@ const Login = () => {
               </Typography>
             </Box>
 
-            {success && (
-              <Collapse in={success}>
-                <Alert
-                  action={
-                    <IconButton
-                      aria-label='close'
-                      color='inherit'
-                      size='small'
-                      onClick={() => {
-                        setSuccess(false)
-                      }}
-                    >
-                      <CloseIcon fontSize='inherit' />
-                    </IconButton>
-                  }
-                  severity='success'
-                >
-                  Member berhasil ditambahkan
-                </Alert>
-              </Collapse>
-            )}
+            {successMessage !== null && message}
             {error && (
               <Collapse in={error}>
                 <Alert
