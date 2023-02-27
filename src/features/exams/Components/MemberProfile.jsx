@@ -36,22 +36,6 @@ const MemberProfile = ({ data }) => {
             {data.member.email}
           </Typography>
         </Box>
-
-        <Divider variant='fullWidth' />
-        <Box mt={2}>
-          <Box className='relative h-40 w-full'>
-            <img
-              src={'/static/images/qr-code.png'}
-              alt='qr-code test result'
-              className='absolute inset-0 h-full w-full object-contain'
-            />
-          </Box>
-          <Box className='flex'>
-            <Button className='mx-auto' variant='text'>
-              Simpan QR Code
-            </Button>
-          </Box>
-        </Box>
       </CardContent>
     </Card>
   )
