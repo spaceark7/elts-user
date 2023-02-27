@@ -22,7 +22,7 @@ const ExamResultInfo = ({ data }) => {
       <Grid item lg={12} md={12} xs={12}>
         <iframe
           className='h-screen w-full'
-          src={`https://admin.ielts-goldenenglish.com/public/api/certificate/${data.id}`}
+          src={import.meta.env.VITE_API_URL+`/certificate/${data.id}`}
           width='100%'
           height='100%'
         />
