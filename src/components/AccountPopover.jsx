@@ -12,6 +12,7 @@ const AccountPopover = (props) => {
     setAuth(null)
     localStorage.removeItem('token')
     localStorage.removeItem('user')
+    localStorage.removeItem('expiryTime')
     navigate('/login')
   }
   return (

@@ -206,7 +206,8 @@ const Login = () => {
   useEffect(() => {
     const token = localStorage.getItem('token')
     const localToken = JSON.parse(token)
-    if (localToken !== null || auth?.accessToken) {
+
+    if (localToken !== null || auth?.access_token) {
       navigate('/dashboard', { replace: true })
     }
   }, [])

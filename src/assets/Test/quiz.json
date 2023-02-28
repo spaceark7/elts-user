@@ -13,31 +13,12 @@
           {
             "id": 1,
             "question_no": 1,
-            "answer_type": "input",
-            "field": "number"
+            "answer_type": "input"
           },
           {
             "id": 2,
             "question_no": 2,
-            "answer_type": "radio",
-            "options": [
-              {
-                "id": 1,
-                "option": "10TH OCTOBER"
-              },
-              {
-                "id": 2,
-                "option": "OCTOBER 1992"
-              },
-              {
-                "id": 3,
-                "option": "10 OCTOBER 1992"
-              },
-              {
-                "id": 4,
-                "option": "1992 OCTOBER 10"
-              }
-            ]
+            "answer_type": "input"
           },
           {
             "id": 3,
@@ -57,25 +38,7 @@
           {
             "id": 6,
             "question_no": 6,
-            "answer_type": "radio",
-            "options": [
-              {
-                "id": 1,
-                "option": "3"
-              },
-              {
-                "id": 2,
-                "option": "3 WEEKS"
-              },
-              {
-                "id": 3,
-                "option": "TRI WEEKS"
-              },
-              {
-                "id": 4,
-                "option": "3RD WEEKS"
-              }
-            ]
+            "answer_type": "input"
           },
           {
             "id": 7,

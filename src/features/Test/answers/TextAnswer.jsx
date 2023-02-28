@@ -27,6 +27,7 @@ const TextAnswer = ({ data, addAnswer, type }) => {
           onBlur={() => addAnswer({ id: data.id, answer: value })}
           onChange={handleChange}
           id='outlined-textarea'
+          autoComplete='off'
           label='Answer'
           type={type}
           placeholder='Fill your answer here'

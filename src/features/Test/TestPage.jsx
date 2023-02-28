@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import RadioAnswer from './answers/RadioAnswer'
 import TextAnswer from './answers/TextAnswer'
 
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import Quiz from '../../assets/Test/quiz.json'
 import useAnswers from '../../hooks/useAnswers'
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.min.css'
@@ -18,6 +18,7 @@ const TestPage = () => {
       return item.parts[page - 1]
     }
   })
+  const navigate = useNavigate()
 
   const answerPage = answers.find((item) => item.page === page) || {
     answers: [],
@@ -86,27 +87,31 @@ const TestPage = () => {
   }
 
   const sendAnswer = async () => {
-    // localStorage.setItem(
-    //   `answers-page-${page}`,
-    //   JSON.stringify({
-    //     page,
-    //     answers,
-    //   })
-    // )
+    console.log(context)
+    localStorage.setItem(
+      `answers-page-${page}`,
+      JSON.stringify({
+        section: data.section_name,
+        answers: answers[page - 1],
+      })
+    )
+
     // const newAnswerPage = answers.filter((item) => item.page !== page)
     // newAnswerPage.push({
     //   page,
     //   answers: answer,
     // })
-    const newAnswerPage = answers.filter((item) => item.page !== page)
-    console.log('before: ', newAnswerPage)
-    console.log(page)
-    newAnswerPage.push({
-      page,
-      answers: answer,
-    })
-    setAnswer([])
-    setAnswers(newAnswerPage.sort((a, b) => a.page - b.page))
+
+    // console.log('answers state: ', answers)
+    // const newAnswerPage = answers.filter((item) => item.page !== page)
+    // console.log('before: ', newAnswerPage)
+    // console.log(page)
+    // newAnswerPage.push({
+    //   page,
+    //   answers: answer,
+    // })
+
+    // setAnswers(newAnswerPage.sort((a, b) => a.page - b.page))
 
     const title = data.section_name
 
@@ -143,7 +148,7 @@ const TestPage = () => {
         maxWidth='xl'
         className='relative  flex flex-col  space-x-2 divide-x-2 divide-slate-600 md:flex-row'
       >
-        <Box className='flex-1 '>
+        <Box className='w-1/2'>
           <Typography className='py-2 text-2xl font-bold' align='center'>
             {data.section_name} Section
           </Typography>
@@ -153,7 +158,7 @@ const TestPage = () => {
           <Box className=' w-full '>
             <Box className='relative h-3/4 w-full'>
               <InnerImageZoom
-                zoomScale={0.5}
+                zoomScale={0.3}
                 src={context.question}
                 zoomSrc={context.question}
               />
@@ -166,7 +171,7 @@ const TestPage = () => {
           </Box>
         </Box>
 
-        <Box className='sticky top-20 max-h-[80vh] max-w-md overflow-y-auto border border-l'>
+        <Box className='sticky top-20 max-h-[80vh] w-1/2 overflow-y-auto border border-l'>
           <Typography align='center' className=' relative text-2xl font-bold'>
             Answer
           </Typography>
@@ -199,15 +204,11 @@ const TestPage = () => {
                   Save Answers
                 </Button>
                 {context.callback && data.parts.length.toString() === page && (
-                  <Button
-                    LinkComponent={Link}
-                    to={context.callback}
-                    variant='text'
-                    color='info'
-                    fullWidth
-                  >
-                    Proceed Next Section
-                  </Button>
+                  <Link to={context.callback} replace>
+                    <Button variant='text' color='info' fullWidth>
+                      Proceed Next Section
+                    </Button>
+                  </Link>
                 )}
               </Box>
             </Box>

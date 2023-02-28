@@ -1,7 +1,6 @@
 import { Alert, AlertTitle, Box, Typography } from '@mui/material'
 import React, { useEffect, useMemo } from 'react'
 import { useTimer } from 'react-timer-hook'
-import Timeframe from 'react-timeframe'
 
 const Timer = ({ expiryTime }) => {
   const localExpiryTime = JSON.parse(localStorage.getItem('expiryTime'))

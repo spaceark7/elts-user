@@ -123,6 +123,7 @@ const DashboardSideBar = () => {
     setAuth(null)
     localStorage.removeItem('token')
     localStorage.removeItem('user')
+    localStorage.removeItem('expiryTime')
     navigate('/login')
   }
   const content = (

@@ -20,7 +20,7 @@ const PaginationTestLayout = () => {
 
   const topPageRef = useRef()
   const pageRef = useRef()
-  const [page, setPage] = React.useState(1)
+  const [page, setPage] = React.useState(parseInt(currentPage))
   const [data, setData] = React.useState(currSection[0])
   const { answers, filled } = useAnswers()
   const [timeRemain, setTimeRemain] = React.useState(0)
