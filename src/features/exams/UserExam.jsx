@@ -57,6 +57,7 @@ const ExamInfo = ({ data }) => {
         navigate('/exam/listening/1', {
           replace: true,
         })
+        localStorage.removeItem('expiryTime')
         // navigate('/exam/listening/1')
       } else if (res.status === 404) {
         actions.setErrors({
