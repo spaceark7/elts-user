@@ -1,5 +1,5 @@
-import { Alert, AlertTitle, Box, Typography } from '@mui/material'
-import React, { useEffect, useMemo } from 'react'
+import { Alert, Box, Typography } from '@mui/material'
+import React, { useMemo } from 'react'
 import { useTimer } from 'react-timer-hook'
 
 const Timer = ({ expiryTime }) => {
@@ -21,7 +21,7 @@ const Timer = ({ expiryTime }) => {
     }
 
     // check local storage for expiry time
-  }, [expiry, localExpiryTime])
+  }, [expiryTime, localExpiryTime])
 
   const { seconds, minutes, hours } = useTimer({
     expiryTimestamp: Date.parse(localExpiryTime),

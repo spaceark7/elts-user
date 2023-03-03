@@ -21,11 +21,13 @@ import { AVAILABLE_TEST, REVIEW_TEST, FINISH_TEST } from '../../constant'
 import SkeletonCard from '../../components/Skeleton/SkeletonCard'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import useAnswers from '../../hooks/useAnswers'
 
 const ExamInfo = ({ data }) => {
   const [open, setOpen] = React.useState(false)
 
-  const { auth } = useAuth()
+  const { auth, setTestId } = useAuth()
+
   const navigate = useNavigate()
   const status =
     data.status === AVAILABLE_TEST ? (
@@ -53,12 +55,12 @@ const ExamInfo = ({ data }) => {
         values.token.toUpperCase()
       )
       if (res.status !== 404) {
-        // Navigate to listening page and replace the current page
+        localStorage.removeItem('expiryTime')
+
         navigate('/exam/listening/1', {
+          state: { test_id: data.id },
           replace: true,
         })
-        localStorage.removeItem('expiryTime')
-        // navigate('/exam/listening/1')
       } else if (res.status === 404) {
         actions.setErrors({
           token: 'Token tidak valid',
@@ -158,7 +160,7 @@ const ExamInfo = ({ data }) => {
                 color='GrayText'
                 variant='caption'
               >
-                {data.exam.description}
+                {data.id}
               </Typography>
             </Box>
             <Box>

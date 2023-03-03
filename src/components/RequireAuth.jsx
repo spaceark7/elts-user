@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useLocation, Navigate, Outlet } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 
@@ -14,10 +15,10 @@ const RequireAuth = ({ allowedRoles }) => {
   // ) : (
   //   <Navigate to={{ pathname: '/login', state: { from: location } }} />
   // )
-  return (auth.user && auth.access_token) || localToken ? (
+  return (auth?.user && auth?.access_token) || localToken ? (
     <Outlet />
   ) : (
-    <Navigate to={{ pathname: '/login' }} />
+    <Navigate replace={true} to={{ pathname: '/login' }} />
   )
 }
 

@@ -89,7 +89,7 @@ const Item = (props) => {
         className='text-white'
         onClick={() => setSelected(title)}
         active={selected === title}
-        routerLink={<Link to={to} />}
+        routerLink={<Link to={to} replace={true} />}
         icon={icon}
       ></MenuItem>
     </>
@@ -99,7 +99,7 @@ const Item = (props) => {
         className='text-white'
         onClick={() => setSelected(title)}
         active={selected === title}
-        routerLink={<Link to={to} />}
+        routerLink={<Link to={to} replace={true} />}
         icon={icon}
       >
         <Typography>{title}</Typography>

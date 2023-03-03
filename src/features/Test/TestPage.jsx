@@ -1,9 +1,9 @@
 import { Box, Button, Container, Typography } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import RadioAnswer from './answers/RadioAnswer'
 import TextAnswer from './answers/TextAnswer'
-
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { ArrowBack, ArrowForward } from '@mui/icons-material'
+import { useParams, useNavigate } from 'react-router-dom'
 import Quiz from '../../assets/Test/quiz.json'
 import useAnswers from '../../hooks/useAnswers'
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.min.css'
@@ -13,19 +13,34 @@ import AudioPlayer from '../../components/test/Player'
 const TestPage = () => {
   const { answers, setAnswers, setFilled } = useAnswers()
   const { page, section } = useParams()
-  const filtered = Quiz.filter((item) => {
-    if (item.section_name.toLowerCase() === section.toLowerCase()) {
-      return item.parts[page - 1]
-    }
-  })
   const navigate = useNavigate()
+  const answerBoxRef = useRef()
+
+  const [pageData, setPageData] = useState(
+    Quiz.filter((item) => {
+      if (item.section_name.toLowerCase() === section.toLowerCase()) {
+        return item.parts[page - 1]
+      }
+      return null
+    })[0].parts.find((item) => item.part_no === parseInt(page))
+  )
+
+  const filtered = useMemo(
+    () =>
+      Quiz.filter((item) => {
+        if (item.section_name.toLowerCase() === section.toLowerCase()) {
+          setPageData(item.parts[page - 1])
+          return item.parts[page - 1]
+        }
+        return null
+      })[0],
+    [page, section]
+  )
+  // const context = data.parts.find((item) => item.part_no.toString() === page)
 
   const answerPage = answers.find((item) => item.page === page) || {
     answers: [],
   }
-
-  const data = filtered[0]
-  const context = data.parts.find((item) => item.part_no.toString() === page)
 
   const addAnswer = (data) => {
     const currPage = answers.find((item) => item.page === page)
@@ -86,12 +101,15 @@ const TestPage = () => {
     // console.log('final: ', answer)
   }
 
+  const resetScroll = () => {
+    answerBoxRef.current.scrollIntoView({})
+  }
+
   const sendAnswer = async () => {
-    console.log(context)
     localStorage.setItem(
       `answers-page-${page}`,
       JSON.stringify({
-        section: data.section_name,
+        section: filtered.section_name,
         answers: answers[page - 1],
       })
     )
@@ -113,7 +131,7 @@ const TestPage = () => {
 
     // setAnswers(newAnswerPage.sort((a, b) => a.page - b.page))
 
-    const title = data.section_name
+    const title = filtered.section_name
 
     // try {
     //   const response = await Api.post(`/${title}`, {
@@ -132,15 +150,21 @@ const TestPage = () => {
   }
 
   useEffect(() => {
+    resetScroll()
     // check if answer is equal to the question
 
-    if (answerPage?.answers.length === context.answers.length) {
+    if (answerPage?.answers.length === pageData.answers.length) {
       setFilled((prev) => [...prev.filter((item) => item[0] !== page), page])
     } else {
-      console.log('not equal')
       setFilled((prev) => [...prev.filter((item) => item[0] !== page)])
     }
-  }, [answerPage.answers.length, context.answers.length])
+  }, [
+    answerPage.answers.length,
+    pageData.answers.length,
+    page,
+    setFilled,
+    pageData,
+  ])
 
   return (
     <Box>
@@ -150,17 +174,17 @@ const TestPage = () => {
       >
         <Box className='w-1/2'>
           <Typography className='py-2 text-2xl font-bold' align='center'>
-            {data.section_name} Section
+            {filtered.section_name} Section
           </Typography>
 
-          {context.audio && <AudioPlayer audio={context?.audio} />}
+          {pageData.audio && <AudioPlayer audio={pageData?.audio} />}
 
           <Box className=' w-full '>
             <Box className='relative h-3/4 w-full'>
               <InnerImageZoom
                 zoomScale={0.3}
-                src={context.question}
-                zoomSrc={context.question}
+                src={pageData.question}
+                zoomSrc={pageData.question}
               />
               {/* <img
                 src={context.question}
@@ -175,8 +199,8 @@ const TestPage = () => {
           <Typography align='center' className=' relative text-2xl font-bold'>
             Answer
           </Typography>
-          <Box p={2} className='relative space-y-2'>
-            {context.answers.map((item, index) => {
+          <Box ref={answerBoxRef} p={2} className='relative space-y-2'>
+            {pageData.answers.map((item, index) => {
               switch (item.answer_type) {
                 case 'input':
                   return (
@@ -196,20 +220,59 @@ const TestPage = () => {
                       data={item}
                     />
                   )
+                default:
+                  return null
               }
             })}
             <Box className=' z-50 bg-white '>
               <Box className='flex flex-col space-y-4'>
-                <Button variant='contained' fullWidth onClick={sendAnswer}>
+                <Box className='flex space-x-4'>
+                  {pageData.nav_prev && (
+                    <Button
+                      variant='text'
+                      color='primary'
+                      fullWidth
+                      startIcon={<ArrowBack />}
+                      onClick={() => {
+                        navigate(`../${pageData.nav_prev}`)
+                      }}
+                    >
+                      Previous
+                    </Button>
+                  )}
+                  {pageData.nav_next && (
+                    <Button
+                      variant='contained'
+                      color='primary'
+                      fullWidth
+                      endIcon={<ArrowForward />}
+                      onClick={() => {
+                        navigate(`../${pageData.nav_next}`)
+                      }}
+                    >
+                      Next
+                    </Button>
+                  )}
+                </Box>
+
+                {/* <Button variant='contained' fullWidth onClick={sendAnswer}>
                   Save Answers
-                </Button>
-                {context.callback && data.parts.length.toString() === page && (
-                  <Link to={context.callback} replace>
-                    <Button variant='text' color='info' fullWidth>
+                </Button> */}
+                {pageData.callback &&
+                  filtered.parts.length.toString() === page && (
+                    <Button
+                      variant='contained'
+                      color='info'
+                      fullWidth
+                      onClick={() =>
+                        navigate(`${pageData.callback}`, {
+                          replace: true,
+                        })
+                      }
+                    >
                       Proceed Next Section
                     </Button>
-                  </Link>
-                )}
+                  )}
               </Box>
             </Box>
           </Box>

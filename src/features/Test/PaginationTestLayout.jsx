@@ -1,14 +1,15 @@
-import { Box, Button, Pagination, PaginationItem, Stack } from '@mui/material'
+import { Box, Pagination, PaginationItem, Stack } from '@mui/material'
 import React, { useEffect } from 'react'
 
 import Quiz from '../../assets/Test/quiz.json'
 import Timer from './Timer'
-import { Outlet, useNavigate, useParams, Link } from 'react-router-dom'
+import { Outlet, useNavigate, useParams, useLocation } from 'react-router-dom'
 import DashboardNavBar from '../../components/DashboardNavBar'
 
 import useAnswers from '../../hooks/useAnswers'
 import { useRef } from 'react'
 import DotIndicator from './DotIndicator'
+import { useMemo } from 'react'
 
 const PaginationTestLayout = () => {
   const { page: currentPage, section } = useParams()
@@ -16,61 +17,59 @@ const PaginationTestLayout = () => {
     if (item.section_name.toLowerCase() === section.toLowerCase()) {
       return item
     }
+
+    return null
+    // const totalPages = data
+    //   .reduce((acc, item) => [...acc, ...item.parts.flatMap((num) => num)], [])
+    //   .reduce((acc, item) => [...acc, ...item.answers], []).length
   })
 
   const topPageRef = useRef()
   const pageRef = useRef()
   const [page, setPage] = React.useState(parseInt(currentPage))
+
+  // eslint-disable-next-line no-use-before-define
   const [data, setData] = React.useState(currSection[0])
-  const { answers, filled } = useAnswers()
-  const [timeRemain, setTimeRemain] = React.useState(0)
+  const { setTestId } = useAnswers()
+  const location = useLocation()
+  const testId = location.state?.test_id
 
   const time = new Date()
   time.setMinutes(time.getMinutes() + 120)
 
-  const filtered = Quiz.filter((item) => {
-    if (item.section_name.toLowerCase() === section.toLowerCase()) {
-      return item.parts[page - 1]
-    }
-  })
+  useMemo(() => {
+    setPage(parseInt(currentPage))
+  }, [currentPage])
 
-  const answerPage = answers.find((item) => item.page === page) || {
-    answers: [],
-  }
+  // const filtered = Quiz.filter((item) => {
+  //   if (item.section_name.toLowerCase() === section.toLowerCase()) {
+  //     return item.parts[page - 1]
+  //   }
+  // })[0]
 
-  const question = filtered[0]
-  const context = question.parts.find(
-    (item) => item.part_no.toString() === currentPage
-  )
+  // const context = filtered.parts.find(
+  //   (item) => item.part_no.toString() === currentPage
+  // )
+
+  // const answerPage = answers.find((item) => item.page === page) || {
+  //   answers: [],
+  // }
 
   const totalPages = data.parts.length
-  const navigateCallback = data.parts[totalPages - 1]?.callback
-
-  // const totalPages = data
-  //   .reduce((acc, item) => [...acc, ...item.parts.flatMap((num) => num)], [])
-  //   .reduce((acc, item) => [...acc, ...item.answers], []).length
 
   const navigate = useNavigate()
 
   const handleChange = (event, value) => {
     setPage(value)
-    navigate(`${value}`)
-    topPageRef.current.scrollIntoView({
-      behavior: 'smooth',
-    })
-  }
-
-  const gotoNextSection = () => {
-    navigate(navigateCallback)
+    navigate(`${value}`, { replace: true })
   }
 
   useEffect(() => {
-    console.log('answer: ', answerPage?.answers.length)
-    console.log('question ', context.answers.length)
-    if (answerPage?.answers.length === context.answers.length) {
-      console.log('equal')
-    }
-  }, [answerPage.answers.length, context.answers.length])
+    setTestId(testId)
+    topPageRef.current.scrollIntoView({
+      behavior: 'smooth',
+    })
+  }, [testId, setTestId, page])
 
   // function to change background color when page answered
 
