@@ -11,11 +11,14 @@ import InnerImageZoom from 'react-inner-image-zoom'
 import AudioPlayer from '../../components/test/Player'
 import { validateAnswer } from './helper/ValidateAnswer'
 import AnswerKey from '../../assets/Test/answer_key.json'
+import { submitTest } from '../../api/Api'
+import useAuth from '../../hooks/useAuth'
 const TestPage = () => {
-  const { answers, setAnswers, setFilled } = useAnswers()
+  const { answers, setAnswers, setFilled, testId } = useAnswers()
   const { page, section } = useParams()
   const navigate = useNavigate()
   const answerBoxRef = useRef()
+  const { auth } = useAuth()
 
   const [pageData, setPageData] = useState(
     Quiz.filter((item) => {
@@ -112,45 +115,12 @@ const TestPage = () => {
       (item) => item.section_name.toLowerCase() === section.toLowerCase()
     ).parts
 
-    console.log('answer_key: ', answer_key)
-    console.log('user_answer: ', answers)
+    // console.log('answer_key: ', answer_key)
+    // console.log('user_answer: ', answers)
 
     const score = validateAnswer(answer_key, answers)
-    console.log(score)
-
-    // const newAnswerPage = answers.filter((item) => item.page !== page)
-    // newAnswerPage.push({
-    //   page,
-    //   answers: answer,
-    // })
-
-    // console.log('answers state: ', answers)
-    // const newAnswerPage = answers.filter((item) => item.page !== page)
-    // console.log('before: ', newAnswerPage)
-    // console.log(page)
-    // newAnswerPage.push({
-    //   page,
-    //   answers: answer,
-    // })
-
-    // setAnswers(newAnswerPage.sort((a, b) => a.page - b.page))
-
-    const title = filtered.section_name
-
-    // try {
-    //   const response = await Api.post(`/${title}`, {
-    //     answers: answer,
-    //   })
-
-    //   setAnswers(newAnswerPage.sort((a, b) => a.page - b.page))
-
-    //   setAnswer([])
-    //   console.log('from answers : ', answers)
-
-    //   console.log(response)
-    // } catch (error) {
-    //   console.log(error)
-    // }
+    const res = await submitTest(auth?.access_token, section, testId, score)
+    console.log(res)
   }
 
   useEffect(() => {

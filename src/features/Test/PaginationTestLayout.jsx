@@ -65,7 +65,10 @@ const PaginationTestLayout = () => {
   }
 
   useEffect(() => {
-    setTestId(testId)
+    if (testId) {
+      setTestId(testId)
+    }
+
     topPageRef.current.scrollIntoView({
       behavior: 'smooth',
     })

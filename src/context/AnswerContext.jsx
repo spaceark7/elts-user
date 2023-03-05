@@ -13,7 +13,6 @@ export const AnswersProvider = ({ children }) => {
       value={{ answers, setAnswers, filled, setFilled, testId, setTestId }}
     >
       <Outlet />
-      {children}
     </AnswersContext.Provider>
   )
 }

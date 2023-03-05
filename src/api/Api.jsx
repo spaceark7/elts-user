@@ -1,10 +1,12 @@
 import axios from 'axios'
 import useSWR from 'swr'
+import { ExamPostBuilder } from '../features/Test/helper/ExamTypeObject'
 
 export const examListEndpoint = '/exam-list'
 export const checkTokenEndpoint = '/cek-token'
 export const examScoreEndpoint = '/exam-score'
 export const changePasswordEndpoint = '/auth/update-password'
+
 export default axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 })
@@ -48,7 +50,11 @@ export const useExamList = (access_token) => {
 
   const { data, error, isValidating, isLoading } = useSWR(
     examListEndpoint,
-    () => getExamList(auth)
+    () => getExamList(auth),
+    {
+      revalidateOnFocus: true,
+      keepPreviousData: true,
+    }
   )
 
   return {
@@ -102,4 +108,26 @@ export const UpdatePassword = async (access_token, data) => {
   // console.log(response.data?.['exam-list'])
 
   return response
+}
+
+export const submitTest = async (access_token, endpoint, testId, score) => {
+  let auth = access_token
+
+  if (!auth) {
+    auth = JSON.parse(localStorage.getItem('token'))
+  }
+  const submitEndpoint = `/${endpoint}/${testId}`
+
+  const postData = ExamPostBuilder(endpoint, score)
+
+  console.log(postData)
+
+  const response = await ExamApi.post(submitEndpoint, postData, {
+    headers: {
+      Authorization: `Bearer ${auth}`,
+      ContentType: 'application/json',
+    },
+  })
+
+  return response.data
 }

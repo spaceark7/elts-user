@@ -9,11 +9,12 @@ import {
   Divider,
   Typography,
   TextField,
+  LinearProgress,
 } from '@mui/material'
-import { Preview, Print, Quiz } from '@mui/icons-material'
-import Api, { checkTestToken, useExamList } from '../../api/Api'
-import React, { useEffect, useState } from 'react'
-import { Link as RouterLink, redirect, useNavigate } from 'react-router-dom'
+import { Preview, Quiz } from '@mui/icons-material'
+import { checkTestToken, useExamList } from '../../api/Api'
+import React from 'react'
+import { Link as RouterLink, useNavigate } from 'react-router-dom'
 import DialogContainer from '../../components/DialogContainer'
 import ExamInstruction from './Components/ExamInstruction'
 import useAuth from '../../hooks/useAuth'
@@ -26,7 +27,8 @@ import useAnswers from '../../hooks/useAnswers'
 const ExamInfo = ({ data }) => {
   const [open, setOpen] = React.useState(false)
 
-  const { auth, setTestId } = useAuth()
+  const { auth } = useAuth()
+  const { setTestId } = useAnswers()
 
   const navigate = useNavigate()
   const status =
@@ -56,7 +58,7 @@ const ExamInfo = ({ data }) => {
       )
       if (res.status !== 404) {
         localStorage.removeItem('expiryTime')
-
+        setTestId(data.id)
         navigate('/exam/listening/1', {
           state: { test_id: data.id },
           replace: true,
@@ -226,7 +228,7 @@ const ExamInfo = ({ data }) => {
               Lihat Hasil
             </Button>
           </CardActions>
-        ) : data.status == REVIEW_TEST ? (
+        ) : data.status === REVIEW_TEST ? (
           <> </>
         ) : (
           <CardActions>
@@ -248,9 +250,7 @@ const ExamInfo = ({ data }) => {
 }
 
 const UserExam = () => {
-  const [data, setData] = React.useState()
   const { auth } = useAuth()
-  const [accessToken, setAccessToken] = useState(auth.accessToken)
 
   const { exam, error, isValidating, isLoading } = useExamList(
     auth.access_token
@@ -258,7 +258,11 @@ const UserExam = () => {
 
   let content
   if (isLoading) {
-    content = <SkeletonCard />
+    content = (
+      <Box className='col-span-2'>
+        <SkeletonCard />
+      </Box>
+    )
   } else if (error) {
     content = <Typography>Something went wrong</Typography>
   } else if (exam) {
@@ -282,7 +286,11 @@ const UserExam = () => {
         {/* {data?.map((item) => (
           <ExamInfo key={item.id} data={item} />
         ))} */}
-
+        {isValidating && (
+          <Box className='col-span-2' sx={{ width: '100%' }}>
+            <LinearProgress />
+          </Box>
+        )}
         {content}
       </Box>
     </Box>

@@ -1,31 +1,27 @@
 import { Alert, Box, Typography } from '@mui/material'
-import React, { useMemo } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTimer } from 'react-timer-hook'
 
 const Timer = ({ expiryTime }) => {
-  const localExpiryTime = JSON.parse(localStorage.getItem('expiryTime'))
-  const [open, setOpen] = React.useState(false)
-  const [expiry, setExpiryTime] = React.useState(null)
+  const [open, setOpen] = useState(false)
+  const [expiry, setExpiry] = useState(() => {
+    // ambil dari localStorage jika ada atau gunakan expiryTime
+    const localExpiryTime = JSON.parse(localStorage.getItem('expiryTime'))
+    return localExpiryTime ?? expiryTime
+  })
+
   const handleOpenAlert = () => {
     setOpen(true)
   }
 
-  useMemo(() => {
-    if (localExpiryTime) {
-      // if expiry time is found, set it to state
-      setExpiryTime(localExpiryTime)
-    } else {
-      // if expiry time is not found, set it to local storage
-
-      localStorage.setItem('expiryTime', JSON.stringify(expiryTime))
-    }
-
-    // check local storage for expiry time
-  }, [expiryTime, localExpiryTime])
+  useEffect(() => {
+    // save the expiry time to localStorage whenever it changes
+    localStorage.setItem('expiryTime', JSON.stringify(expiry))
+  }, [expiry])
 
   const { seconds, minutes, hours } = useTimer({
-    expiryTimestamp: Date.parse(localExpiryTime),
-    onExpire: () => handleOpenAlert(),
+    expiryTimestamp: Date.parse(expiry),
+    onExpire: handleOpenAlert,
   })
 
   return (
@@ -40,7 +36,9 @@ const Timer = ({ expiryTime }) => {
           <Typography color='white'>
             {expiry !== null ? (
               <>
-                {hours}:{minutes}:{seconds}
+                {hours.toString().padStart(2, '0')}:
+                {minutes.toString().padStart(2, '0')}:
+                {seconds.toString().padStart(2, '0')}
               </>
             ) : (
               <>Null</>

@@ -1,22 +1,19 @@
-import { useEffect } from 'react'
-import { useLocation, Navigate, Outlet } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
+import { AnswersProvider } from '../context/AnswerContext'
+import RequireTestId from '../features/Test/RequireTestId'
 import useAuth from '../hooks/useAuth'
 
 const RequireAuth = ({ allowedRoles }) => {
   const { auth } = useAuth()
-  const location = useLocation()
 
   // get token from local storage
   const token = localStorage.getItem('token')
   const localToken = JSON.parse(token)
 
-  // return auth?.role && auth?.accessToken ? (
-  //   <Outlet />
-  // ) : (
-  //   <Navigate to={{ pathname: '/login', state: { from: location } }} />
-  // )
   return (auth?.user && auth?.access_token) || localToken ? (
-    <Outlet />
+    <AnswersProvider>
+      <Outlet />
+    </AnswersProvider>
   ) : (
     <Navigate replace={true} to={{ pathname: '/login' }} />
   )

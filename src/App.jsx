@@ -17,6 +17,7 @@ import PaginationTestLayout from './features/Test/PaginationTestLayout'
 import TestPage from './features/Test/TestPage'
 
 import HomePage from './Pages/HomePage'
+import RequireTestId from './features/Test/RequireTestId'
 
 function App() {
   return (
@@ -40,7 +41,7 @@ function App() {
               <Route path='password' element={<ChangePassword />} />
             </Route>
 
-            <Route path='exam' element={<AnswersProvider />}>
+            <Route path='exam' element={<RequireTestId />}>
               <Route path=':section' element={<PaginationTestLayout />}>
                 <Route path=':page' element={<TestPage />} />
               </Route>
