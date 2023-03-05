@@ -265,7 +265,6 @@ const UserExam = () => {
     content = exam.map((item) => <ExamInfo key={item.id} data={item} />)
   } else {
     content = <Typography>Nothing Happen</Typography>
-    console.log(isLoading, error, examData, isValidating)
   }
 
   return (

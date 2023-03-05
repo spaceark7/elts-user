@@ -2,297 +2,230 @@
   {
     "id": 1,
     "section_name": "Listening",
-    "duration": 30,
 
     "parts": [
       {
         "part_no": 1,
-        "question": "/static/images/questions/listening_p1.png",
-        "audio": "/static/audio/listening/section_1.mp3",
-        "nav_prev": null,
-        "nav_next": 2,
         "answers": [
           {
             "id": 1,
             "question_no": 1,
-            "answer_type": "input"
+            "answer": "2194429785"
           },
           {
             "id": 2,
             "question_no": 2,
-            "answer_type": "input"
+            "answer": "10 OCTOBER",
+            "alternate_answer": "10TH OCTOBER"
           },
           {
             "id": 3,
             "question_no": 3,
-            "answer_type": "input"
+            "answer": "MANAGER"
           },
           {
             "id": 4,
             "question_no": 4,
-            "answer_type": "input"
+            "answer": "CAWLEY"
           },
           {
             "id": 5,
             "question_no": 5,
-            "answer_type": "input"
+            "answer": "KNEE"
           },
           {
             "id": 6,
             "question_no": 6,
-            "answer_type": "input"
+            "answer": "3 WEEKS",
+            "alternate_answer": "THREE WEEKS"
           },
           {
             "id": 7,
             "question_no": 7,
-            "answer_type": "input"
+            "answer": "TENNIS"
           },
           {
             "id": 8,
             "question_no": 8,
-            "answer_type": "input"
+            "answer": "RUNNING"
           },
           {
             "id": 9,
             "question_no": 9,
-            "answer_type": "input"
+            "answer": "SHOULDER"
           },
           {
             "id": 10,
             "question_no": 10,
-            "answer_type": "input"
+            "answer": "VITAMINS"
           }
         ]
       },
       {
         "part_no": 2,
-        "question": "/static/images/questions/listening_p2.png",
-        "audio": "/static/audio/listening/section_2.mp3",
-        "nav_prev": 1,
-        "nav_next": 3,
         "answers": [
           {
             "id": 11,
             "question_no": 11,
-            "answer_type": "radio",
-            "options": [
-              {
-                "id": 1,
-                "option": "A"
-              },
-              {
-                "id": 2,
-                "option": "B"
-              },
-              {
-                "id": 3,
-                "option": "C"
-              }
-            ]
+            "answer": "C"
           },
           {
             "id": 12,
             "question_no": 12,
-            "answer_type": "radio",
-            "options": [
-              {
-                "id": 1,
-                "option": "A"
-              },
-              {
-                "id": 2,
-                "option": "B"
-              },
-              {
-                "id": 3,
-                "option": "C"
-              }
-            ]
+            "answer": "A"
           },
           {
             "id": 13,
             "question_no": 13,
-            "answer_type": "radio",
-            "options": [
-              {
-                "id": 1,
-                "option": "A"
-              },
-              {
-                "id": 2,
-                "option": "B"
-              },
-              {
-                "id": 3,
-                "option": "C"
-              }
-            ]
+            "answer": "B"
           },
           {
             "id": 14,
             "question_no": 14,
-            "answer_type": "radio",
-            "options": [
-              {
-                "id": 1,
-                "option": "A"
-              },
-              {
-                "id": 2,
-                "option": "B"
-              },
-              {
-                "id": 3,
-                "option": "C"
-              }
-            ]
+            "answer": "C"
           },
           {
             "id": 15,
             "question_no": 15,
-            "answer_type": "input"
+            "answer": "E"
           },
           {
             "id": 16,
             "question_no": 16,
-            "answer_type": "input"
+            "answer": "C"
           },
           {
             "id": 17,
             "question_no": 17,
-            "answer_type": "input"
+            "answer": "B"
           },
           {
             "id": 18,
             "question_no": 18,
-            "answer_type": "input"
+            "answer": "A"
           },
           {
             "id": 19,
             "question_no": 19,
-            "answer_type": "input"
+            "answer": "G"
           },
           {
             "id": 20,
             "question_no": 20,
-            "answer_type": "input"
+            "answer": "D"
           }
         ]
       },
       {
         "part_no": 3,
-        "question": "/static/images/questions/listening_p3.png",
-        "audio": "/static/audio/listening/section_3.mp3",
-        "nav_prev": 2,
-        "nav_next": 4,
         "answers": [
           {
             "id": 21,
             "question_no": 21,
-            "answer_type": "input"
+            "answer": "PAGE"
           },
           {
             "id": 22,
             "question_no": 22,
-            "answer_type": "input"
+            "answer": "SIZE"
           },
           {
             "id": 23,
             "question_no": 23,
-            "answer_type": "input"
+            "answer": "GRAPHIC",
+            "alternate_answer": "GRAPHICS"
           },
           {
             "id": 24,
             "question_no": 24,
-            "answer_type": "input"
+            "answer": "STRUCTURE"
           },
           {
             "id": 25,
             "question_no": 25,
-            "answer_type": "input"
+            "answer": "PURPOSE"
           },
           {
             "id": 26,
             "question_no": 26,
-            "answer_type": "input"
+            "answer": "ASSUMPTION",
+            "alternate_answer": "ASSUMPTIONS"
           },
           {
             "id": 27,
             "question_no": 27,
-            "answer_type": "input"
+            "answer": "A"
           },
           {
             "id": 28,
             "question_no": 28,
-            "answer_type": "input"
+            "answer": "C"
           },
           {
             "id": 29,
             "question_no": 29,
-            "answer_type": "input"
+            "answer": "C"
           },
           {
             "id": 30,
             "question_no": 30,
-            "answer_type": "input"
+            "answer": "B"
           }
         ]
       },
       {
         "part_no": 4,
-        "question": "/static/images/questions/listening_p4.png",
-        "audio": "/static/audio/listening/section_4.mp3",
-        "callback": "/exam/reading/1",
+
         "answers": [
           {
             "id": 31,
             "question_no": 31,
-            "answer_type": "input"
+            "answer": "BULLYING"
           },
           {
             "id": 32,
             "question_no": 32,
-            "answer_type": "input"
+            "answer": "SUPERIORITY"
           },
           {
             "id": 33,
             "question_no": 33,
-            "answer_type": "input"
+            "answer": "PERSONALITY"
           },
           {
             "id": 3,
             "question_no": 34,
-            "answer_type": "input"
+            "answer": "STRUCTURAL"
           },
           {
             "id": 35,
             "question_no": 35,
-            "answer_type": "input"
+            "answer": "ABSENCE"
           },
           {
             "id": 36,
             "question_no": 36,
-            "answer_type": "input"
+            "answer": "CONFIDENCE"
           },
           {
             "id": 37,
             "question_no": 37,
-            "answer_type": "input"
+            "answer": "VISIONS"
           },
           {
             "id": 38,
             "question_no": 38,
-            "answer_type": "input"
+            "answer": "DEMOCRATIC"
           },
           {
             "id": 39,
             "question_no": 39,
-            "answer_type": "input"
+            "answer": "RESPECT"
           },
           {
             "id": 40,
             "question_no": 40,
-            "answer_type": "input"
+            "answer": "MEDIATOR"
           }
         ]
       }
@@ -313,13 +246,13 @@
           {
             "id": 41,
             "question_no": 1,
-            "answer_type": "input",
+            "answer": "input",
             "field": "number"
           },
           {
             "id": 42,
             "question_no": 2,
-            "answer_type": "radio",
+            "answer": "radio",
             "options": [
               {
                 "id": 1,
@@ -342,22 +275,22 @@
           {
             "id": 43,
             "question_no": 3,
-            "answer_type": "input"
+            "answer": "input"
           },
           {
             "id": 44,
             "question_no": 4,
-            "answer_type": "input"
+            "answer": "input"
           },
           {
             "id": 45,
             "question_no": 5,
-            "answer_type": "input"
+            "answer": "input"
           },
           {
             "id": 46,
             "question_no": 6,
-            "answer_type": "radio",
+            "answer": "radio",
             "options": [
               {
                 "id": 1,
@@ -380,22 +313,22 @@
           {
             "id": 47,
             "question_no": 7,
-            "answer_type": "input"
+            "answer": "input"
           },
           {
             "id": 48,
             "question_no": 8,
-            "answer_type": "input"
+            "answer": "input"
           },
           {
             "id": 49,
             "question_no": 9,
-            "answer_type": "input"
+            "answer": "input"
           },
           {
             "id": 50,
             "question_no": 10,
-            "answer_type": "input"
+            "answer": "input"
           }
         ]
       },
@@ -405,52 +338,52 @@
           {
             "id": 51,
             "question_no": 11,
-            "answer_type": "input"
+            "answer": "input"
           },
           {
             "id": 52,
             "question_no": 12,
-            "answer_type": "input"
+            "answer": "input"
           },
           {
             "id": 53,
             "question_no": 13,
-            "answer_type": "input"
+            "answer": "input"
           },
           {
             "id": 54,
             "question_no": 14,
-            "answer_type": "input"
+            "answer": "input"
           },
           {
             "id": 55,
             "question_no": 15,
-            "answer_type": "input"
+            "answer": "input"
           },
           {
             "id": 56,
             "question_no": 16,
-            "answer_type": "input"
+            "answer": "input"
           },
           {
             "id": 57,
             "question_no": 17,
-            "answer_type": "input"
+            "answer": "input"
           },
           {
             "id": 58,
             "question_no": 18,
-            "answer_type": "input"
+            "answer": "input"
           },
           {
             "id": 59,
             "question_no": 19,
-            "answer_type": "input"
+            "answer": "input"
           },
           {
             "id": 60,
             "question_no": 20,
-            "answer_type": "input"
+            "answer": "input"
           }
         ]
       },
@@ -461,52 +394,52 @@
           {
             "id": 61,
             "question_no": 21,
-            "answer_type": "input"
+            "answer": "input"
           },
           {
             "id": 62,
             "question_no": 22,
-            "answer_type": "input"
+            "answer": "input"
           },
           {
             "id": 63,
             "question_no": 23,
-            "answer_type": "input"
+            "answer": "input"
           },
           {
             "id": 64,
             "question_no": 24,
-            "answer_type": "input"
+            "answer": "input"
           },
           {
             "id": 65,
             "question_no": 25,
-            "answer_type": "input"
+            "answer": "input"
           },
           {
             "id": 66,
             "question_no": 26,
-            "answer_type": "input"
+            "answer": "input"
           },
           {
             "id": 67,
             "question_no": 27,
-            "answer_type": "input"
+            "answer": "input"
           },
           {
             "id": 68,
             "question_no": 28,
-            "answer_type": "input"
+            "answer": "input"
           },
           {
             "id": 69,
             "question_no": 29,
-            "answer_type": "input"
+            "answer": "input"
           },
           {
             "id": 70,
             "question_no": 30,
-            "answer_type": "input"
+            "answer": "input"
           }
         ]
       }

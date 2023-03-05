@@ -9,7 +9,8 @@ import useAnswers from '../../hooks/useAnswers'
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.min.css'
 import InnerImageZoom from 'react-inner-image-zoom'
 import AudioPlayer from '../../components/test/Player'
-
+import { validateAnswer } from './helper/ValidateAnswer'
+import AnswerKey from '../../assets/Test/answer_key.json'
 const TestPage = () => {
   const { answers, setAnswers, setFilled } = useAnswers()
   const { page, section } = useParams()
@@ -106,13 +107,16 @@ const TestPage = () => {
   }
 
   const sendAnswer = async () => {
-    localStorage.setItem(
-      `answers-page-${page}`,
-      JSON.stringify({
-        section: filtered.section_name,
-        answers: answers[page - 1],
-      })
-    )
+    answers.sort((a, b) => a.page - b.page)
+    const answer_key = AnswerKey.find(
+      (item) => item.section_name.toLowerCase() === section.toLowerCase()
+    ).parts
+
+    console.log('answer_key: ', answer_key)
+    console.log('user_answer: ', answers)
+
+    const score = validateAnswer(answer_key, answers)
+    console.log(score)
 
     // const newAnswerPage = answers.filter((item) => item.page !== page)
     // newAnswerPage.push({
@@ -264,10 +268,12 @@ const TestPage = () => {
                       variant='contained'
                       color='info'
                       fullWidth
-                      onClick={() =>
-                        navigate(`${pageData.callback}`, {
-                          replace: true,
-                        })
+                      onClick={
+                        sendAnswer
+                        // () =>
+                        // navigate(`${pageData.callback}`, {
+                        //   replace: true,
+                        // })
                       }
                     >
                       Proceed Next Section

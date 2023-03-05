@@ -52,7 +52,7 @@ export const useExamList = (access_token) => {
   )
 
   return {
-    exam: data?.['exam-list'],
+    exam: data?.exam_list,
     error,
     isValidating,
     isLoading,

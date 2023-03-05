@@ -85,12 +85,14 @@ const Login = () => {
 
       try {
         const { data } = await Api.post('auth/login', loginData)
+        console.log(data)
         if (data) {
-          const access_token = data.data?.access_token
+          const access_token = data?.access_token
           setAuth({
             access_token,
           })
           localStorage.setItem('token', JSON.stringify(access_token))
+          navigate('/dashboard', { replace: true })
         } else {
           setError(true)
           setErrMessage('Terjadi kesalahan')
@@ -131,7 +133,6 @@ const Login = () => {
         //   })
         // }
 
-        navigate('/dashboard', { replace: true })
         actions.setSubmitting(false)
       } catch (error) {
         setError(true)
