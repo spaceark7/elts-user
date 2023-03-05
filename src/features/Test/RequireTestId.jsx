@@ -5,24 +5,22 @@ import useAnswers from '../../hooks/useAnswers'
 const RequireTestId = () => {
   const { testId, setTestId } = useAnswers()
 
-  // get token from local storage
-  const token = localStorage.getItem('token')
-  const localToken = JSON.parse(token)
+  const localTestID = JSON.parse(localStorage.getItem('activeTest'))
 
   useEffect(() => {
-    if (!testId) {
-      setTestId(JSON.parse(localStorage.getItem('activeTest')))
+    if (!testId && localTestID) {
+      setTestId(localTestID)
     }
 
     return () => {
       setTestId(null)
     }
-  }, [setTestId, testId])
+  }, [setTestId, testId, localTestID])
 
-  return testId ? (
+  return testId || localTestID ? (
     <Outlet />
   ) : (
-    <Navigate replace={true} to={{ pathname: '/dashboard' }} />
+    <Navigate replace={true} to={{ pathname: '/dashboard/user-exam' }} />
   )
 }
 

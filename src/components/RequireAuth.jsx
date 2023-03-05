@@ -1,6 +1,5 @@
 import { Navigate, Outlet } from 'react-router-dom'
 import { AnswersProvider } from '../context/AnswerContext'
-import RequireTestId from '../features/Test/RequireTestId'
 import useAuth from '../hooks/useAuth'
 
 const RequireAuth = ({ allowedRoles }) => {

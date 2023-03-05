@@ -59,6 +59,7 @@ const ExamInfo = ({ data }) => {
       if (res.status !== 404) {
         localStorage.removeItem('expiryTime')
         setTestId(data.id)
+        localStorage.setItem('activeTest', JSON.stringify(data.id))
         navigate('/exam/listening/1', {
           state: { test_id: data.id },
           replace: true,

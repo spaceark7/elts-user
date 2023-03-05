@@ -29,22 +29,36 @@ const TestPage = () => {
     })[0].parts.find((item) => item.part_no === parseInt(page))
   )
 
-  const filtered = useMemo(
-    () =>
-      Quiz.filter((item) => {
-        if (item.section_name.toLowerCase() === section.toLowerCase()) {
-          setPageData(item.parts[page - 1])
-          return item.parts[page - 1]
-        }
-        return null
-      })[0],
-    [page, section]
-  )
+  // const filtered = useMemo(
+  //   () =>
+  //     Quiz.filter((item) => {
+  //       if (item.section_name.toLowerCase() === section.toLowerCase()) {
+  //         setPageData(item.parts[page - 1])
+  //         return item.parts[page - 1]
+  //       }
+  //       return null
+  //     })[0],
+  //   [page, section]
+  // )
+
+  const filtered = useMemo(() => {
+    const filtered = Quiz.filter((item) => {
+      return item.section_name.toLowerCase() === section.toLowerCase()
+    })[0]
+
+    setPageData(filtered.parts[page - 1])
+
+    return filtered
+  }, [page, section])
+
   // const context = data.parts.find((item) => item.part_no.toString() === page)
 
-  const answerPage = answers.find((item) => item.page === page) || {
-    answers: [],
-  }
+  const answerPage = useMemo(() => {
+    return answers.find((item) => item.page === page) ?? { answers: [] }
+  }, [answers, page])
+  // const answerPage = answers.find((item) => item.page === page) || {
+  //   answers: [],
+  // }
 
   const addAnswer = (data) => {
     const currPage = answers.find((item) => item.page === page)
@@ -128,9 +142,11 @@ const TestPage = () => {
     // check if answer is equal to the question
 
     if (answerPage?.answers.length === pageData.answers.length) {
-      setFilled((prev) => [...prev.filter((item) => item[0] !== page), page])
+      // setFilled((prev) => [...prev.filter((item) => item[0] !== page), page])
+      setFilled((prev) => prev.concat([page]))
     } else {
-      setFilled((prev) => [...prev.filter((item) => item[0] !== page)])
+      // setFilled((prev) => [...prev.filter((item) => item[0] !== page)])
+      setFilled((prev) => prev.filter((item) => item !== page))
     }
   }, [
     answerPage.answers.length,
