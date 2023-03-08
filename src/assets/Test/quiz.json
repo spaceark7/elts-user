@@ -7,6 +7,7 @@
     "parts": [
       {
         "part_no": 1,
+        "page_no": 1,
         "question": "/static/images/questions/listening_p1.png",
         "audio": "/static/audio/listening/section_1.mp3",
         "nav_prev": null,
@@ -66,6 +67,7 @@
       },
       {
         "part_no": 2,
+        "page_no": 2,
         "question": "/static/images/questions/listening_p2.png",
         "audio": "/static/audio/listening/section_2.mp3",
         "nav_prev": 1,
@@ -181,6 +183,7 @@
       },
       {
         "part_no": 3,
+        "page_no": 3,
         "question": "/static/images/questions/listening_p3.png",
         "audio": "/static/audio/listening/section_3.mp3",
         "nav_prev": 2,
@@ -240,9 +243,11 @@
       },
       {
         "part_no": 4,
+        "page_no": 4,
         "question": "/static/images/questions/listening_p4.png",
         "audio": "/static/audio/listening/section_4.mp3",
-        "callback": "/exam/reading/1",
+        "nav_prev": 3,
+        "callback": "/exam/reading/5",
         "answers": [
           {
             "id": 31,
@@ -305,16 +310,30 @@
     "parts": [
       {
         "part_no": 1,
-        "question": "/static/images/questions/listening_p1.png",
-        "audio": "/static/audio/listening/section_1.mp3",
+        "page_no": 5,
+        "section_name": "Reading",
+        "question": "/static/images/questions/reading_p1.png",
         "nav_prev": null,
-        "nav_next": 2,
+        "nav_next": 6,
         "answers": [
           {
             "id": 41,
             "question_no": 1,
-            "answer_type": "input",
-            "field": "number"
+            "answer_type": "radio",
+            "options": [
+              {
+                "id": 1,
+                "option": "TRUE"
+              },
+              {
+                "id": 2,
+                "option": "FALSE"
+              },
+              {
+                "id": 3,
+                "option": "NOT GIVEN"
+              }
+            ]
           },
           {
             "id": 42,
@@ -323,36 +342,74 @@
             "options": [
               {
                 "id": 1,
-                "option": "10TH OCTOBER"
+                "option": "TRUE"
               },
               {
                 "id": 2,
-                "option": "OCTOBER 1992"
+                "option": "FALSE"
               },
               {
                 "id": 3,
-                "option": "10 OCTOBER 1992"
-              },
-              {
-                "id": 4,
-                "option": "1992 OCTOBER 10"
+                "option": "NOT GIVEN"
               }
             ]
           },
           {
             "id": 43,
             "question_no": 3,
-            "answer_type": "input"
+            "answer_type": "input",
+            "options": [
+              {
+                "id": 1,
+                "option": "TRUE"
+              },
+              {
+                "id": 2,
+                "option": "FALSE"
+              },
+              {
+                "id": 3,
+                "option": "NOT GIVEN"
+              }
+            ]
           },
           {
             "id": 44,
             "question_no": 4,
-            "answer_type": "input"
+            "answer_type": "radio",
+            "options": [
+              {
+                "id": 1,
+                "option": "TRUE"
+              },
+              {
+                "id": 2,
+                "option": "FALSE"
+              },
+              {
+                "id": 3,
+                "option": "NOT GIVEN"
+              }
+            ]
           },
           {
             "id": 45,
             "question_no": 5,
-            "answer_type": "input"
+            "answer_type": "radio",
+            "options": [
+              {
+                "id": 1,
+                "option": "TRUE"
+              },
+              {
+                "id": 2,
+                "option": "FALSE"
+              },
+              {
+                "id": 3,
+                "option": "NOT GIVEN"
+              }
+            ]
           },
           {
             "id": 46,
@@ -361,26 +418,36 @@
             "options": [
               {
                 "id": 1,
-                "option": "3"
+                "option": "TRUE"
               },
               {
                 "id": 2,
-                "option": "3 WEEKS"
+                "option": "FALSE"
               },
               {
                 "id": 3,
-                "option": "TRI WEEKS"
-              },
-              {
-                "id": 4,
-                "option": "3RD WEEKS"
+                "option": "NOT GIVEN"
               }
             ]
           },
           {
             "id": 47,
             "question_no": 7,
-            "answer_type": "input"
+            "answer_type": "radio",
+            "options": [
+              {
+                "id": 1,
+                "option": "TRUE"
+              },
+              {
+                "id": 2,
+                "option": "FALSE"
+              },
+              {
+                "id": 3,
+                "option": "NOT GIVEN"
+              }
+            ]
           },
           {
             "id": 48,
@@ -396,12 +463,7 @@
             "id": 50,
             "question_no": 10,
             "answer_type": "input"
-          }
-        ]
-      },
-      {
-        "part_no": 2,
-        "answers": [
+          },
           {
             "id": 51,
             "question_no": 11,
@@ -416,7 +478,17 @@
             "id": 53,
             "question_no": 13,
             "answer_type": "input"
-          },
+          }
+        ]
+      },
+      {
+        "part_no": 2,
+        "page_no": 6,
+        "section_name": "Reading",
+        "question": "/static/images/questions/reading_p2.png",
+        "nav_prev": 5,
+        "nav_next": 7,
+        "answers": [
           {
             "id": 54,
             "question_no": 14,
@@ -451,13 +523,7 @@
             "id": 60,
             "question_no": 20,
             "answer_type": "input"
-          }
-        ]
-      },
-      {
-        "part_no": 3,
-        "callback": "/exam/writing/1",
-        "answers": [
+          },
           {
             "id": 61,
             "question_no": 21,
@@ -487,26 +553,307 @@
             "id": 66,
             "question_no": 26,
             "answer_type": "input"
-          },
+          }
+        ]
+      },
+      {
+        "part_no": 3,
+        "page_no": 7,
+        "section_name": "Reading",
+        "question": "/static/images/questions/reading_p3.png",
+        "nav_prev": 6,
+        "nav_next": null,
+        "callback": "/exam/writing/8",
+        "answers": [
           {
             "id": 67,
             "question_no": 27,
-            "answer_type": "input"
+            "answer_type": "radio",
+            "options": [
+              {
+                "id": 1,
+                "option": "TRUE"
+              },
+              {
+                "id": 2,
+                "option": "FALSE"
+              },
+              {
+                "id": 3,
+                "option": "NOT GIVEN"
+              }
+            ]
           },
           {
             "id": 68,
             "question_no": 28,
-            "answer_type": "input"
+            "answer_type": "radio",
+            "options": [
+              {
+                "id": 1,
+                "option": "TRUE"
+              },
+              {
+                "id": 2,
+                "option": "FALSE"
+              },
+              {
+                "id": 3,
+                "option": "NOT GIVEN"
+              }
+            ]
           },
           {
             "id": 69,
             "question_no": 29,
-            "answer_type": "input"
+            "answer_type": "radio",
+            "options": [
+              {
+                "id": 1,
+                "option": "TRUE"
+              },
+              {
+                "id": 2,
+                "option": "FALSE"
+              },
+              {
+                "id": 3,
+                "option": "NOT GIVEN"
+              }
+            ]
           },
           {
             "id": 70,
             "question_no": 30,
+            "answer_type": "radio",
+            "options": [
+              {
+                "id": 1,
+                "option": "TRUE"
+              },
+              {
+                "id": 2,
+                "option": "FALSE"
+              },
+              {
+                "id": 3,
+                "option": "NOT GIVEN"
+              }
+            ]
+          },
+          {
+            "id": 71,
+            "question_no": 31,
+            "answer_type": "radio",
+            "options": [
+              {
+                "id": 1,
+                "option": "A"
+              },
+              {
+                "id": 2,
+                "option": "B"
+              },
+              {
+                "id": 3,
+                "option": "C"
+              },
+              {
+                "id": 4,
+                "option": "D"
+              }
+            ]
+          },
+          {
+            "id": 72,
+            "question_no": 32,
+            "answer_type": "radio",
+            "options": [
+              {
+                "id": 1,
+                "option": "A"
+              },
+              {
+                "id": 2,
+                "option": "B"
+              },
+              {
+                "id": 3,
+                "option": "C"
+              },
+              {
+                "id": 4,
+                "option": "D"
+              }
+            ]
+          },
+          {
+            "id": 73,
+            "question_no": 33,
+            "answer_type": "radio",
+            "options": [
+              {
+                "id": 1,
+                "option": "A"
+              },
+              {
+                "id": 2,
+                "option": "B"
+              },
+              {
+                "id": 3,
+                "option": "C"
+              },
+              {
+                "id": 4,
+                "option": "D"
+              }
+            ]
+          },
+          {
+            "id": 74,
+            "question_no": 34,
+            "answer_type": "radio",
+            "options": [
+              {
+                "id": 1,
+                "option": "A"
+              },
+              {
+                "id": 2,
+                "option": "B"
+              },
+              {
+                "id": 3,
+                "option": "C"
+              },
+              {
+                "id": 4,
+                "option": "D"
+              }
+            ]
+          },
+          {
+            "id": 75,
+            "question_no": 35,
+            "answer_type": "radio",
+            "options": [
+              {
+                "id": 1,
+                "option": "A"
+              },
+              {
+                "id": 2,
+                "option": "B"
+              },
+              {
+                "id": 3,
+                "option": "C"
+              },
+              {
+                "id": 4,
+                "option": "D"
+              }
+            ]
+          },
+          {
+            "id": 76,
+            "question_no": 36,
+            "answer_type": "radio",
+            "options": [
+              {
+                "id": 1,
+                "option": "A"
+              },
+              {
+                "id": 2,
+                "option": "B"
+              },
+              {
+                "id": 3,
+                "option": "C"
+              },
+              {
+                "id": 4,
+                "option": "D"
+              }
+            ]
+          },
+          {
+            "id": 77,
+            "question_no": 37,
             "answer_type": "input"
+          },
+          {
+            "id": 78,
+            "question_no": 38,
+            "answer_type": "input"
+          },
+          {
+            "id": 79,
+            "question_no": 39,
+            "answer_type": "input"
+          },
+          {
+            "id": 80,
+            "question_no": 40,
+            "answer_type": "input"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "section_name": "Writing",
+    "duration": 30,
+    "parts": [
+      {
+        "part_no": 1,
+        "page_no": 8,
+        "section_name": "Writing",
+        "question": "/static/images/questions/writing_p1.png",
+        "nav_prev": null,
+        "nav_next": 9,
+        "answers": [
+          {
+            "id": 81,
+            "question_no": 1,
+            "answer_type": "input",
+            "field": "text"
+          }
+        ]
+      },
+      {
+        "part_no": 2,
+        "page_no": 9,
+        "section_name": "Writing",
+        "question": "/static/images/questions/writing_p2.png",
+        "nav_prev": 8,
+        "nav_next": 10,
+        "answers": [
+          {
+            "id": 82,
+            "question_no": 2,
+            "answer_type": "input",
+            "field": "text"
+          }
+        ]
+      },
+      {
+        "part_no": 3,
+        "page_no": 10,
+        "section_name": "Writing",
+        "question": "/static/images/questions/writing_p3.png",
+        "nav_prev": 9,
+        "nav_next": null,
+        "callback": "/exam/speaking/11",
+        "answers": [
+          {
+            "id": 83,
+            "question_no": 3,
+            "answer_type": "input",
+            "field": "text"
           }
         ]
       }

@@ -116,6 +116,9 @@ export const submitTest = async (access_token, endpoint, testId, score) => {
   if (!auth) {
     auth = JSON.parse(localStorage.getItem('token'))
   }
+  if (!testId) {
+    testId = JSON.parse(localStorage.getItem('testId'))
+  }
   const submitEndpoint = `/${endpoint}/${testId}`
 
   const postData = ExamPostBuilder(endpoint, score)

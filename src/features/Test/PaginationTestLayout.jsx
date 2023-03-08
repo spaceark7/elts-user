@@ -19,9 +19,7 @@ const PaginationTestLayout = () => {
     }
 
     return null
-    // const totalPages = data
-    //   .reduce((acc, item) => [...acc, ...item.parts.flatMap((num) => num)], [])
-    //   .reduce((acc, item) => [...acc, ...item.answers], []).length
+    //
   })
 
   const topPageRef = useRef()
@@ -41,6 +39,11 @@ const PaginationTestLayout = () => {
     setPage(parseInt(currentPage))
   }, [currentPage])
 
+  const questionPage = Quiz.reduce(
+    (acc, item) => [...acc, ...item.parts.flatMap((num) => num)],
+    []
+  )
+
   // const filtered = Quiz.filter((item) => {
   //   if (item.section_name.toLowerCase() === section.toLowerCase()) {
   //     return item.parts[page - 1]
@@ -57,18 +60,16 @@ const PaginationTestLayout = () => {
 
   const totalPages = data.parts.length
 
-  const navigate = useNavigate()
-
   const handleChange = (event, value) => {
-    setPage(value)
-    navigate(`${value}`, { replace: true })
+    // setPage(value)
+    // navigate(`${value}`, { replace: true })
   }
 
   useEffect(() => {
     if (testId) {
       setTestId(testId)
     }
-
+    console.log('cause')
     topPageRef.current.scrollIntoView({
       behavior: 'smooth',
     })
@@ -105,16 +106,17 @@ const PaginationTestLayout = () => {
 
                 <DotIndicator itemPage={item.page} />
                 <PaginationItem
+                  className='cursor-not-allowed'
+                  disabled={item.page > page}
                   // component={Link}
                   // to={`/test/${page}  `}
                   {...item}
                 />
               </>
             )}
-            boundaryCount={totalPages}
-            count={totalPages}
+            boundaryCount={questionPage.length}
+            count={questionPage.length}
             page={page}
-            onChange={handleChange}
           />
 
           {/* {navigateCallback && page === totalPages && (

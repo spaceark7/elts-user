@@ -3,7 +3,7 @@ export const validateAnswer = (answerKey, userAnswers) => {
 
   userAnswers.forEach((userAnswer) => {
     const answerPart = answerKey.find(
-      (answer) => answer.part_no.toString() === userAnswer.page
+      (answer) => answer.page_no.toString() === userAnswer.page
     )
     if (!answerPart) return
 

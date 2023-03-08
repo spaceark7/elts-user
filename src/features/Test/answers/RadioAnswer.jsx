@@ -27,7 +27,9 @@ const RadioAnswer = ({ data, addAnswer }) => {
 
   return (
     <Box>
-      <Typography variant='overline'>Answer Question No.{data?.id}</Typography>
+      <Typography variant='overline'>
+        Answer Question No.{data?.question_no}
+      </Typography>
       <Box py={2}>
         <FormControl>
           <RadioGroup

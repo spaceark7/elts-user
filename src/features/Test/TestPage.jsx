@@ -21,13 +21,24 @@ const TestPage = () => {
   const { auth } = useAuth()
 
   const [pageData, setPageData] = useState(
-    Quiz.filter((item) => {
-      if (item.section_name.toLowerCase() === section.toLowerCase()) {
-        return item.parts[page - 1]
-      }
-      return null
-    })[0].parts.find((item) => item.part_no === parseInt(page))
+    Quiz.reduce(
+      (acc, item) => [...acc, ...item.parts.flatMap((num) => num)],
+      []
+    ).find((item) => item.page_no === parseInt(page))
   )
+
+  // context[page - 1] ?? context[context.length - 1]
+  // Quiz.reduce(
+  //   (acc, item) => [...acc, ...item.parts.flatMap((num) => num)],
+  //   []
+  // )[page - 1]
+
+  // Quiz.filter((item) => {
+  //   if (item.section_name.toLowerCase() === section.toLowerCase()) {
+  //     return item.parts[page - 1]
+  //   }
+  //   return null
+  // })[0].parts.find((item) => item.part_no === parseInt(page))
 
   // const filtered = useMemo(
   //   () =>
@@ -41,15 +52,15 @@ const TestPage = () => {
   //   [page, section]
   // )
 
-  const filtered = useMemo(() => {
-    const filtered = Quiz.filter((item) => {
-      return item.section_name.toLowerCase() === section.toLowerCase()
-    })[0]
+  // const filtered = useMemo(() => {
+  //   const filtered = Quiz.filter((item) => {
+  //     return item.section_name.toLowerCase() === section.toLowerCase()
+  //   })[0]
 
-    setPageData(filtered.parts[page - 1])
+  //   setPageData(filtered.parts[page - 1])
 
-    return filtered
-  }, [page, section])
+  //   return filtered
+  // }, [section])
 
   // const context = data.parts.find((item) => item.part_no.toString() === page)
 
@@ -129,16 +140,26 @@ const TestPage = () => {
       (item) => item.section_name.toLowerCase() === section.toLowerCase()
     ).parts
 
-    // console.log('answer_key: ', answer_key)
+    console.log('answer_key: ', answer_key)
     // console.log('user_answer: ', answers)
 
     const score = validateAnswer(answer_key, answers)
     const res = await submitTest(auth?.access_token, section, testId, score)
     console.log(res)
+    navigate(`${pageData.callback}`, { replace: true })
   }
 
   useEffect(() => {
+    const data = Quiz.reduce(
+      (acc, item) => [...acc, ...item.parts.flatMap((num) => num)],
+      []
+    ).find((item) => item.page_no === parseInt(page))
+    setPageData(data)
+  }, [page])
+
+  useEffect(() => {
     resetScroll()
+
     // check if answer is equal to the question
 
     if (answerPage?.answers.length === pageData.answers.length) {
@@ -148,13 +169,7 @@ const TestPage = () => {
       // setFilled((prev) => [...prev.filter((item) => item[0] !== page)])
       setFilled((prev) => prev.filter((item) => item !== page))
     }
-  }, [
-    answerPage.answers.length,
-    pageData.answers.length,
-    page,
-    setFilled,
-    pageData,
-  ])
+  }, [answerPage.answers.length, pageData.answers.length, page, setFilled])
 
   return (
     <Box>
@@ -162,9 +177,9 @@ const TestPage = () => {
         maxWidth='xl'
         className='relative  flex flex-col  space-x-2 divide-x-2 divide-slate-600 md:flex-row'
       >
-        <Box className='w-1/2'>
+        <Box className='w-full md:w-1/2 lg:w-8/12'>
           <Typography className='py-2 text-2xl font-bold' align='center'>
-            {filtered.section_name} Section
+            {pageData.section_name} Section
           </Typography>
 
           {pageData.audio && <AudioPlayer audio={pageData?.audio} />}
@@ -185,7 +200,7 @@ const TestPage = () => {
           </Box>
         </Box>
 
-        <Box className='sticky top-20 max-h-[80vh] w-1/2 overflow-y-auto border border-l'>
+        <Box className='sticky top-20 max-h-[80vh] w-full overflow-y-auto border border-l md:w-1/2 lg:w-4/12'>
           <Typography align='center' className=' relative text-2xl font-bold'>
             Answer
           </Typography>
@@ -243,16 +258,10 @@ const TestPage = () => {
                       Next
                     </Button>
                   )}
-                </Box>
-
-                {/* <Button variant='contained' fullWidth onClick={sendAnswer}>
-                  Save Answers
-                </Button> */}
-                {pageData.callback &&
-                  filtered.parts.length.toString() === page && (
+                  {pageData.callback && (
                     <Button
                       variant='contained'
-                      color='info'
+                      color='success'
                       fullWidth
                       onClick={
                         sendAnswer
@@ -262,9 +271,14 @@ const TestPage = () => {
                         // })
                       }
                     >
-                      Proceed Next Section
+                      Submit & Continue
                     </Button>
                   )}
+                </Box>
+
+                {/* <Button variant='contained' fullWidth onClick={sendAnswer}>
+                  Save Answers
+                </Button> */}
               </Box>
             </Box>
           </Box>

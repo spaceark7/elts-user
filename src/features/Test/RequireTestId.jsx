@@ -12,9 +12,9 @@ const RequireTestId = () => {
       setTestId(localTestID)
     }
 
-    return () => {
-      setTestId(null)
-    }
+    // return () => {
+    //   if (!testId && localTestID) setTestId(null)
+    // }
   }, [setTestId, testId, localTestID])
 
   return testId || localTestID ? (
