@@ -1,8 +1,8 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 
 const mimeType = 'audio/webm'
 
-const AudioRecorder = ({ maxRecordingTime }) => {
+const AudioRecorder = ({ maxRecordingTime = 3000 }) => {
   const [permission, setPermission] = useState(false)
   const mediaRecorder = useRef(null)
   const [recordingStatus, setRecordingStatus] = useState('inactive')
@@ -48,7 +48,7 @@ const AudioRecorder = ({ maxRecordingTime }) => {
     setAudioChunks(localAudioChunks)
   }
 
-  const stopRecording = () => {
+  const stopRecording = useCallback(() => {
     setRecordingStatus('inactive')
 
     mediaRecorder.current.stop()
@@ -61,7 +61,18 @@ const AudioRecorder = ({ maxRecordingTime }) => {
 
       setAudioChunks([])
     }
-  }
+  }, [audioChunks])
+
+  // automatically stop recording after maxRecordingTime
+  useEffect(() => {
+    let timer
+    if (recordingStatus === 'recording' && maxRecordingTime) {
+      timer = setTimeout(() => {
+        stopRecording()
+      }, maxRecordingTime)
+    }
+    return () => clearTimeout(timer)
+  }, [recordingStatus, maxRecordingTime, stopRecording])
 
   return (
     <div>
