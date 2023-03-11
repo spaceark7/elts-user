@@ -18,7 +18,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import * as Yup from 'yup'
 import { useState } from 'react'
-import { replace, useFormik } from 'formik'
+import { useFormik } from 'formik'
 import { MuiTelInput } from 'mui-tel-input'
 import Api from '../../api/Api'
 import { config } from '../../api/utils'
@@ -30,6 +30,7 @@ const Register = () => {
   const [error, setError] = useState(false)
   const [errMessage, setErrMessage] = useState('')
   const navigate = useNavigate({ replace: true })
+
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -71,6 +72,7 @@ const Register = () => {
 
       await Api.post('auth/register', registerData, config)
         .then((response) => {
+          console.log(response.data.message)
           navigate('/login', {
             replace: true,
             state: { message: response.data.message },

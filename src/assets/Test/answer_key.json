@@ -237,7 +237,7 @@
   {
     "id": 2,
     "section_name": "Reading",
-    "duration": 30,
+
     "parts": [
       {
         "part_no": 1,
@@ -441,22 +441,22 @@
           {
             "id": 77,
             "question_no": 37,
-            "answer_type": "HEAT"
+            "answer": "HEAT"
           },
           {
             "id": 78,
             "question_no": 38,
-            "answer_type": "LEAF LITTER"
+            "answer": "LEAF LITTER"
           },
           {
             "id": 79,
             "question_no": 39,
-            "answer_type": "SCREEN"
+            "answer": "SCREEN"
           },
           {
             "id": 80,
             "question_no": 40,
-            "answer_type": "ALCOHOL"
+            "answer": "ALCOHOL"
           }
         ]
       }

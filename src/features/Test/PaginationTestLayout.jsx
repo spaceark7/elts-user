@@ -1,34 +1,33 @@
-import { Box, Pagination, PaginationItem, Stack } from '@mui/material'
+import {
+  Box,
+  Pagination,
+  PaginationItem,
+  Stack,
+  Tooltip,
+  Typography,
+} from '@mui/material'
 import React, { useEffect } from 'react'
 
 import Quiz from '../../assets/Test/quiz.json'
 import Timer from './Timer'
-import { Outlet, useNavigate, useParams, useLocation } from 'react-router-dom'
+import { Outlet, useParams, useLocation } from 'react-router-dom'
 import DashboardNavBar from '../../components/DashboardNavBar'
 
 import useAnswers from '../../hooks/useAnswers'
 import { useRef } from 'react'
-import DotIndicator from './DotIndicator'
+
 import { useMemo } from 'react'
 
 const PaginationTestLayout = () => {
-  const { page: currentPage, section } = useParams()
-  const currSection = Quiz.filter((item) => {
-    if (item.section_name.toLowerCase() === section.toLowerCase()) {
-      return item
-    }
-
-    return null
-    //
-  })
+  const { page: currentPage } = useParams()
 
   const topPageRef = useRef()
   const pageRef = useRef()
   const [page, setPage] = React.useState(parseInt(currentPage))
 
   // eslint-disable-next-line no-use-before-define
-  const [data, setData] = React.useState(currSection[0])
-  const { setTestId } = useAnswers()
+
+  const { setTestId, answers } = useAnswers()
   const location = useLocation()
   const testId = location.state?.test_id
 
@@ -39,8 +38,13 @@ const PaginationTestLayout = () => {
     setPage(parseInt(currentPage))
   }, [currentPage])
 
-  const questionPage = Quiz.reduce(
-    (acc, item) => [...acc, ...item.parts.flatMap((num) => num)],
+  // get all the answer on each parts from the Quiz json
+  const questions = useMemo(
+    () =>
+      Quiz.reduce(
+        (acc, item) => [...acc, ...item.parts.flatMap((num) => num)],
+        []
+      ).reduce((acc, item) => [...acc, ...item.answers], []),
     []
   )
 
@@ -57,13 +61,6 @@ const PaginationTestLayout = () => {
   // const answerPage = answers.find((item) => item.page === page) || {
   //   answers: [],
   // }
-
-  const totalPages = data.parts.length
-
-  const handleChange = (event, value) => {
-    // setPage(value)
-    // navigate(`${value}`, { replace: true })
-  }
 
   useEffect(() => {
     if (testId) {
@@ -91,33 +88,50 @@ const PaginationTestLayout = () => {
           <Outlet />
         </Box>
 
-        <Box className='z-20 mx-auto flex w-full items-center justify-center space-x-8 bg-gray-100 bg-white py-4'>
-          <Pagination
-            color='primary'
-            hideNextButton
-            hidePrevButton
-            ref={pageRef}
-            renderItem={(item) => (
-              <>
-                {/* {filled.includes(currentPage.toString()) &&
+        <Box className='z-20 mx-auto w-full items-center justify-center space-x-8 bg-gray-100 bg-white py-4'>
+          <Typography variant='h6' className='mx-auto w-fit font-bold'>
+            Total Question : {questions.length}
+          </Typography>
+          <Box className='z-20 mx-auto flex items-center justify-center space-x-8 bg-gray-100 bg-white py-4'>
+            <Pagination
+              className='mx-auto w-full md:max-w-screen-lg'
+              color='primary'
+              hideNextButton
+              hidePrevButton
+              ref={pageRef}
+              renderItem={(item) => (
+                <>
+                  {answers.find((b) => b.id === item.page) ? (
+                    <Tooltip title='Nice! You answer the question'>
+                      <PaginationItem
+                        className='cursor-not-allowed bg-green-200 font-bold text-emerald-800'
+                        disabled={item.page > page}
+                        // component={Link}
+                        // to={`/test/${page}  `}
+                        {...item}
+                      />
+                    </Tooltip>
+                  ) : (
+                    <PaginationItem
+                      className='cursor-not-allowed'
+                      size='small'
+                      disabled={item.page > page}
+                      // component={Link}
+                      // to={`/test/${page}  `}
+                      {...item}
+                    />
+                  )}
+                  {/* {filled.includes(currentPage.toString()) &&
                   item.page.toString() === currentPage && (
                     <DotIndicator filled={true} />
                   )} */}
-
-                <DotIndicator itemPage={item.page} />
-                <PaginationItem
-                  className='cursor-not-allowed'
-                  disabled={item.page > page}
-                  // component={Link}
-                  // to={`/test/${page}  `}
-                  {...item}
-                />
-              </>
-            )}
-            boundaryCount={questionPage.length}
-            count={questionPage.length}
-            page={page}
-          />
+                </>
+              )}
+              boundaryCount={questions.length}
+              count={questions.length}
+              page={0}
+            />
+          </Box>
 
           {/* {navigateCallback && page === totalPages && (
             <Button

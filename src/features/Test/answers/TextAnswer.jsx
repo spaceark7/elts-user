@@ -1,27 +1,42 @@
 import { Box, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import useAnswers from '../../../hooks/useAnswers'
 
-const TextAnswer = ({ data, addAnswer, type }) => {
+const TextAnswer = ({ data, addAnswer, type, id }) => {
   const { answers } = useAnswers()
-  const { page } = useParams()
-  const contextAnswer = answers
-    .filter((item) => item.page === page)[0]
-    ?.answers.find((item) => item.id === data.id)
-  // console.log(contextAnswer)
-  const [value, setValue] = useState(contextAnswer?.answer ?? '')
-  const wordCount = value
-    ? value
+  const [value, setValue] = useState('')
+  const [contextAnswer, setContextAnswer] = useState(() => {
+    return (
+      answers.find((item) => item.id === data.id) ?? { id: data.id, answer: '' }
+    )
+  })
+
+  useEffect(() => {
+    const answer = answers.find((item) => item.id === data.id) ?? {
+      id: data.id,
+      answer: '',
+    }
+    setContextAnswer(answer)
+  }, [answers, data.id])
+
+  const wordCount = useMemo(() => {
+    if (value) {
+      return value
         .trim()
         .split(/\s+/)
         .filter((word) => word.length >= 1).length
-    : 0
+    }
+    return 0
+  }, [value])
 
-  const handleChange = (event) => {
-    setValue(event.target.value)
+  const handleChange = useCallback((event) => {
+    setValue(event.target.value.toUpperCase())
     // handleAnswer({ id_quiz: data.id_quiz, answer: value })
-  }
+  }, [])
+
+  useEffect(() => {
+    setValue(contextAnswer.answer)
+  }, [contextAnswer])
 
   return (
     <Box>
@@ -34,22 +49,19 @@ const TextAnswer = ({ data, addAnswer, type }) => {
           value={value}
           onBlur={() => addAnswer({ id: data.id, answer: value })}
           onChange={handleChange}
-          id='outlined-textarea'
+          id={`outlined-textarea-${id}`}
           autoComplete='off'
           label='Answer'
           type={type}
           placeholder='Fill your answer here'
-          multiline={type === 'text' ? true : false}
+          multiline={type === 'text'}
         />
 
         {type === 'text' && (
           <Box className='flex justify-end'>
-            <Typography
-              className='w-full text-right'
-              variant='caption'
-            >{`You have write ${wordCount} word${
-              wordCount > 2 ? 's' : ''
-            }`}</Typography>
+            <Typography className='w-full text-right' variant='caption'>
+              {`You have write ${wordCount} word${wordCount > 2 ? 's' : ''}`}
+            </Typography>
           </Box>
         )}
       </Box>

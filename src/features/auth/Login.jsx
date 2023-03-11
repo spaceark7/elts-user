@@ -53,9 +53,7 @@ const Login = () => {
         }
         severity='success'
       >
-        {/* {location.state?.message} */}
-        Registration Success! Please confirm to administrator for activating
-        your account
+        {location.state?.message}
       </Alert>
     </Collapse>
   )
@@ -205,13 +203,29 @@ const Login = () => {
   })
 
   useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        setError(false)
+      }, 3000)
+    }
+  }, [error])
+
+  useEffect(() => {
+    if (success) {
+      setTimeout(() => {
+        setSuccess(false)
+      }, 3000)
+    }
+  }, [success])
+
+  useEffect(() => {
     const token = localStorage.getItem('token')
     const localToken = JSON.parse(token)
 
     if (localToken !== null || auth?.access_token) {
       navigate('/dashboard', { replace: true })
     }
-  }, [])
+  }, [auth?.access_token, navigate])
 
   return (
     <>

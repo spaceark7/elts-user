@@ -1,5 +1,5 @@
 import { Box, Button, Container, Typography } from '@mui/material'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import RadioAnswer from './answers/RadioAnswer'
 import TextAnswer from './answers/TextAnswer'
 import { ArrowBack, ArrowForward } from '@mui/icons-material'
@@ -13,6 +13,7 @@ import { validateAnswer } from './helper/ValidateAnswer'
 import AnswerKey from '../../assets/Test/answer_key.json'
 import { submitTest } from '../../api/Api'
 import useAuth from '../../hooks/useAuth'
+import AudioRecorder from './components/AudioRecorder'
 const TestPage = () => {
   const { answers, setAnswers, setFilled, testId } = useAnswers()
   const { page, section } = useParams()
@@ -27,108 +28,43 @@ const TestPage = () => {
     ).find((item) => item.page_no === parseInt(page))
   )
 
-  // context[page - 1] ?? context[context.length - 1]
-  // Quiz.reduce(
-  //   (acc, item) => [...acc, ...item.parts.flatMap((num) => num)],
-  //   []
-  // )[page - 1]
-
-  // Quiz.filter((item) => {
-  //   if (item.section_name.toLowerCase() === section.toLowerCase()) {
-  //     return item.parts[page - 1]
-  //   }
-  //   return null
-  // })[0].parts.find((item) => item.part_no === parseInt(page))
-
-  // const filtered = useMemo(
-  //   () =>
-  //     Quiz.filter((item) => {
-  //       if (item.section_name.toLowerCase() === section.toLowerCase()) {
-  //         setPageData(item.parts[page - 1])
-  //         return item.parts[page - 1]
-  //       }
-  //       return null
-  //     })[0],
-  //   [page, section]
-  // )
-
-  // const filtered = useMemo(() => {
-  //   const filtered = Quiz.filter((item) => {
-  //     return item.section_name.toLowerCase() === section.toLowerCase()
-  //   })[0]
-
-  //   setPageData(filtered.parts[page - 1])
-
-  //   return filtered
-  // }, [section])
-
-  // const context = data.parts.find((item) => item.part_no.toString() === page)
-
   const answerPage = useMemo(() => {
     return answers.find((item) => item.page === page) ?? { answers: [] }
   }, [answers, page])
-  // const answerPage = answers.find((item) => item.page === page) || {
-  //   answers: [],
-  // }
 
-  const addAnswer = (data) => {
-    const currPage = answers.find((item) => item.page === page)
-
-    if (data.answer !== '') {
-      if (!currPage) {
-        setAnswers((prev) => [
-          ...prev,
-          {
-            page,
-            answers: [data],
-          },
-        ])
-      } else {
-        const newAnswer = currPage.answers.filter((item) => item.id !== data.id)
-        newAnswer.push(data)
-        newAnswer.sort((a, b) => a.id - b.id)
-        setAnswers((prev) => [
-          ...prev.filter((item) => item.page !== page),
-          {
-            page,
-            answers: newAnswer,
-          },
-        ])
-
-        answers.sort((a, b) => a.page - b.page)
-
-        // remove empty value on answers array
-      }
-    } else {
-      const newAnswer = currPage.answers.filter((item) => item.id !== data.id)
-      console.log('null :', newAnswer)
-      setAnswers((prev) => [
-        ...prev.filter((item) => item.page !== page),
-        {
-          page,
-          answers: newAnswer,
-        },
-      ])
-    }
-
-    // remove old answer
-    // const newAnswer =
-    //   answers
-    //     .filter((item) => item.page === page)[0]
-    //     ?.answers.filter((item) => item.id !== data.id) || []
-    // console.log('bef a ', newAnswer)
-    // newAnswer.push(data)
-    // console.log('aft a ', newAnswer)
-    // newAnswer.sort((a, b) => a.id - b.id)
-
-    // setAnswer(newAnswer)
-
-    // setAnswer((prev) => [
-    //   ...prev,
-    //   newAnswer.sort((a, b) => a.id_quiz - b.id_quiz),
-    // ])
-    // console.log('final: ', answer)
+  const handleRadioClick = (event) => {
+    event.stopPropagation()
   }
+
+  const addAnswer = useCallback(
+    (data) => {
+      // add new answers to the setAnswers state compare to the previous answers in the questions
+      const currAnswer = answers.find((item) => item.id === data.id)
+
+      if (data.answer.trim() !== '' && !currAnswer) {
+        setAnswers((prevAnswers) => {
+          const newAnswers = [...prevAnswers, data]
+          localStorage.setItem('answers', JSON.stringify(newAnswers))
+          return newAnswers
+        })
+      } else if (data.answer.trim() !== '') {
+        const updatedAnswers = answers.map((item) =>
+          item.id === data.id ? data : item
+        )
+        setAnswers((prevAnswers) => {
+          localStorage.setItem('answers', JSON.stringify(updatedAnswers))
+          return updatedAnswers
+        })
+      } else {
+        const updatedAnswers = answers.filter((item) => item.id !== data.id)
+        setAnswers((prevAnswers) => {
+          localStorage.setItem('answers', JSON.stringify(updatedAnswers))
+          return updatedAnswers
+        })
+      }
+    },
+    [answers, setAnswers]
+  )
 
   const resetScroll = () => {
     answerBoxRef.current.scrollIntoView({})
@@ -136,18 +72,28 @@ const TestPage = () => {
 
   const sendAnswer = async () => {
     answers.sort((a, b) => a.page - b.page)
-    const answer_key = AnswerKey.find(
-      (item) => item.section_name.toLowerCase() === section.toLowerCase()
-    ).parts
+    if (
+      section.toLowerCase() === 'listening' ||
+      section.toLowerCase() === 'reading'
+    ) {
+      const answer_key = AnswerKey.find(
+        (item) => item.section_name.toLowerCase() === section.toLowerCase()
+      ).parts
+      console.log('answer_key: ', answer_key)
+      // console.log('user_answer: ', answers)
 
-    console.log('answer_key: ', answer_key)
-    // console.log('user_answer: ', answers)
-
-    const score = validateAnswer(answer_key, answers)
-    const res = await submitTest(auth?.access_token, section, testId, score)
-    console.log(res)
-    navigate(`${pageData.callback}`, { replace: true })
+      const score = validateAnswer(answer_key, answers)
+      const res = await submitTest(auth?.access_token, section, testId, score)
+      console.log(res)
+      navigate(`${pageData.callback}`, { replace: true })
+    } else {
+      navigate(`${pageData.callback}`, { replace: true })
+    }
   }
+
+  useEffect(() => {
+    resetScroll()
+  }, [page])
 
   useEffect(() => {
     const data = Quiz.reduce(
@@ -158,8 +104,6 @@ const TestPage = () => {
   }, [page])
 
   useEffect(() => {
-    resetScroll()
-
     // check if answer is equal to the question
 
     if (answerPage?.answers.length === pageData.answers.length) {
@@ -205,7 +149,36 @@ const TestPage = () => {
             Answer
           </Typography>
           <Box ref={answerBoxRef} p={2} className='relative space-y-2'>
-            {pageData.answers.map((item, index) => {
+            {pageData.answers.map((answer) => (
+              <Box
+                key={answer.id}
+                ref={answer.id === answerPage.currAns ? answerBoxRef : null}
+                onClick={handleRadioClick}
+              >
+                {answer.answer_type === 'radio' ? (
+                  <RadioAnswer
+                    data={answer}
+                    addAnswer={addAnswer}
+                    answerPage={answerPage}
+                  />
+                ) : answer.answer_type === 'media' ? (
+                  <AudioRecorder
+                    data={answer}
+                    addAnswer={addAnswer}
+                    answerPage={answerPage}
+                  />
+                ) : (
+                  <TextAnswer
+                    data={answer}
+                    id={answer.id}
+                    addAnswer={addAnswer}
+                    type={answer.field}
+                  />
+                )}
+              </Box>
+            ))}
+
+            {/* {pageData.answers.map((item, index) => {
               switch (item.answer_type) {
                 case 'input':
                   return (
@@ -228,7 +201,7 @@ const TestPage = () => {
                 default:
                   return null
               }
-            })}
+            })} */}
             <Box className=' z-50 bg-white '>
               <Box className='flex flex-col space-y-4'>
                 <Box className='flex space-x-4'>

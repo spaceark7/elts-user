@@ -24,7 +24,7 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import useAnswers from '../../hooks/useAnswers'
 
-const ExamInfo = ({ data }) => {
+const ExamInfo = ({ data, isSingleData }) => {
   const [open, setOpen] = React.useState(false)
 
   const { auth } = useAuth()
@@ -131,7 +131,12 @@ const ExamInfo = ({ data }) => {
         </form>
       </DialogContainer>
 
-      <Card raised className='max-w-screen col-span-2 py-4 lg:col-span-1 '>
+      <Card
+        raised
+        className={`${
+          isSingleData && 'col-span-2 lg:col-span-2'
+        } 'max-w-screen lg:col-span-1' col-span-2 py-4`}
+      >
         <CardContent>
           <Box className='mb-2 flex justify-between'>
             <Typography color='MenuText' variant='h6'>
@@ -251,11 +256,25 @@ const ExamInfo = ({ data }) => {
 }
 
 const UserExam = () => {
-  const { auth } = useAuth()
-
+  const { auth, setAuth } = useAuth()
+  const navigate = useNavigate()
   const { exam, error, isValidating, isLoading } = useExamList(
     auth.access_token
   )
+
+  const handleLogout = () => {
+    setAuth(null)
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    localStorage.removeItem('expiryTime')
+    navigate('/login', {
+      replace: true,
+      state: {
+        from: '/exam',
+        message: 'Your Login Session is expired! Please Re-Login.',
+      },
+    })
+  }
 
   let content
   if (isLoading) {
@@ -266,8 +285,11 @@ const UserExam = () => {
     )
   } else if (error) {
     content = <Typography>Something went wrong</Typography>
+    handleLogout()
   } else if (exam) {
-    content = exam.map((item) => <ExamInfo key={item.id} data={item} />)
+    content = exam.map((item) => (
+      <ExamInfo isSingleData={exam.length === 1} key={item.id} data={item} />
+    ))
   } else {
     content = <Typography>Nothing Happen</Typography>
   }

@@ -357,7 +357,7 @@
           {
             "id": 43,
             "question_no": 3,
-            "answer_type": "input",
+            "answer_type": "radio",
             "options": [
               {
                 "id": 1,
@@ -830,7 +830,8 @@
         "section_name": "Writing",
         "question": "/static/images/questions/writing_p2.png",
         "nav_prev": 8,
-        "nav_next": 10,
+        "nav_next": null,
+        "callback": "/exam/speaking/10",
         "answers": [
           {
             "id": 82,
@@ -839,21 +840,56 @@
             "field": "text"
           }
         ]
-      },
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "section_name": "Speaking",
+    "duration": 30,
+    "parts": [
       {
-        "part_no": 3,
+        "part_no": 1,
         "page_no": 10,
-        "section_name": "Writing",
-        "question": "/static/images/questions/writing_p3.png",
-        "nav_prev": 9,
-        "nav_next": null,
-        "callback": "/exam/speaking/11",
+        "section_name": "Speaking",
+        "question": "/static/images/questions/speaking_p1.png",
+        "nav_prev": null,
+        "nav_next": 11,
         "answers": [
           {
             "id": 83,
+            "question_no": 1,
+            "answer_type": "media"
+          }
+        ]
+      },
+      {
+        "part_no": 2,
+        "page_no": 11,
+        "section_name": "Speaking",
+        "question": "/static/images/questions/speaking_p2.png",
+        "nav_prev": 10,
+        "nav_next": 12,
+        "answers": [
+          {
+            "id": 84,
+            "question_no": 2,
+            "answer_type": "media"
+          }
+        ]
+      },
+      {
+        "part_no": 3,
+        "page_no": 12,
+        "section_name": "Speaking",
+        "question": "/static/images/questions/speaking_p3.png",
+        "nav_prev": 11,
+        "nav_next": 13,
+        "answers": [
+          {
+            "id": 85,
             "question_no": 3,
-            "answer_type": "input",
-            "field": "text"
+            "answer_type": "media"
           }
         ]
       }

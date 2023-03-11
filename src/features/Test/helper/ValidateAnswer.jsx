@@ -19,7 +19,7 @@ export const validateAnswer = (answerKey, userAnswers) => {
           userAns.answer.toLowerCase() ===
             answer.alternate_answer.toLowerCase())
       ) {
-        score += 2
+        ++score
       }
     })
   })
