@@ -1,30 +1,48 @@
 export const validateAnswer = (answerKey, userAnswers) => {
-  let score = 0
+  const answerMap = new Map(answerKey.map((item) => [item.id, item]))
 
-  userAnswers.forEach((userAnswer) => {
-    const answerPart = answerKey.find(
-      (answer) => answer.page_no.toString() === userAnswer.page
-    )
-    if (!answerPart) return
+  const score = userAnswers.reduce((acc, curr) => {
+    const answer = answerMap.get(curr.id)
+    if (!answer) return acc
 
-    userAnswer.answers.forEach((userAns) => {
-      const answer = answerPart.answers.find(
-        (ans) => ans.question_no === userAns.id
-      )
-      if (!answer) return
+    if (
+      curr.answer === answer.answer ||
+      curr.answer === answer.alternate_answer
+    ) {
+      return acc + 1
+    }
 
-      if (
-        userAns.answer.toLowerCase() === answer.answer.toLowerCase() ||
-        (answer.alternate_answer &&
-          userAns.answer.toLowerCase() ===
-            answer.alternate_answer.toLowerCase())
-      ) {
-        ++score
-      }
-    })
-  })
+    return acc
+  }, 0)
 
   return score
+
+  // let score = 0
+
+  // userAnswers.forEach((userAnswer) => {
+  //   const answerPart = answerKey.find(
+  //     (answer) => answer.page_no.toString() === userAnswer.page
+  //   )
+  //   if (!answerPart) return
+
+  //   userAnswer.answers.forEach((userAns) => {
+  //     const answer = answerPart.answers.find(
+  //       (ans) => ans.question_no === userAns.id
+  //     )
+  //     if (!answer) return
+
+  //     if (
+  //       userAns.answer.toLowerCase() === answer.answer.toLowerCase() ||
+  //       (answer.alternate_answer &&
+  //         userAns.answer.toLowerCase() ===
+  //           answer.alternate_answer.toLowerCase())
+  //     ) {
+  //       ++score
+  //     }
+  //   })
+  // })
+
+  // return score
 
   //   return answerKey.reduce((score, answerPart) => {
   //     const userPart = userAnswers.find(

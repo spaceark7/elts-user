@@ -98,28 +98,35 @@ const PaginationTestLayout = () => {
               color='primary'
               hideNextButton
               hidePrevButton
+              size='small'
               ref={pageRef}
               renderItem={(item) => (
                 <>
+                  {console.log(item)}
                   {answers.find((b) => b.id === item.page) ? (
                     <Tooltip title='Nice! You answer the question'>
                       <PaginationItem
-                        className='cursor-not-allowed bg-green-200 font-bold text-emerald-800'
-                        disabled={item.page > page}
+                        className='cursor-not-allowed bg-green-200 font-semibold text-emerald-800'
+                        size='small'
                         // component={Link}
                         // to={`/test/${page}  `}
-                        {...item}
-                      />
+                        {...(item,
+                        { page: questions[item.page - 1].question_no })}
+                      >
+                        {questions[item.page - 1].question_no}
+                      </PaginationItem>
                     </Tooltip>
                   ) : (
                     <PaginationItem
                       className='cursor-not-allowed'
                       size='small'
-                      disabled={item.page > page}
                       // component={Link}
                       // to={`/test/${page}  `}
-                      {...item}
-                    />
+                      {...(item,
+                      { page: questions[item.page - 1].question_no })}
+                    >
+                      {questions[item.page - 1].question_no}
+                    </PaginationItem>
                   )}
                   {/* {filled.includes(currentPage.toString()) &&
                   item.page.toString() === currentPage && (
