@@ -1,11 +1,4 @@
-import {
-  Backdrop,
-  Box,
-  Button,
-  CircularProgress,
-  Container,
-  Typography,
-} from '@mui/material'
+import { Box, Button, Container, Typography } from '@mui/material'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import RadioAnswer from './answers/RadioAnswer'
 import TextAnswer from './answers/TextAnswer'
@@ -107,7 +100,7 @@ const TestPage = () => {
       }, 2000)
 
       console.log(res)
-      // navigate(`${pageData.callback}`, { replace: true })
+      navigate(`${pageData.callback}`, { replace: true })
     } else {
       navigate(`${pageData.callback}`, { replace: true })
     }
@@ -124,6 +117,21 @@ const TestPage = () => {
     ).find((item) => item.page_no === parseInt(page))
     setPageData(data)
   }, [page])
+
+  useEffect(() => {
+    const handleBackButton = (event) => {
+      event.preventDefault()
+      event.stopPropagation()
+      return false
+    }
+
+    window.history.pushState(null, '', window.location.pathname)
+    window.addEventListener('popstate', handleBackButton)
+
+    return () => {
+      window.removeEventListener('popstate', handleBackButton)
+    }
+  }, [section])
 
   // useEffect(() => {
   //   // check if answer is equal to the question

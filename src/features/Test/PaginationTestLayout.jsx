@@ -63,6 +63,19 @@ const PaginationTestLayout = () => {
   // }
 
   useEffect(() => {
+    const handlePopState = () => {
+      window.history.pushState(null, null, window.location.pathname)
+    }
+
+    window.history.pushState(null, null, window.location.pathname)
+    window.addEventListener('popstate', handlePopState)
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState)
+    }
+  }, [])
+
+  useEffect(() => {
     if (testId) {
       setTestId(testId)
     }
