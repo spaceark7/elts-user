@@ -2,7 +2,6 @@ import {Outlet, Route, Routes} from 'react-router-dom'
 import DashLayout from './components/DashLayout'
 import NotFound from './components/Error/NotFound'
 import Layout from './components/Layout'
-
 import RequireAuth from './components/RequireAuth'
 import AdminDashboard from './features/admin/AdminDashboard'
 import Validation from './features/validation/Validation'
