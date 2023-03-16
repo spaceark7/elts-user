@@ -4,7 +4,7 @@ import { AnswersProvider } from '../context/AnswerContext'
 import useAuth from '../hooks/useAuth'
 import useClearLocalStorage from '../hooks/useClearLocalStorage'
 
-const RequireAuth = ({ allowedRoles }) => {
+const RequireAuth = () => {
   const { auth } = useAuth()
 
   // get token from local storage
@@ -23,7 +23,7 @@ const RequireAuth = ({ allowedRoles }) => {
     }
   }, [activeTest, answers])
 
-  return auth?.user && auth?.access_token && localToken ? (
+  return auth?.access_token && localToken ? (
     <AnswersProvider>
       <Outlet />
     </AnswersProvider>

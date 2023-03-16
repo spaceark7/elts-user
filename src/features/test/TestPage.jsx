@@ -230,7 +230,7 @@ const TestPage = () => {
 
       <Box>
         <Box>
-          <Timer expiryTime={20} />
+          <Timer expiryTime={pageData} />
         </Box>
         <Container
           maxWidth='xl'

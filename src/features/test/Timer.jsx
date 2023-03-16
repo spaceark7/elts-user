@@ -6,8 +6,9 @@ const Timer = ({ expiryTime }) => {
   const [open, setOpen] = useState(false)
   const [expiry, setExpiry] = useState(() => {
     // ambil dari localStorage jika ada atau gunakan expiryTime
-    const localExpiryTime = JSON.parse(localStorage.getItem('expiryTime'))
-    return localExpiryTime ?? expiryTime
+    const now = new Date()
+    const future = now.getTime() + expiryTime * 1000
+    return future
   })
 
   const handleOpenAlert = () => {
