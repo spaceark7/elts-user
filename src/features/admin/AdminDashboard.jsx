@@ -3,10 +3,10 @@ import { Box, Container, Grid, Typography } from '@mui/material'
 import React, { useEffect } from 'react'
 
 import { Article, AssignmentInd, FindInPage } from '@mui/icons-material'
-import TotalCard from '../../components/Dashboard/TestCard'
+import TotalCard from '../../components/dashboard/TestCard'
 import useAuth from '../../hooks/useAuth'
-import UserCard from '../../components/Dashboard/UserCard'
-import InstructionCard from '../../components/Dashboard/InstructionCard'
+import UserCard from '../../components/dashboard/UserCard'
+import InstructionCard from '../../components/dashboard/InstructionCard'
 import Api from '../../api/Api'
 import { useNavigate } from 'react-router-dom'
 

@@ -38,7 +38,7 @@ const DashboardNavBar = (props) => {
         >
           <MenuIcon fontSize='small' />
         </IconButton>
-        {timerComponent !== null && timerComponent}
+
         <Avatar
           onClick={() => setOpenAccountPopover(true)}
           ref={settingsRef}

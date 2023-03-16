@@ -9,7 +9,7 @@ import {
 import React, { useEffect } from 'react'
 
 import Quiz from '../../assets/Test/quiz.json'
-import Timer from './Timer'
+
 import { Outlet, useParams, useLocation } from 'react-router-dom'
 import DashboardNavBar from '../../components/DashboardNavBar'
 
@@ -19,7 +19,7 @@ import { useRef } from 'react'
 import { useMemo } from 'react'
 
 const PaginationTestLayout = () => {
-  const { page: currentPage } = useParams()
+  const { page: currentPage, section } = useParams()
 
   const topPageRef = useRef()
   const pageRef = useRef()
@@ -38,42 +38,30 @@ const PaginationTestLayout = () => {
     setPage(parseInt(currentPage))
   }, [currentPage])
 
-  // get all the answer on each parts from the Quiz json
-  const questions = useMemo(
-    () =>
-      Quiz.reduce(
-        (acc, item) => [...acc, ...item.parts.flatMap((num) => num)],
-        []
-      ).reduce((acc, item) => [...acc, ...item.answers], []),
-    []
-  )
-
-  // const filtered = Quiz.filter((item) => {
-  //   if (item.section_name.toLowerCase() === section.toLowerCase()) {
-  //     return item.parts[page - 1]
-  //   }
-  // })[0]
-
-  // const context = filtered.parts.find(
-  //   (item) => item.part_no.toString() === currentPage
+  // useNavigationBlocker(
+  //   '/dashboard',
+  //   'Your test will be invalidated automatically if you leave the page'
   // )
 
-  // const answerPage = answers.find((item) => item.page === page) || {
-  //   answers: [],
-  // }
+  // get all the answer on each parts from the Quiz json
+  // const questions = useMemo(
+  //   () =>
+  //     Quiz.reduce(
+  //       (acc, item) => [...acc, ...item.parts.flatMap((num) => num)],
+  //       []
+  //     ).reduce((acc, item) => [...acc, ...item.answers], []),
+  //   []
+  // )
+  const questions = useMemo(
+    () =>
+      Quiz.filter(
+        (item) => item.section_name.toLowerCase() === section.toLowerCase()
+      )
+        .flatMap((num) => num.parts)
+        .flatMap((num) => num.answers),
 
-  useEffect(() => {
-    const handlePopState = () => {
-      window.history.pushState(null, null, window.location.pathname)
-    }
-
-    window.history.pushState(null, null, window.location.pathname)
-    window.addEventListener('popstate', handlePopState)
-
-    return () => {
-      window.removeEventListener('popstate', handlePopState)
-    }
-  }, [])
+    [section]
+  )
 
   useEffect(() => {
     if (testId) {
@@ -92,7 +80,7 @@ const PaginationTestLayout = () => {
       <Stack className=' mx-auto min-h-screen justify-center ' spacing={2}>
         <DashboardNavBar
           desktop={true}
-          timerComponent={<Timer expiryTime={time} />}
+          // timerComponent={<Timer expiryTime={time} />}
         />
 
         {/* Render Page component */}
@@ -113,56 +101,53 @@ const PaginationTestLayout = () => {
               hidePrevButton
               size='small'
               ref={pageRef}
-              renderItem={(item) => (
-                <>
-                  {console.log(item)}
-                  {answers.find((b) => b.id === item.page) ? (
-                    <Tooltip title='Nice! You answer the question'>
+              renderItem={(item) => {
+                item = {
+                  ...item,
+                  question_section: section,
+                }
+
+                return (
+                  <>
+                    {answers.find(
+                      (b) =>
+                        b.question_no === item.page &&
+                        b.question_section === section
+                    ) ? (
+                      <Tooltip title='Nice! You answer the question'>
+                        <PaginationItem
+                          className='cursor-not-allowed bg-green-200 font-semibold text-emerald-800'
+                          size='small'
+                          {...(item,
+                          {
+                            page: questions[item.page - 1].question_no,
+                          })}
+                        >
+                          {questions[item.page - 1].question_no}
+                        </PaginationItem>
+                      </Tooltip>
+                    ) : (
                       <PaginationItem
-                        className='cursor-not-allowed bg-green-200 font-semibold text-emerald-800'
+                        className='cursor-not-allowed'
                         size='small'
                         // component={Link}
                         // to={`/test/${page}  `}
                         {...(item,
-                        { page: questions[item.page - 1].question_no })}
+                        {
+                          page: questions[item.page - 1].question_no,
+                        })}
                       >
                         {questions[item.page - 1].question_no}
                       </PaginationItem>
-                    </Tooltip>
-                  ) : (
-                    <PaginationItem
-                      className='cursor-not-allowed'
-                      size='small'
-                      // component={Link}
-                      // to={`/test/${page}  `}
-                      {...(item,
-                      { page: questions[item.page - 1].question_no })}
-                    >
-                      {questions[item.page - 1].question_no}
-                    </PaginationItem>
-                  )}
-                  {/* {filled.includes(currentPage.toString()) &&
-                  item.page.toString() === currentPage && (
-                    <DotIndicator filled={true} />
-                  )} */}
-                </>
-              )}
+                    )}
+                  </>
+                )
+              }}
               boundaryCount={questions.length}
               count={questions.length}
               page={0}
             />
           </Box>
-
-          {/* {navigateCallback && page === totalPages && (
-            <Button
-              variant='contained'
-              color='secondary'
-              className='justify-self-end'
-              onClick={gotoNextSection}
-            >
-              Proceed to Next Section
-            </Button>
-          )} */}
         </Box>
       </Stack>
     </Box>

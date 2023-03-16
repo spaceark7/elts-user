@@ -1,6 +1,8 @@
+import { useEffect } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 import { AnswersProvider } from '../context/AnswerContext'
 import useAuth from '../hooks/useAuth'
+import useClearLocalStorage from '../hooks/useClearLocalStorage'
 
 const RequireAuth = ({ allowedRoles }) => {
   const { auth } = useAuth()
@@ -9,7 +11,19 @@ const RequireAuth = ({ allowedRoles }) => {
   const token = localStorage.getItem('token')
   const localToken = JSON.parse(token)
 
-  return (auth?.user && auth?.access_token) || localToken ? (
+  const answers = localStorage.getItem('answers')
+  const activeTest = localStorage.getItem('activeTest')
+
+  useClearLocalStorage()
+
+  useEffect(() => {
+    if (answers && activeTest) {
+      localStorage.removeItem('answers')
+      localStorage.removeItem('activeTest')
+    }
+  }, [activeTest, answers])
+
+  return auth?.user && auth?.access_token && localToken ? (
     <AnswersProvider>
       <Outlet />
     </AnswersProvider>

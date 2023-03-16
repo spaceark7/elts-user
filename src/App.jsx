@@ -1,23 +1,22 @@
 import { Outlet, Route, Routes } from 'react-router-dom'
 import DashLayout from './components/DashLayout'
-import NotFound from './components/Error/NotFound'
+import NotFound from './components/error/NotFound'
 import Layout from './components/Layout'
 
 import RequireAuth from './components/RequireAuth'
-import { AnswersProvider } from './context/AnswerContext'
 import AdminDashboard from './features/admin/AdminDashboard'
 import Validation from './features/validation/Validation'
 import Login from './features/auth/Login'
 import Register from './features/auth/Register'
-import ChangePassword from './features/ChangePassword/ChangePassword'
+import ChangePassword from './features/changePassword/ChangePassword'
 import ExamResult from './features/exams/ExamResult'
 import UserExam from './features/exams/UserExam'
 
-import PaginationTestLayout from './features/Test/PaginationTestLayout'
-import TestPage from './features/Test/TestPage'
+import PaginationTestLayout from './features/test/PaginationTestLayout'
+import TestPage from './features/test/TestPage'
 
-import HomePage from './Pages/HomePage'
-import RequireTestId from './features/Test/RequireTestId'
+import HomePage from './pages/HomePage'
+import RequireTestId from './features/test/RequireTestId'
 
 function App() {
   return (

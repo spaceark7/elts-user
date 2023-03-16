@@ -1,9 +1,9 @@
 import { Box, Button, Container, Typography } from '@mui/material'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import RadioAnswer from './answers/RadioAnswer'
-import TextAnswer from './answers/TextAnswer'
+import RadioAnswer from './components/RadioAnswer'
+import TextAnswer from './components/TextAnswer'
 import { ArrowBack, ArrowForward } from '@mui/icons-material'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, useBeforeUnload } from 'react-router-dom'
 import Quiz from '../../assets/Test/quiz.json'
 import useAnswers from '../../hooks/useAnswers'
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.min.css'
@@ -11,10 +11,13 @@ import InnerImageZoom from 'react-inner-image-zoom'
 import AudioPlayer from '../../components/test/Player'
 import { validateAnswer } from './helper/ValidateAnswer'
 import AnswerKey from '../../assets/Test/answer_key.json'
-import { submitTest } from '../../api/Api'
+import { submitTest, submitTestNoValidation } from '../../api/Api'
 import useAuth from '../../hooks/useAuth'
 import AudioRecorder from './components/AudioRecorder'
 import SubmitProgress from './components/SubmitProgress'
+import useInvalidateOnLeave from '../../hooks/useTestNavigationPrevention'
+import { LISTENING, READING, SPEAKING, WRITING } from '../../constant'
+import Timer from './Timer'
 
 const TestPage = () => {
   const { answers, setAnswers, testId } = useAnswers()
@@ -47,7 +50,10 @@ const TestPage = () => {
 
       if (data.answer.trim() !== '' && !currAnswer) {
         setAnswers((prevAnswers) => {
-          const newAnswers = [...prevAnswers, data]
+          const newAnswers = [
+            ...prevAnswers,
+            { ...data, question_section: section },
+          ]
           localStorage.setItem('answers', JSON.stringify(newAnswers))
           return newAnswers
         })
@@ -67,44 +73,141 @@ const TestPage = () => {
         })
       }
     },
-    [answers, setAnswers]
+    [answers, setAnswers, section]
   )
 
   const resetScroll = () => {
     answerBoxRef.current.scrollIntoView({})
   }
 
+  /**
+   * This function is used to submit the answer sheet. It checks the answer key and calculates the score of the student.
+   * It then uses the submitTest function to submit the test to the server.
+   * @param {string} access_token - the access token of the user
+   * @param {string} section - the section of the test
+   * @param {string} testId - the id of the test
+   * @param {number} score - the score of the student
+   */
+
   const sendAnswer = async () => {
+    // sort the answer by page number
     answers.sort((a, b) => a.page - b.page)
+
+    //get the user answer of the section
+    const userAnswers = answers.filter(
+      (item) => item.question_section.toLowerCase() === section.toLowerCase()
+    )
+    // check if the section is listening or reading
     if (
-      section.toLowerCase() === 'listening' ||
-      section.toLowerCase() === 'reading'
+      section.toLowerCase() === LISTENING ||
+      section.toLowerCase() === READING
     ) {
-      const answer_key = AnswerKey.find(
+      // get the answer key of the section
+      const answerKey = AnswerKey.find(
         (item) => item.section_name.toLowerCase() === section.toLowerCase()
       ).parts.flatMap((item) => item.answers)
-      console.log('answer_key: ', answer_key)
-      // console.log('user_answer: ', answers)
+      // validate the answer
+      const score = validateAnswer(answerKey, userAnswers)
+      // console.log('score: ', score)
+      // console.log('testId: ', testId)
 
-      const score = validateAnswer(answer_key, answers)
-      console.log('score: ', score)
-      console.log('testId: ', testId)
+      // set the submitting state to true
       setIsSubmitting(true)
+      // send the answer to the server
       const res = await submitTest(auth?.access_token, section, testId, score)
       if (res.success) {
-        console.log(res.message)
+        // console.log(res.message)
+        // set the success message to the response's message
+        setSuccessMessage(res)
+      }
+      // set the submitting state to false after 2 seconds
+      setTimeout(() => {
+        setIsSubmitting(false)
+      }, 2000)
+
+      // console.log(res)
+      // navigate to the next section
+      navigate(`${pageData.callback}`, { replace: true })
+    } else if (section.toLowerCase() === WRITING) {
+      setIsSubmitting(true)
+      const res = await submitTestNoValidation(
+        auth?.access_token,
+        section,
+        testId,
+        userAnswers
+      )
+      if (res.success) {
+        // console.log(res.message)
+        // set the success message to the response's message
         setSuccessMessage(res)
       }
       setTimeout(() => {
         setIsSubmitting(false)
       }, 2000)
+      // navigate to the next section
+      navigate(`${pageData.callback}`, { replace: true })
+    } else if (section.toLowerCase() === SPEAKING) {
+      setIsSubmitting(true)
+      const res = await submitTestNoValidation(
+        auth?.access_token,
+        section,
+        testId,
+        userAnswers
+      )
+      console.log('outer: ', res)
+      if (
+        res.success &&
+        (res.response.status !== 400 ||
+          res.response.status !== 500 ||
+          res.response.status !== 404)
+      ) {
+        // console.log(res.message)
+        // set the success message to the response's message
+        setSuccessMessage(res)
+        setTimeout(() => {
+          setIsSubmitting(false)
+        }, 2000)
 
-      console.log(res)
-      navigate(`${pageData.callback}`, { replace: true })
-    } else {
-      navigate(`${pageData.callback}`, { replace: true })
+        navigate(`${pageData.callback}`, { replace: true })
+        localStorage.removeItem('answers')
+        localStorage.removeItem('activeTest')
+      } else {
+        setSuccessMessage({
+          success: false,
+          message: 'Something went wrong. Please try again later.',
+        })
+        setTimeout(() => {
+          setIsSubmitting(false)
+        }, 10000)
+
+        navigate(`${pageData.callback}`, { replace: true })
+      }
+
+      localStorage.removeItem('answers')
+      localStorage.removeItem('activeTest')
+      localStorage.removeItem('expiryTime')
+
+      // navigate(`${pageData.callback}`, { replace: true })
     }
   }
+
+  const handleLeave = useInvalidateOnLeave()
+
+  // handle back and forward button clicks
+  useEffect(() => {
+    window.onpopstate = () => {
+      handleLeave()
+      navigate(`../../${section}/${page}`, { state: { test_id: testId } })
+    }
+  }, [handleLeave, navigate, page, section, testId])
+
+  useBeforeUnload((event) => {
+    localStorage.removeItem('answers')
+    localStorage.removeItem('activeTest')
+
+    event.preventDefault()
+    return (event.returnValue = 'Are you sure you want to close?')
+  })
 
   useEffect(() => {
     resetScroll()
@@ -118,33 +221,6 @@ const TestPage = () => {
     setPageData(data)
   }, [page])
 
-  useEffect(() => {
-    const handleBackButton = (event) => {
-      event.preventDefault()
-      event.stopPropagation()
-      return false
-    }
-
-    window.history.pushState(null, '', window.location.pathname)
-    window.addEventListener('popstate', handleBackButton)
-
-    return () => {
-      window.removeEventListener('popstate', handleBackButton)
-    }
-  }, [section])
-
-  // useEffect(() => {
-  //   // check if answer is equal to the question
-
-  //   if (answerPage?.answers.length === pageData.answers.length) {
-  //     // setFilled((prev) => [...prev.filter((item) => item[0] !== page), page])
-  //     setFilled((prev) => prev.concat([page]))
-  //   } else {
-  //     // setFilled((prev) => [...prev.filter((item) => item[0] !== page)])
-  //     setFilled((prev) => prev.filter((item) => item !== page))
-  //   }
-  // }, [answerPage.answers.length, pageData.answers.length, page, setFilled])
-
   return (
     <>
       <SubmitProgress
@@ -153,6 +229,9 @@ const TestPage = () => {
       />
 
       <Box>
+        <Box>
+          <Timer expiryTime={20} />
+        </Box>
         <Container
           maxWidth='xl'
           className='relative  flex flex-col  space-x-2 divide-x-2 divide-slate-600 md:flex-row'
@@ -214,30 +293,6 @@ const TestPage = () => {
                 </Box>
               ))}
 
-              {/* {pageData.answers.map((item, index) => {
-              switch (item.answer_type) {
-                case 'input':
-                  return (
-                    <TextAnswer
-                      key={item.id}
-                      addAnswer={addAnswer}
-                      data={item}
-                      type={item.field}
-                    />
-                  )
-
-                case 'radio':
-                  return (
-                    <RadioAnswer
-                      key={item.id}
-                      addAnswer={addAnswer}
-                      data={item}
-                    />
-                  )
-                default:
-                  return null
-              }
-            })} */}
               <Box className=' z-50 bg-white '>
                 <Box className='flex flex-col space-y-4'>
                   <Box className='flex space-x-4'>
@@ -272,13 +327,7 @@ const TestPage = () => {
                         variant='contained'
                         color='success'
                         fullWidth
-                        onClick={
-                          sendAnswer
-                          // () =>
-                          // navigate(`${pageData.callback}`, {
-                          //   replace: true,
-                          // })
-                        }
+                        onClick={sendAnswer}
                       >
                         Submit & Continue
                       </Button>

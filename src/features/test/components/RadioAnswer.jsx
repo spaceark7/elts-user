@@ -38,7 +38,13 @@ const RadioAnswer = ({ data, addAnswer }) => {
           <RadioGroup
             tabIndex={0}
             value={value}
-            onBlur={() => addAnswer({ id: data.id, answer: value })}
+            onBlur={() =>
+              addAnswer({
+                id: data.id,
+                question_no: data.question_no,
+                answer: value,
+              })
+            }
             onChange={handleChange}
             row
             aria-labelledby='demo-radio-buttons-group-label'

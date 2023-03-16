@@ -96,11 +96,15 @@ const AudioRecorder = ({ maxRecordingTime = 10, data, addAnswer }) => {
         const base64String = reader.result
 
         setAudio(base64String)
-        addAnswer({ id: data.id, answer: base64String })
+        addAnswer({
+          id: data.id,
+          question_no: data.question_no,
+          answer: base64String,
+        })
         setAudioChunks([])
       }
     }
-  }, [audioChunks, data.id, addAnswer])
+  }, [audioChunks, data.id, addAnswer, data.question_no])
 
   useEffect(() => {
     if (stream?.active) {

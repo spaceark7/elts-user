@@ -4,9 +4,9 @@ import Api, { getExamScore } from '../../api/Api'
 import React, { useEffect, useMemo } from 'react'
 
 import { useNavigate, useParams } from 'react-router-dom'
-import NotFound from '../../components/Error/NotFound'
-import MemberProfile from './Components/MemberProfile'
-import MemberExamResult from './Components/MemberExamResult'
+import NotFound from '../../components/error/NotFound'
+import MemberProfile from './components/MemberProfile'
+import MemberExamResult from './components/MemberExamResult'
 import useAuth from '../../hooks/useAuth'
 
 const ExamResultInfo = ({ data }) => {
@@ -22,7 +22,7 @@ const ExamResultInfo = ({ data }) => {
       <Grid item lg={12} md={12} xs={12}>
         <iframe
           className='h-screen w-full'
-          src={import.meta.env.VITE_API_URL+`/certificate/${data.id}`}
+          src={import.meta.env.VITE_API_URL + `/certificate/${data.id}`}
           width='100%'
           height='100%'
         />

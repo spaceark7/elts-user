@@ -8,6 +8,7 @@
       {
         "part_no": 1,
         "page_no": 1,
+        "duration": 40,
         "question": "/static/images/questions/listening_p1.png",
         "audio": "/static/audio/listening/section_1.mp3",
         "nav_prev": null,
@@ -884,7 +885,7 @@
         "section_name": "Speaking",
         "question": "/static/images/questions/speaking_p3.png",
         "nav_prev": 11,
-
+        "callback": "/dashboard",
         "answers": [
           {
             "id": 85,

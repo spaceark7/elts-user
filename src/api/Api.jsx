@@ -1,6 +1,6 @@
 import axios from 'axios'
 import useSWR from 'swr'
-import { ExamPostBuilder } from '../features/Test/helper/ExamTypeObject'
+import { ExamPostBuilder } from '../features/test/helper/ExamTypeObject'
 
 export const examListEndpoint = '/exam-list'
 export const checkTokenEndpoint = '/cek-token'
@@ -117,7 +117,7 @@ export const submitTest = async (access_token, endpoint, testId, score) => {
     auth = JSON.parse(localStorage.getItem('token'))
   }
   if (!testId) {
-    testId = JSON.parse(localStorage.getItem('testId'))
+    testId = JSON.parse(localStorage.getItem('activeTest'))
   }
   const submitEndpoint = `/${endpoint}/${testId}`
 
@@ -133,4 +133,39 @@ export const submitTest = async (access_token, endpoint, testId, score) => {
   })
 
   return response.data
+}
+
+export const submitTestNoValidation = async (
+  access_token,
+  endpoint,
+  testId,
+  answers
+) => {
+  let auth = access_token
+
+  if (!auth) {
+    auth = JSON.parse(localStorage.getItem('token'))
+  }
+  if (!testId) {
+    testId = JSON.parse(localStorage.getItem('activeTest'))
+  }
+  const submitEndpoint = `/${endpoint}/${testId}`
+
+  const postData = ExamPostBuilder(endpoint, answers)
+
+  console.log('the POST DATA: ', postData)
+
+  try {
+    const response = await ExamApi.post(submitEndpoint, postData, {
+      headers: {
+        Authorization: `Bearer ${auth}`,
+        ContentType: 'application/json',
+      },
+    })
+
+    return response.data
+  } catch (error) {
+    console.log('error response: ', error)
+    return error
+  }
 }

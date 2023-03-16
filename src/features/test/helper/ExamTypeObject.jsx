@@ -11,13 +11,21 @@ export const ExamPostBuilder = (endpoint, score) => {
         reading_score: score,
       }
     case SPEAKING:
-      return {
-        speaking_score: score,
-      }
-    case WRITING:
-      return {
-        writing_score: score,
-      }
+      const data = {}
+
+      score.forEach((item) => {
+        data[`speaking_task_${item.question_no}`] = item.answer
+      })
+      return data
+    case WRITING: {
+      const data = {}
+
+      score.forEach((item) => {
+        data[`writing_task_${item.question_no}`] = item.answer
+      })
+      return data
+    }
+
     default:
       return null
   }

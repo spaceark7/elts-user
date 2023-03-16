@@ -69,7 +69,7 @@ const AudioControl = ({
             </Box>
           ) : null} */}
         </div>
-        {console.log(audio)}
+
         {audio ? (
           <div className='audio-player'>
             <audio src={audio} controls></audio>

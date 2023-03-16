@@ -18,7 +18,7 @@ const SubmitProgress = ({ isSubmitting, successMessage }) => {
         <Box className='flex flex-col items-center justify-center'>
           <CircularProgress color='inherit' />
           <Typography className='text-lg ' align='center'>
-            Submitting...
+            {successMessage?.message ?? 'Submitting...'}
           </Typography>
         </Box>
       )}

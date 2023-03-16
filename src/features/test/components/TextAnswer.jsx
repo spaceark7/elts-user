@@ -47,14 +47,23 @@ const TextAnswer = ({ data, addAnswer, type, id }) => {
         <TextField
           fullWidth
           value={value}
-          onBlur={() => addAnswer({ id: data.id, answer: value })}
+          onBlur={() =>
+            addAnswer({
+              id: data.id,
+              question_no: data.question_no,
+              answer: value,
+            })
+          }
           onChange={handleChange}
           id={`outlined-textarea-${id}`}
           autoComplete='off'
           label='Answer'
           type={type}
-          placeholder='Fill your answer here'
+          placeholder={` ${
+            type === 'text' ? 'Write you essay' : 'Fill your answer here'
+          }`}
           multiline={type === 'text'}
+          rows={type === 'text' ? 10 : 1}
         />
 
         {type === 'text' && (

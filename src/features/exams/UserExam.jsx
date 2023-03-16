@@ -16,10 +16,10 @@ import { checkTestToken, useExamList } from '../../api/Api'
 import React from 'react'
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
 import DialogContainer from '../../components/DialogContainer'
-import ExamInstruction from './Components/ExamInstruction'
+import ExamInstruction from './components/ExamInstruction'
 import useAuth from '../../hooks/useAuth'
 import { AVAILABLE_TEST, REVIEW_TEST, FINISH_TEST } from '../../constant'
-import SkeletonCard from '../../components/Skeleton/SkeletonCard'
+import SkeletonCard from '../../components/skeleton/SkeletonCard'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import useAnswers from '../../hooks/useAnswers'
@@ -52,14 +52,18 @@ const ExamInfo = ({ data, isSingleData }) => {
     }),
 
     onSubmit: async (values, actions) => {
+      localStorage.removeItem('activeTest')
+      localStorage.removeItem('expiryTime')
+      localStorage.removeItem('answers')
       const res = await checkTestToken(
         auth.access_token,
         values.token.toUpperCase()
       )
       if (res.status !== 404) {
+        localStorage.setItem('activeTest', JSON.stringify(data.id))
         localStorage.removeItem('expiryTime')
         setTestId(data.id)
-        localStorage.setItem('activeTest', JSON.stringify(data.id))
+
         navigate('/exam/listening/1', {
           state: { test_id: data.id },
           replace: true,
